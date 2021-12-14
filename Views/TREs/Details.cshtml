@@ -1,0 +1,90 @@
+﻿@model QuanLyTruongMauGiao.Models.TRE
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TRE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LOP.TenLop)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOP.TenLop)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PHUHUYNH.TenPH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PHUHUYNH.TenPH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenTre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenTre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgaySinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgaySinh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GioiTinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GioiTinh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QueQuan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QueQuan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DanToc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DanToc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayNhapHoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayNhapHoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Anh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Anh)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaTre }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
