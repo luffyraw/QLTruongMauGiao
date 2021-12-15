@@ -137,10 +137,9 @@
     <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\DangKiThucDonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\ThucDonNgayController.cs" />
+    <Compile Include="Controllers\ThucDonController.cs" />
     <Compile Include="Controllers\TREsController.cs" />
     <Compile Include="Controllers\XemDanhGiaController.cs" />
     <Compile Include="Global.asax.cs">
@@ -3668,23 +3667,17 @@
     <Content Include="Views\TREs\Details.cshtml" />
     <Content Include="Views\TREs\Edit.cshtml" />
     <Content Include="Views\TREs\Index.cshtml" />
-    <Content Include="Views\ThucDonNgay\Create.cshtml" />
-    <Content Include="Views\ThucDonNgay\Delete.cshtml" />
-    <Content Include="Views\ThucDonNgay\Details.cshtml" />
-    <Content Include="Views\ThucDonNgay\Edit.cshtml" />
-    <Content Include="Views\ThucDonNgay\Index.cshtml" />
-    <Content Include="Views\DangKiThucDon\Create.cshtml" />
-    <Content Include="Views\DangKiThucDon\Delete.cshtml" />
-    <Content Include="Views\DangKiThucDon\Details.cshtml" />
-    <Content Include="Views\DangKiThucDon\Edit.cshtml" />
-    <Content Include="Views\DangKiThucDon\Index.cshtml" />
     <Content Include="Views\XemDanhGia\Create.cshtml" />
     <Content Include="Views\XemDanhGia\Delete.cshtml" />
     <Content Include="Views\XemDanhGia\Details.cshtml" />
     <Content Include="Views\XemDanhGia\Edit.cshtml" />
     <Content Include="Views\XemDanhGia\Index.cshtml" />
-    <Content Include="Views\DangKiThucDon\DangKiTheoNgay.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\ThucDon\Create.cshtml" />
+    <Content Include="Views\ThucDon\Delete.cshtml" />
+    <Content Include="Views\ThucDon\Details.cshtml" />
+    <Content Include="Views\ThucDon\Edit.cshtml" />
+    <Content Include="Views\ThucDon\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

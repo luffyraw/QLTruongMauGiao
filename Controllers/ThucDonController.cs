@@ -10,18 +10,17 @@ using QuanLyTruongMauGiao.Models;
 
 namespace QuanLyTruongMauGiao.Controllers
 {
-    public class ThucDonNgayController : Controller
+    public class ThucDonController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
 
-        // GET: ThucDonNgay
+        // GET: ThucDon
         public ActionResult Index()
         {
-            var tHUCDONNGAYs = db.THUCDONNGAYs.Include(t => t.THUCDONTUAN);
-            return View(tHUCDONNGAYs.ToList());
+            return View(db.THUCDONNGAYs.ToList());
         }
 
-        // GET: ThucDonNgay/Details/5
+        // GET: ThucDon/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -36,19 +35,18 @@ namespace QuanLyTruongMauGiao.Controllers
             return View(tHUCDONNGAY);
         }
 
-        // GET: ThucDonNgay/Create
+        // GET: ThucDon/Create
         public ActionResult Create()
         {
-            ViewBag.MaTDT = new SelectList(db.THUCDONTUANs, "MaTDT", "MaTDT");
             return View();
         }
 
-        // POST: ThucDonNgay/Create
+        // POST: ThucDon/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaTDN,MaTDT,Ngay,BuaSang,BuaTrua,BuaXe")] THUCDONNGAY tHUCDONNGAY)
+        public ActionResult Create([Bind(Include = "MaTDN,Ngay,BuaSang,BuaTrua,BuaXe")] THUCDONNGAY tHUCDONNGAY)
         {
             if (ModelState.IsValid)
             {
@@ -57,11 +55,10 @@ namespace QuanLyTruongMauGiao.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaTDT = new SelectList(db.THUCDONTUANs, "MaTDT", "MaTDT", tHUCDONNGAY.MaTDT);
             return View(tHUCDONNGAY);
         }
 
-        // GET: ThucDonNgay/Edit/5
+        // GET: ThucDon/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -73,16 +70,15 @@ namespace QuanLyTruongMauGiao.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MaTDT = new SelectList(db.THUCDONTUANs, "MaTDT", "MaTDT", tHUCDONNGAY.MaTDT);
             return View(tHUCDONNGAY);
         }
 
-        // POST: ThucDonNgay/Edit/5
+        // POST: ThucDon/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaTDN,MaTDT,Ngay,BuaSang,BuaTrua,BuaXe")] THUCDONNGAY tHUCDONNGAY)
+        public ActionResult Edit([Bind(Include = "MaTDN,Ngay,BuaSang,BuaTrua,BuaXe")] THUCDONNGAY tHUCDONNGAY)
         {
             if (ModelState.IsValid)
             {
@@ -90,11 +86,10 @@ namespace QuanLyTruongMauGiao.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaTDT = new SelectList(db.THUCDONTUANs, "MaTDT", "MaTDT", tHUCDONNGAY.MaTDT);
             return View(tHUCDONNGAY);
         }
 
-        // GET: ThucDonNgay/Delete/5
+        // GET: ThucDon/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -109,7 +104,7 @@ namespace QuanLyTruongMauGiao.Controllers
             return View(tHUCDONNGAY);
         }
 
-        // POST: ThucDonNgay/Delete/5
+        // POST: ThucDon/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
