@@ -8,7 +8,7 @@ namespace QuanLyTruongMauGiao.Models
     public partial class QLMauGiao : DbContext
     {
         public QLMauGiao()
-            : base("name=QLMauGiao")
+            : base("name=QLMauGiao1")
         {
         }
 
@@ -26,14 +26,12 @@ namespace QuanLyTruongMauGiao.Models
         public virtual DbSet<PHUHUYNH> PHUHUYNHs { get; set; }
         public virtual DbSet<TAIKHOAN> TAIKHOANs { get; set; }
         public virtual DbSet<THUCDONNGAY> THUCDONNGAYs { get; set; }
-        public virtual DbSet<THUCDONTUAN> THUCDONTUANs { get; set; }
         public virtual DbSet<TRE> TREs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CHIPHI>()
                 .Property(e => e.MaChiPhi)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<CHIPHI>()
@@ -47,22 +45,18 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<DIEMDANH>()
                 .Property(e => e.MaTre)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<DONGCHIPHI>()
                 .Property(e => e.MaPhieu)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<DONGCHIPHI>()
                 .Property(e => e.MaChiPhi)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<GIAOVIEN>()
                 .Property(e => e.MaGV)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<GIAOVIEN>()
@@ -72,7 +66,6 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<GIAOVIEN>()
                 .Property(e => e.Email)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<GIAOVIEN>()
@@ -81,7 +74,6 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<GIAOVIEN>()
                 .Property(e => e.TenTK)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<GIAOVIEN>()
@@ -96,17 +88,14 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<KETQUADANHGIA>()
                 .Property(e => e.MaPhieu)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<KETQUADANHGIA>()
                 .Property(e => e.MaNDDG)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<LOP>()
                 .Property(e => e.MaLop)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<LOP>()
@@ -126,7 +115,6 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<NOIDUNGDANHGIA>()
                 .Property(e => e.MaNDDG)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<NOIDUNGDANHGIA>()
@@ -136,27 +124,22 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<PHANCONGGIAOVIEN>()
                 .Property(e => e.MaGV)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHANCONGGIAOVIEN>()
                 .Property(e => e.MaLop)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHIEUDANHGIA>()
                 .Property(e => e.MaPhieu)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHIEUDANHGIA>()
                 .Property(e => e.MaTre)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHIEUDANHGIA>()
                 .Property(e => e.MaGV)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHIEUDANHGIA>()
@@ -166,12 +149,10 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<PHIEUTHUTIEN>()
                 .Property(e => e.MaPhieu)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHIEUTHUTIEN>()
                 .Property(e => e.MaTre)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHIEUTHUTIEN>()
@@ -181,17 +162,14 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<PHUHUYNH>()
                 .Property(e => e.MaPH)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHUHUYNH>()
                 .Property(e => e.DienThoai)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHUHUYNH>()
                 .Property(e => e.TenTK)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHUHUYNH>()
@@ -201,17 +179,14 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<TAIKHOAN>()
                 .Property(e => e.TenTK)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<TAIKHOAN>()
                 .Property(e => e.MatKhau)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<TAIKHOAN>()
                 .Property(e => e.AnhDaiDien)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<TAIKHOAN>()
@@ -226,42 +201,22 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<THUCDONNGAY>()
                 .Property(e => e.MaTDN)
-                .IsFixedLength()
                 .IsUnicode(false);
-
-            modelBuilder.Entity<THUCDONNGAY>()
-                .Property(e => e.MaTDT)
-                .IsFixedLength()
-                .IsUnicode(false);
-
-            modelBuilder.Entity<THUCDONTUAN>()
-                .Property(e => e.MaTDT)
-                .IsFixedLength()
-                .IsUnicode(false);
-
-            modelBuilder.Entity<THUCDONTUAN>()
-                .HasMany(e => e.THUCDONNGAYs)
-                .WithRequired(e => e.THUCDONTUAN)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<TRE>()
                 .Property(e => e.MaTre)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<TRE>()
                 .Property(e => e.MaLop)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<TRE>()
                 .Property(e => e.MaPH)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<TRE>()
                 .Property(e => e.Anh)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<TRE>()
