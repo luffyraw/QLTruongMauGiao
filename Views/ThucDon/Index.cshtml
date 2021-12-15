@@ -1,52 +1,85 @@
-﻿@model IEnumerable<QuanLyTruongMauGiao.Models.THUCDONNGAY>
+﻿@*@model IEnumerable<QuanLyTruongMauGiao.Models.THUCDONNGAY>*@
+@model PagedList.IPagedList<QuanLyTruongMauGiao.Models.THUCDONNGAY>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Thêm", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Ngay)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BuaSang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BuaTrua)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BuaXe)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @item.Ngay.ToString("dd-MM-yyyy")
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BuaSang)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BuaTrua)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BuaXe)
-        </td>
-        <td>
-            @Html.ActionLink("Sửa", "Edit", new { id=item.MaTDN }) |
-            @Html.ActionLink("Chi tiết", "Details", new { id=item.MaTDN }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.MaTDN })
-        </td>
-    </tr>
-}
-
-</table>
+<h3>Thực đơn</h3>
+<div class="ibox">
+    <div class="ibox-head">
+        <div class="ibox-title">@Html.ActionLink("Thêm", "Create")</div>
+    </div>
+    <div class="ibox-body">
+        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+            <tr>
+                @using (Html.BeginForm())
+                {
+                    <p>
+                        <input type="date" name="startdate" />to<input type="date" name="enddate" />
+                        <input type="submit" value="Search" />
+                    </p>
+                }
+            </tr>
+            <thead>
+                <tr>
+                    <td>STT</td>
+                    <th>Ngày</th>
+                    <th>Bữa sáng</th>
+                    <th>Bữa trưa</th>
+                    <th>Bữa xế</th>
+                </tr>
+            </thead>
+            @{
+                int stt = 0;
+            }
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    stt++;
+                    <tr>
+                        <td>
+                            @stt
+                        </td>
+                        <td>
+                            @item.Ngay.ToString("dd-MM-yyyy")
+                        </td>
+                        <td>
+                            @item.BuaSang
+                        </td>
+                        <td>
+                            @item.BuaTrua
+                        </td>
+                        <td>
+                            @item.BuaXe
+                        </td>
+                        <td>
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.MaTDN }) |
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.MaTDN }) |
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.MaTDN })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-sm-12 col-md-5">
+                Trang @(Model.PageCount < Model.PageNumber ?0:Model.PageNumber)/@Model.PageCount
+            </div>
+            <div class="col-sm-12 col-md-7">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+                 new PagedListRenderOptions
+                      {
+                    LinkToFirstPageFormat = "<<",
+                    LinkToPreviousPageFormat = "<",
+                    LinkToNextPageFormat = ">",
+                    LinkToLastPageFormat = ">>",
+                    MaximumPageNumbersToDisplay = 6,
+                    DisplayEllipsesWhenNotShowingAllPageNumbers = false
+                 })
+            </div>
+        </div>
+    </div>
+    
+</div>
