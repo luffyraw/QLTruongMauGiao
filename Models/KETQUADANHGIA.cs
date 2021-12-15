@@ -1,7 +1,8 @@
-namespace QuanLyTruongMauGiao.Models
+﻿namespace QuanLyTruongMauGiao.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -21,6 +22,7 @@ namespace QuanLyTruongMauGiao.Models
 
         [Required]
         [StringLength(200)]
+        [DisplayName("Kết quả")]
         public string kq { get; set; }
 
         public virtual NOIDUNGDANHGIA NOIDUNGDANHGIA { get; set; }

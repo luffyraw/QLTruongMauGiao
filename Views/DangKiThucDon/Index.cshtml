@@ -1,0 +1,56 @@
+﻿@model IEnumerable<QuanLyTruongMauGiao.Models.THUCDONNGAY>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2><center>Đăng kí thực đơn</center></h2>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.THUCDONTUAN.MaTDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ngay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuaSang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuaTrua)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuaXe)
+        </th>
+        <th>
+            Chọn
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.THUCDONTUAN.MaTDT)
+        </td>
+        <td>
+            @item.Ngay.ToString("dd/MM/yyyy")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuaSang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuaTrua)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuaXe)
+        </td>
+        <td>
+            <input type="checkbox" />
+        </td>
+    </tr>
+}
+</table>
+<p><center><input type="submit" value="Đăng kí" /><input type="reset" value="Hủy" style="margin-left:50px" /></center></p>

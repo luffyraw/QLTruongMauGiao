@@ -1,7 +1,8 @@
-namespace QuanLyTruongMauGiao.Models
+﻿namespace QuanLyTruongMauGiao.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -22,6 +23,7 @@ namespace QuanLyTruongMauGiao.Models
         [Column("NoiDungDanhGia")]
         [Required]
         [StringLength(300)]
+        [DisplayName("Nội dung đánh giá")]
         public string NoiDungDanhGia1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
