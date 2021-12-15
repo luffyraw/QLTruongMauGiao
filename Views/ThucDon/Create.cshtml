@@ -19,7 +19,7 @@
     <table>
         <tr>
             <td>
-                @Html.LabelFor(model => model.MaTDT, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="font-normal">Mã thực đơn tuần</label>
             </td>
             <td>
                 @Html.EditorFor(model => model.MaTDT, new { htmlAttributes = new { @class = "form-control" } })
@@ -30,7 +30,7 @@
         </tr>
         <tr>
             <td>
-                @Html.LabelFor(model => model.NgayBD, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="font-normal">Ngày bắt đầu</label>
             </td>
             <td>
                 @Html.EditorFor(model => model.NgayBD, new { htmlAttributes = new { @class = "form-control" } })
@@ -41,7 +41,7 @@
         </tr>
         <tr>
             <td>
-                @Html.LabelFor(model => model.NgayKT, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="font-normal">Ngày kết thúc</label>       
             </td>
             <td>
                 @Html.EditorFor(model => model.NgayKT, new { htmlAttributes = new { @class = "form-control" } })
