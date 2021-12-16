@@ -24,7 +24,7 @@ namespace QuanLyTruongMauGiao.Controllers
         public PartialViewResult GetName(string name)
         {
             var contacts = db.TREs.Where(x => x.TenTre.Contains(name));
-            return PartialView("IndexPartialView", contacts);
+            return PartialView("Index", contacts);
         }
         // GET: TREs/Details/5
         public ActionResult Details(string id)
