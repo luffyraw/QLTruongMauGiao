@@ -5,61 +5,80 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>THUCDONNGAY</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaTDN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaTDN, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MaTDN, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-md-6">
+            <div class="ibox">
+                <div class="ibox-head">
+                    <div class="ibox-title">Tạo thực đơn</div>
+                    <div class="ibox-tools">
+                        <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+                        <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-body">
+                    <form class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Mã</label>
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.MaTDN, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-sm-10 ml-sm-auto">
+                                @Html.ValidationMessageFor(model => model.MaTDN, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Ngày</label>
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-sm-10 ml-sm-auto">
+                                @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Bữa sáng</label>
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.BuaSang, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-sm-10 ml-sm-auto">
+                                @Html.ValidationMessageFor(model => model.BuaSang, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Bữa trưa</label>
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.BuaTrua, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-sm-10 ml-sm-auto">
+                                @Html.ValidationMessageFor(model => model.BuaTrua, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Bữa xế</label>
+                            <div class="col-sm-10">
+                                @Html.EditorFor(model => model.BuaXe, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-sm-10 ml-sm-auto">
+                                @Html.ValidationMessageFor(model => model.BuaXe, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-10 ml-sm-auto">
+                                <button class="btn btn-info" type="submit">Thêm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ngay, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BuaSang, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BuaSang, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BuaSang, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BuaTrua, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BuaTrua, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BuaTrua, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BuaXe, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BuaXe, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BuaXe, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Thêm" class="btn btn-default" />
-            </div>
-        </div>
+    </div>
     </div>
 }
 

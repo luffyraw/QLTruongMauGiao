@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyTruongMauGiao.Models;
+using PagedList;
 
 namespace QuanLyTruongMauGiao.Controllers
 {
@@ -15,9 +16,18 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: ThucDon
-        public ActionResult Index()
+        public ActionResult Index(DateTime? startdate, DateTime? enddate, int? page)
         {
-            return View(db.THUCDONNGAYs.ToList());
+            IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
+            
+            if(startdate != null && enddate != null)
+            {
+                thucdons = thucdons.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
+            }
+            thucdons = thucdons.OrderBy(td => td.Ngay);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(thucdons.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: ThucDon/Details/5

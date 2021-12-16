@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyTruongMauGiao.Models;
+using PagedList;
 
 namespace QuanLyTruongMauGiao.Controllers
 {
@@ -15,10 +16,17 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: PhuHuynh
-        public ActionResult Index()
+        public ActionResult Index(string searchstr, int? page)
         {
-            var pHUHUYNHs = db.PHUHUYNHs.Include(p => p.TAIKHOAN);
-            return View(pHUHUYNHs.ToList());
+            var phuHuynh = db.PHUHUYNHs.Include(p => p.TAIKHOAN);
+            if (!String.IsNullOrEmpty(searchstr))
+            {
+                phuHuynh = phuHuynh.Where(ph => ph.TenPH == searchstr);
+            }
+            phuHuynh = phuHuynh.OrderBy(ph => ph.TenPH);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(phuHuynh.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: PhuHuynh/Details/5
@@ -39,7 +47,9 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhuHuynh/Create
         public ActionResult Create()
         {
-            ViewBag.TenTK = new SelectList(db.TAIKHOANs, "TenTK", "MatKhau");
+            var taiKhoanPH = from ph in db.PHUHUYNHs
+                             select ph.TenTK;
+            ViewBag.TenTK = new SelectList(taiKhoanPH);
             return View();
         }
 
@@ -73,7 +83,9 @@ namespace QuanLyTruongMauGiao.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TenTK = new SelectList(db.TAIKHOANs, "TenTK", "MatKhau", pHUHUYNH.TenTK);
+            var taiKhoanPH = from ph in db.PHUHUYNHs
+                             select ph.TenTK;
+            ViewBag.TenTK = new SelectList(taiKhoanPH);
             return View(pHUHUYNH);
         }
 
@@ -115,9 +127,18 @@ namespace QuanLyTruongMauGiao.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             PHUHUYNH pHUHUYNH = db.PHUHUYNHs.Find(id);
-            db.PHUHUYNHs.Remove(pHUHUYNH);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.PHUHUYNHs.Remove(pHUHUYNH);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Có lỗi khi xóa: " + ex.Message;
+                return View("Delete", pHUHUYNH);
+            }
+            
         }
 
         protected override void Dispose(bool disposing)
