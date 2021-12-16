@@ -28,8 +28,6 @@
         
         [Column(TypeName = "date")]
         [Required(ErrorMessage = "Không được để trống")]
-
-        [Column(TypeName = "date")]
         [DisplayName("Năm sinh")]
         public DateTime NamSinh { get; set; }
         [DisplayName("Giới tính")]
