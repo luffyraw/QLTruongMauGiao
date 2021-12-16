@@ -10,116 +10,116 @@ using QuanLyTruongMauGiao.Models;
 
 namespace QuanLyTruongMauGiao.Controllers
 {
-    public class XemDanhGiaController : Controller
+    public class PHIEUDANHGIAsController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
 
-        // GET: XemDanhGia
+        // GET: PHIEUDANHGIAs
         public ActionResult Index()
         {
-            var kETQUADANHGIAs = db.KETQUADANHGIAs.Include(k => k.NOIDUNGDANHGIA).Include(k => k.PHIEUDANHGIA);
-            return View(kETQUADANHGIAs.ToList());
+            var pHIEUDANHGIAs = db.PHIEUDANHGIAs.Include(p => p.GIAOVIEN).Include(p => p.TRE);
+            return View(pHIEUDANHGIAs.ToList());
         }
 
-        // GET: XemDanhGia/Details/5
+        // GET: PHIEUDANHGIAs/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KETQUADANHGIA kETQUADANHGIA = db.KETQUADANHGIAs.Find(id);
-            if (kETQUADANHGIA == null)
+            PHIEUDANHGIA pHIEUDANHGIA = db.PHIEUDANHGIAs.Find(id);
+            if (pHIEUDANHGIA == null)
             {
                 return HttpNotFound();
             }
-            return View(kETQUADANHGIA);
+            return View(pHIEUDANHGIA);
         }
 
-        // GET: XemDanhGia/Create
+        // GET: PHIEUDANHGIAs/Create
         public ActionResult Create()
         {
-            ViewBag.MaNDDG = new SelectList(db.NOIDUNGDANHGIAs, "MaNDDG", "NoiDungDanhGia1");
-            ViewBag.MaPhieu = new SelectList(db.PHIEUDANHGIAs, "MaPhieu", "MaTre");
+            ViewBag.MaGV = new SelectList(db.GIAOVIENs, "MaGV", "TenGV");
+            ViewBag.MaTre = new SelectList(db.TREs, "MaTre", "MaLop");
             return View();
         }
 
-        // POST: XemDanhGia/Create
+        // POST: PHIEUDANHGIAs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaPhieu,MaNDDG,kq")] KETQUADANHGIA kETQUADANHGIA)
+        public ActionResult Create([Bind(Include = "MaPhieu,MaTre,MaGV,NgayTao,NamHoc")] PHIEUDANHGIA pHIEUDANHGIA)
         {
             if (ModelState.IsValid)
             {
-                db.KETQUADANHGIAs.Add(kETQUADANHGIA);
+                db.PHIEUDANHGIAs.Add(pHIEUDANHGIA);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaNDDG = new SelectList(db.NOIDUNGDANHGIAs, "MaNDDG", "NoiDungDanhGia1", kETQUADANHGIA.MaNDDG);
-            ViewBag.MaPhieu = new SelectList(db.PHIEUDANHGIAs, "MaPhieu", "MaTre", kETQUADANHGIA.MaPhieu);
-            return View(kETQUADANHGIA);
+            ViewBag.MaGV = new SelectList(db.GIAOVIENs, "MaGV", "TenGV", pHIEUDANHGIA.MaGV);
+            ViewBag.MaTre = new SelectList(db.TREs, "MaTre", "MaLop", pHIEUDANHGIA.MaTre);
+            return View(pHIEUDANHGIA);
         }
 
-        // GET: XemDanhGia/Edit/5
+        // GET: PHIEUDANHGIAs/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KETQUADANHGIA kETQUADANHGIA = db.KETQUADANHGIAs.Find(id);
-            if (kETQUADANHGIA == null)
+            PHIEUDANHGIA pHIEUDANHGIA = db.PHIEUDANHGIAs.Find(id);
+            if (pHIEUDANHGIA == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MaNDDG = new SelectList(db.NOIDUNGDANHGIAs, "MaNDDG", "NoiDungDanhGia1", kETQUADANHGIA.MaNDDG);
-            ViewBag.MaPhieu = new SelectList(db.PHIEUDANHGIAs, "MaPhieu", "MaTre", kETQUADANHGIA.MaPhieu);
-            return View(kETQUADANHGIA);
+            ViewBag.MaGV = new SelectList(db.GIAOVIENs, "MaGV", "TenGV", pHIEUDANHGIA.MaGV);
+            ViewBag.MaTre = new SelectList(db.TREs, "MaTre", "MaLop", pHIEUDANHGIA.MaTre);
+            return View(pHIEUDANHGIA);
         }
 
-        // POST: XemDanhGia/Edit/5
+        // POST: PHIEUDANHGIAs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaPhieu,MaNDDG,kq")] KETQUADANHGIA kETQUADANHGIA)
+        public ActionResult Edit([Bind(Include = "MaPhieu,MaTre,MaGV,NgayTao,NamHoc")] PHIEUDANHGIA pHIEUDANHGIA)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(kETQUADANHGIA).State = EntityState.Modified;
+                db.Entry(pHIEUDANHGIA).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaNDDG = new SelectList(db.NOIDUNGDANHGIAs, "MaNDDG", "NoiDungDanhGia1", kETQUADANHGIA.MaNDDG);
-            ViewBag.MaPhieu = new SelectList(db.PHIEUDANHGIAs, "MaPhieu", "MaTre", kETQUADANHGIA.MaPhieu);
-            return View(kETQUADANHGIA);
+            ViewBag.MaGV = new SelectList(db.GIAOVIENs, "MaGV", "TenGV", pHIEUDANHGIA.MaGV);
+            ViewBag.MaTre = new SelectList(db.TREs, "MaTre", "MaLop", pHIEUDANHGIA.MaTre);
+            return View(pHIEUDANHGIA);
         }
 
-        // GET: XemDanhGia/Delete/5
+        // GET: PHIEUDANHGIAs/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KETQUADANHGIA kETQUADANHGIA = db.KETQUADANHGIAs.Find(id);
-            if (kETQUADANHGIA == null)
+            PHIEUDANHGIA pHIEUDANHGIA = db.PHIEUDANHGIAs.Find(id);
+            if (pHIEUDANHGIA == null)
             {
                 return HttpNotFound();
             }
-            return View(kETQUADANHGIA);
+            return View(pHIEUDANHGIA);
         }
 
-        // POST: XemDanhGia/Delete/5
+        // POST: PHIEUDANHGIAs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            KETQUADANHGIA kETQUADANHGIA = db.KETQUADANHGIAs.Find(id);
-            db.KETQUADANHGIAs.Remove(kETQUADANHGIA);
+            PHIEUDANHGIA pHIEUDANHGIA = db.PHIEUDANHGIAs.Find(id);
+            db.PHIEUDANHGIAs.Remove(pHIEUDANHGIA);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

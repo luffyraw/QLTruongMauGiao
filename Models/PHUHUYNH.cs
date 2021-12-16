@@ -1,7 +1,8 @@
-namespace QuanLyTruongMauGiao.Models
+﻿namespace QuanLyTruongMauGiao.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -21,23 +22,28 @@ namespace QuanLyTruongMauGiao.Models
 
         [Required]
         [StringLength(50)]
+        [DisplayName("Tên phụ huynh")]
         public string TenPH { get; set; }
 
         [Column(TypeName = "date")]
+        [DisplayName("Năm sinh")]
         public DateTime NamSinh { get; set; }
-
+        [DisplayName("Giới tính")]
         public bool GioiTinh { get; set; }
 
         [Required]
         [StringLength(100)]
+        [DisplayName("Địa chỉ")]
         public string DiaChi { get; set; }
 
         [Required]
         [StringLength(15)]
+        [DisplayName("Số điện thoại")]
         public string DienThoai { get; set; }
 
         [Required]
         [StringLength(20)]
+        [DisplayName("Tên tài khoản")]
         public string TenTK { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
