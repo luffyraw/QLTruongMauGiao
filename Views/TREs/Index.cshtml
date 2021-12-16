@@ -1,81 +1,23 @@
 ﻿@model IEnumerable<QuanLyTruongMauGiao.Models.TRE>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lí trẻ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.LOP.TenLop)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PHUHUYNH.TenPH)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TenTre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgaySinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GioiTinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QueQuan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DanToc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayNhapHoc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Anh)
-        </th>
-        <th></th>
-    </tr>
+@using (Ajax.BeginForm("GetName", "tres", new AjaxOptions
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "TreList",
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LOP.TenLop)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PHUHUYNH.TenPH)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenTre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgaySinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GioiTinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QueQuan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DanToc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayNhapHoc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Anh)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaTre }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaTre }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaTre })
-        </td>
-    </tr>
+}))
+{
+    <input type="text" name="Name" id="name" />
+    <input type="submit" value="Search by name" />
+    <p> </p>
+    <hr />
 }
-
-</table>
+@Html.Partial("IndexPartialView")

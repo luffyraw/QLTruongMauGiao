@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -22,24 +23,31 @@
 
         [StringLength(50)]
         [Required(ErrorMessage = "Không được để trống")]
+        [DisplayName("Tên phụ huynh")]
         public string TenPH { get; set; }
-
+        
         [Column(TypeName = "date")]
         [Required(ErrorMessage = "Không được để trống")]
-        public DateTime NamSinh { get; set; }
 
+        [Column(TypeName = "date")]
+        [DisplayName("Năm sinh")]
+        public DateTime NamSinh { get; set; }
+        [DisplayName("Giới tính")]
         public bool GioiTinh { get; set; }
 
         [Required(ErrorMessage = "Không được để trống")]
         [StringLength(100)]
+        [DisplayName("Địa chỉ")]
         public string DiaChi { get; set; }
 
         [Required(ErrorMessage = "Không được để trống")]
         [StringLength(15)]
+        [DisplayName("Số điện thoại")]
         public string DienThoai { get; set; }
 
         [Required(ErrorMessage = "Không được để trống")]
         [StringLength(20)]
+        [DisplayName("Tên tài khoản")]
         public string TenTK { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
