@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyTruongMauGiao.Models;
-
+using PagedList;
 namespace QuanLyTruongMauGiao.Controllers
 {
     public class TREsController : Controller
@@ -15,15 +15,20 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: TREs
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var tREs = db.TREs.Include(t => t.LOP).Include(t => t.PHUHUYNH);
-            return View(tREs.ToList());
+            tREs = tREs.OrderBy(tr => tr.TenTre);
+
+            int pageSize = 7;
+            int pageNumber = (page ?? 1);
+            return View(tREs.ToPagedList(pageNumber,pageSize));
         }
 
         public PartialViewResult GetName(string name)
         {
             var contacts = db.TREs.Where(x => x.TenTre.Contains(name));
+            
             return PartialView("Index", contacts);
         }
         // GET: TREs/Details/5
