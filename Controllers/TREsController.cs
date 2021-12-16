@@ -25,11 +25,14 @@ namespace QuanLyTruongMauGiao.Controllers
             return View(tREs.ToPagedList(pageNumber,pageSize));
         }
 
-        public PartialViewResult GetName(string name)
+        public PartialViewResult GetName(string name, int? page)
         {
             var contacts = db.TREs.Where(x => x.TenTre.Contains(name));
-            
-            return PartialView("Index", contacts);
+            contacts = contacts.OrderBy(tr => tr.TenTre);
+
+            int pageSize = 7;
+            int pageNumber = (page ?? 1);
+            return PartialView("Index", contacts.ToPagedList(pageNumber,pageSize));
         }
         // GET: TREs/Details/5
         public ActionResult Details(string id)
