@@ -143,11 +143,11 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LopController.cs" />
     <Compile Include="Controllers\PhanCongGiaoVienController.cs" />
+    <Compile Include="Controllers\PHIEUDANHGIAsController.cs" />
     <Compile Include="Controllers\PhuHuynhController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThucDonController.cs" />
     <Compile Include="Controllers\TREsController.cs" />
-    <Compile Include="Controllers\XemDanhGiaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3140,6 +3140,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Image\Default.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\assets\demo\data\countries.json" />
@@ -3649,6 +3650,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -3716,6 +3719,17 @@
     <Content Include="Views\Shared\LayoutPH.cshtml" />
     <Content Include="Views\Home\HomePageGV.cshtml" />
     <Content Include="Views\Home\HomePagePH.cshtml" />
+    <Content Include="Views\TREs\Create.cshtml" />
+    <Content Include="Views\TREs\Delete.cshtml" />
+    <Content Include="Views\TREs\Details.cshtml" />
+    <Content Include="Views\TREs\Edit.cshtml" />
+    <Content Include="Views\TREs\Index.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Create.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Delete.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Details.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Edit.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Index.cshtml" />
+    <Content Include="Views\TREs\IndexPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
