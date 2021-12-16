@@ -127,9 +127,18 @@ namespace QuanLyTruongMauGiao.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             PHUHUYNH pHUHUYNH = db.PHUHUYNHs.Find(id);
-            db.PHUHUYNHs.Remove(pHUHUYNH);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.PHUHUYNHs.Remove(pHUHUYNH);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Có lỗi khi xóa: " + ex.Message;
+                return View("Delete", pHUHUYNH);
+            }
+            
         }
 
         protected override void Dispose(bool disposing)
