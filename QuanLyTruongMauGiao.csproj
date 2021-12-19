@@ -148,7 +148,6 @@
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThucDonController.cs" />
     <Compile Include="Controllers\TreController.cs" />
-    <Compile Include="Controllers\TREsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3669,11 +3668,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\TREs\Create.cshtml" />
-    <Content Include="Views\TREs\Delete.cshtml" />
-    <Content Include="Views\TREs\Details.cshtml" />
-    <Content Include="Views\TREs\Edit.cshtml" />
-    <Content Include="Views\TREs\Index.cshtml" />
     <Content Include="Views\XemDanhGia\Create.cshtml" />
     <Content Include="Views\XemDanhGia\Delete.cshtml" />
     <Content Include="Views\XemDanhGia\Details.cshtml" />
@@ -3720,17 +3714,11 @@
     <Content Include="Views\Shared\LayoutPH.cshtml" />
     <Content Include="Views\Home\HomePageGV.cshtml" />
     <Content Include="Views\Home\HomePagePH.cshtml" />
-    <Content Include="Views\TREs\Create.cshtml" />
-    <Content Include="Views\TREs\Delete.cshtml" />
-    <Content Include="Views\TREs\Details.cshtml" />
-    <Content Include="Views\TREs\Edit.cshtml" />
-    <Content Include="Views\TREs\Index.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Create.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Delete.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Details.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Edit.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Index.cshtml" />
-    <Content Include="Views\TREs\IndexPartialView.cshtml" />
     <Content Include="Views\Tre\Create.cshtml" />
     <Content Include="Views\Tre\Delete.cshtml" />
     <Content Include="Views\Tre\Details.cshtml" />
