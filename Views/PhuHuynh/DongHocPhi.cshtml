@@ -1,0 +1,45 @@
+﻿@model IEnumerable<QuanLyTruongMauGiao.Models.DONGCHIPHI>
+
+@{
+    ViewBag.Title = "DongHocPhi";
+}
+
+<h2><center>Thông tin đóng học phí</center></h2>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PHIEUTHUTIEN.MaTre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CHIPHI.NoiDung)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GhiChu)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PHIEUTHUTIEN.MaTre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CHIPHI.NoiDung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>
+        </tr>
+    }
+</table>
+<p><center><input type="button" value="Quay lại" onclick="location.href = '@Url.Action("Index2","PhuHuynh")'" /></center></p>
