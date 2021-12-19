@@ -147,6 +147,7 @@
     <Compile Include="Controllers\PhuHuynhController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThucDonController.cs" />
+    <Compile Include="Controllers\TreController.cs" />
     <Compile Include="Controllers\TREsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3730,6 +3731,12 @@
     <Content Include="Views\PHIEUDANHGIAs\Edit.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Index.cshtml" />
     <Content Include="Views\TREs\IndexPartialView.cshtml" />
+    <Content Include="Views\Tre\Create.cshtml" />
+    <Content Include="Views\Tre\Delete.cshtml" />
+    <Content Include="Views\Tre\Details.cshtml" />
+    <Content Include="Views\Tre\Edit.cshtml" />
+    <Content Include="Views\Tre\Index.cshtml" />
+    <Content Include="Views\Tre\IndexPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

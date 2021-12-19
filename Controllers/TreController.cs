@@ -8,13 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using QuanLyTruongMauGiao.Models;
 using PagedList;
+
 namespace QuanLyTruongMauGiao.Controllers
 {
-    public class TREsController : Controller
+    public class TreController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
 
-        // GET: TREs
+        // GET: Tre
         public ActionResult Index(int? page)
         {
             var tREs = db.TREs.Include(t => t.LOP).Include(t => t.PHUHUYNH);
@@ -22,7 +23,7 @@ namespace QuanLyTruongMauGiao.Controllers
 
             int pageSize = 7;
             int pageNumber = (page ?? 1);
-            return View(tREs.ToPagedList(pageNumber,pageSize));
+            return View(tREs.ToPagedList(pageNumber, pageSize));
         }
 
         public PartialViewResult GetName(string name, int? page)
@@ -32,9 +33,9 @@ namespace QuanLyTruongMauGiao.Controllers
 
             int pageSize = 7;
             int pageNumber = (page ?? 1);
-            return PartialView("Index", contacts.ToPagedList(pageNumber,pageSize));
+            return PartialView("Index", contacts.ToPagedList(pageNumber, pageSize));
         }
-        // GET: TREs/Details/5
+        // GET: Tre/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -49,7 +50,7 @@ namespace QuanLyTruongMauGiao.Controllers
             return View(tRE);
         }
 
-        // GET: TREs/Create
+        // GET: Tre/Create
         public ActionResult Create()
         {
             ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop");
@@ -57,7 +58,7 @@ namespace QuanLyTruongMauGiao.Controllers
             return View();
         }
 
-        // POST: TREs/Create
+        // POST: Tre/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -76,7 +77,7 @@ namespace QuanLyTruongMauGiao.Controllers
             return View(tRE);
         }
 
-        // GET: TREs/Edit/5
+        // GET: Tre/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -93,7 +94,7 @@ namespace QuanLyTruongMauGiao.Controllers
             return View(tRE);
         }
 
-        // POST: TREs/Edit/5
+        // POST: Tre/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -111,7 +112,7 @@ namespace QuanLyTruongMauGiao.Controllers
             return View(tRE);
         }
 
-        // GET: TREs/Delete/5
+        // GET: Tre/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -126,7 +127,7 @@ namespace QuanLyTruongMauGiao.Controllers
             return View(tRE);
         }
 
-        // POST: TREs/Delete/5
+        // POST: Tre/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
