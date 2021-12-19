@@ -19,7 +19,9 @@
     }
 
     .pagination li:hover {
-        background-color: #337ab7;
+        background-color: #687fff;
+    }
+    .pagination li a:hover {
         color: #fff;
     }
 </style>
@@ -101,12 +103,11 @@
             </tbody>
         </table>
         <br />
-        <div class="page">
-            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-
-            @Html.PagedListPager(Model, page => Url.Action("Index",
-                new { page }))
-        </div>
+            <div class="page">
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page }))
+            </div>
+      
         @*<div class="row">
             <div class="col-sm-12 col-md-5">
                 Trang @(Model.PageCount < Model.PageNumber ?0:Model.PageNumber)/@Model.PageCount
