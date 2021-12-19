@@ -5,7 +5,25 @@
         width: 100px;
         height: 100px;
     }
+    .pagination > li > a {
+        float: left;
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        border: 1px solid #ddd;
+    }
+
+    .pagination > .active a {
+        background-color: #337ab7;
+        color: #fff;
+    }
+
+    .pagination li:hover {
+        background-color: #337ab7;
+        color: #fff;
+    }
 </style>
+
 
 <h3>Danh sách trẻ</h3>
 <div class="ibox">
@@ -71,7 +89,7 @@
                             @item.NgayNhapHoc
                         </td>
                         <td>
-                            <img class="anh" src="~/Image/@item.Anh"/>
+                            <img class="anh" src="~/Image/@item.Anh" />
                         </td>
                         <td>
                             @Html.ActionLink("Sửa", "Edit", new { id = item.MaTre }) |
@@ -82,7 +100,14 @@
                 }
             </tbody>
         </table>
-        <div class="row">
+        <br />
+        <div class="page">
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page }))
+        </div>
+        @*<div class="row">
             <div class="col-sm-12 col-md-5">
                 Trang @(Model.PageCount < Model.PageNumber ?0:Model.PageNumber)/@Model.PageCount
             </div>
@@ -98,7 +123,7 @@
                     DisplayEllipsesWhenNotShowingAllPageNumbers = false
                  })
             </div>
-        </div>
+        </div>*@
     </div>
 
 </div>
