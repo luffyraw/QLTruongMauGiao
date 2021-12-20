@@ -1,38 +1,58 @@
 ﻿@model QuanLyTruongMauGiao.Models.TRE
-
+@using QuanLyTruongMauGiao.Models
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    QLMauGiao db = new QLMauGiao();
+    var ph = from item in db.PHUHUYNHs select item;
+    var ngaysinh = Model.NgaySinh.ToString("dd/MM/yyyy");
+    var ngaynhaphoc = Model.NgayNhapHoc.ToString("dd/MM/yyyy");
 }
 
-<h2>Edit</h2>
+<h2>Thay đổi thông tin trẻ</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TRE</h4>
         <hr />
+        @*
+            Mã trẻ
+            *@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MaTre)
-
+        <label class="control-label col-md-10"><h4>Mã trẻ: @Model.MaTre </h4></label>
+        @*
+        Lớp
+            *@
         <div class="form-group">
-            @Html.LabelFor(model => model.MaLop, "MaLop", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MaLop, "Lớp", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("MaLop", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MaLop, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*Phụ huynh*@
         <div class="form-group">
-            @Html.LabelFor(model => model.MaPH, "MaPH", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Phụ huynh</label>
             <div class="col-md-10">
-                @Html.DropDownList("MaPH", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.MaPH, new { htmlAttributes = new { @list = "ide", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MaPH, "", new { @class = "text-danger" })
+                Không có trong danh sách?<a href="~/phuhuynh/create"> Thêm mới</a>
             </div>
         </div>
+        <datalist id="ide">
+            @foreach (PHUHUYNH item in ph)
+            {
+                <option value="@item.MaPH"> @item.TenPH @item.DienThoai @item.NamSinh.ToString("dd/MM/yyyy")</option>
+            }
 
+            @Html.ValidationMessageFor(model => model.MaPH, "", new { @class = "text-danger" })
+        </datalist>
+
+
+        @*Tên trẻ
+            *@
         <div class="form-group">
             @Html.LabelFor(model => model.TenTre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -40,25 +60,43 @@
                 @Html.ValidationMessageFor(model => model.TenTre, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @* ngày sinh
+            *@
         <div class="form-group">
             @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control" } })
+                <label class="control-label col-md-10">Ngày sinh hiện tại: @ngaysinh</label>
+                <label class="control-label col-md-10">Ngày sinh mới:</label>
+                @Html.EditorFor(model => model.NgaySinh ,new { htmlAttributes = new { @type = "date", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*
+        Giới tính    
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.GioiTinh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.GioiTinh)
-                    @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
-                </div>
+                @{
+                    if (Model.GioiTinh == true)
+                    {
+                        <input type="radio" value="true" id="GioiTinh" name="GioiTinh" checked="checked" class="radio"/> <span>Nam</span>
+                        <input type="radio" value="false" id="GioiTinh" name="GioiTinh" class="radio"/> <span>Nữ</span>
+
+                    }
+                    else
+                    {
+                        <input type="radio" value="true" id="GioiTinh" name="GioiTinh" class="radio" /> <span>Nam</span>
+                        <input type="radio" value="false" id="GioiTinh" name="GioiTinh" checked="checked" class="radio"/> <span>Nữ</span>
+                    }
+                }
+
+                @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*
+        Quê quán    
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.QueQuan, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -66,7 +104,9 @@
                 @Html.ValidationMessageFor(model => model.QueQuan, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*
+        Dân tộc    
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.DanToc, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -74,15 +114,22 @@
                 @Html.ValidationMessageFor(model => model.DanToc, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*
+        Ngày nhập học    
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.NgayNhapHoc, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayNhapHoc, new { htmlAttributes = new { @class = "form-control" } })
+                <label class="control-label col-md-10">Ngày nhập học hiện tại: @ngaynhaphoc</label>
+                <label class="control-label col-md-10">Ngày nhập học mới:</label>
+
+                @Html.EditorFor(model => model.NgayNhapHoc, new { htmlAttributes = new { Type = "date", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NgayNhapHoc, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*
+        Ảnh    
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.Anh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -90,7 +137,9 @@
                 @Html.ValidationMessageFor(model => model.Anh, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*
+        Save    
+        *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -100,5 +149,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Quay về", "Index")
 </div>
