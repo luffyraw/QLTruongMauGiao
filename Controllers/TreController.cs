@@ -19,8 +19,8 @@ namespace QuanLyTruongMauGiao.Controllers
         public ActionResult Index(int? page)
         {
             var tREs = db.TREs.Include(t => t.LOP).Include(t => t.PHUHUYNH);
+            
             tREs = tREs.OrderBy(tr => tr.TenTre);
-
             int pageSize = 7;
             int pageNumber = (page ?? 1);
             return View(tREs.ToPagedList(pageNumber, pageSize));

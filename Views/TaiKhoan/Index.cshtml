@@ -1,52 +1,30 @@
-﻿@model IEnumerable<QuanLyTruongMauGiao.Models.TAIKHOAN>
-
+﻿@model PagedList.IPagedList<QuanLyTruongMauGiao.Models.TAIKHOAN>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<h3>Danh sách tài khoản</h3>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MatKhau)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhanQuyen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrangThaiHD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AnhDaiDien)
-        </th>
-        <th></th>
-    </tr>
+@using (Ajax.BeginForm("GetQuyen", "TaiKhoan", new AjaxOptions
+{
+    InsertionMode = InsertionMode.Replace,
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MatKhau)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhanQuyen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrangThaiHD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AnhDaiDien)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TenTK }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TenTK }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TenTK })
-        </td>
-    </tr>
+}))
+{
+    <select id="quyen" name="quyen" class="form-control col-md-2">
+        <option value=" ">Toàn bộ</option>
+        <option value="Quản lý">Quản lý</option>
+        <option value="Giáo viên">Giáo viên</option>
+        <option value="Phụ huynh">Phụ huynh</option>
+    </select>
+    <input type="submit" value="Tìm kiếm" class="form-control col-md-2" />
+    <p> </p>
+    <hr />
 }
 
-</table>
+@Html.Partial("IndexPartialView")
+

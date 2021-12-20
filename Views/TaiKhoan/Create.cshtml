@@ -43,7 +43,9 @@
             @Html.LabelFor(model => model.TrangThaiHD, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.TrangThaiHD)
+                    <input class="check-box" data-val="true" data-val-required="The Trạng thái hoạt động field is required." id="TrangThaiHD" name="TrangThaiHD" type="checkbox" value="true" checked="checked" />
+                    <input name="TrangThaiHD" type="hidden" value="false" />
+
                     @Html.ValidationMessageFor(model => model.TrangThaiHD, "", new { @class = "text-danger" })
                 </div>
             </div>

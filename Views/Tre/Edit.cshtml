@@ -67,6 +67,7 @@
             <div class="col-md-10">
                 <label class="control-label col-md-10">Ngày sinh hiện tại: @ngaysinh</label>
                 <label class="control-label col-md-10">Ngày sinh mới:</label>
+                <input type="date" value="2021/11/20"/>
                 @Html.EditorFor(model => model.NgaySinh ,new { htmlAttributes = new { @type = "date", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
             </div>
