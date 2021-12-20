@@ -1,8 +1,10 @@
-﻿@model IEnumerable<QuanLyTruongMauGiao.Models.TRE>
+﻿@model PagedList.IPagedList<QuanLyTruongMauGiao.Models.TRE>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Quản lí trẻ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -15,8 +17,8 @@
 
 }))
 {
-    <input type="text" name="Name" id="name" />
-    <input type="submit" value="Search by name" />
+    <input type="text" name="Name" id="name" placeholder="Tên" />
+    <input type="submit" value="Tìm kiếm" />
     <p> </p>
     <hr />
 }

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<QuanLyTruongMauGiao.Models.THUCDONNGAY>
+
+@{
+    ViewBag.Title = "DangKiBuaAn";
+}
+
+<h2><center>Đăng kí bữa ăn</center></h2>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ngay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuaSang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuaTrua)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuaXe)
+        </th>
+        <th>
+            Chọn
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Ngay.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @item.BuaSang
+            </td>
+            <td>
+                @item.BuaTrua
+            </td>
+            <td>
+                @item.BuaXe
+            </td>
+            <td>
+                <input type="checkbox" />
+            </td>
+        </tr>
+    }
+</table>
+<p><center><input type="submit" value="Đăng kí" /><input type="reset" value="Hủy" style="margin-left:50px" onclick="location.href = '@Url.Action("Index2","PhuHuynh")'" /></center></p>
