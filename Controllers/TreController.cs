@@ -67,6 +67,8 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             if (ModelState.IsValid)
             {
+                var lop = (from item in db.LOPs where item.MaLop == tRE.MaLop select item).FirstOrDefault();
+                lop.SiSo++;
                 db.TREs.Add(tRE);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -124,6 +126,7 @@ namespace QuanLyTruongMauGiao.Controllers
             {
                 return HttpNotFound();
             }
+           
             return View(tRE);
         }
 
@@ -134,6 +137,8 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             TRE tRE = db.TREs.Find(id);
             db.TREs.Remove(tRE);
+            var lop = (from item in db.LOPs where item.MaLop == tRE.MaLop select item).FirstOrDefault();
+            lop.SiSo--;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

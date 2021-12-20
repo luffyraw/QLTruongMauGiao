@@ -1,10 +1,21 @@
 ﻿@model QuanLyTruongMauGiao.Models.LOP
+@using QuanLyTruongMauGiao.Models;
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    QLMauGiao db = new QLMauGiao();
+    var lisths = from item in db.TREs
+                 where item.MaLop == Model.MaLop
+                 select item;
 
+}
+<style>
+    .anh {
+        width: 100px;
+        height: 100px;
+    }
+</style>
 <h2>Details</h2>
 
 <div>
@@ -42,7 +53,87 @@
         <dd>
             @Html.DisplayFor(model => model.Khoi)
         </dd>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <div class="ibox-title">Danh sách trẻ trong lớp</div>
+                        <div class="ibox-tools">
+                            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+                            <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
+                        </div>
+                    </div>
+                    <div class="ibox-body">
+                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <td>STT</td>
+                                    <th>Tên phụ huynh</th>
+                                    <th>Tên trẻ</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Giới tính</th>
+                                    <th>Quê quán</th>
+                                    <th>Dân tộc</th>
+                                    <th>Ảnh</th>
+                                </tr>
+                            </thead>
+                            @{
+                                int stt = 0;
+                            }
+                            <tbody>
+                                @foreach (var item in lisths)
+                                {
+                                    stt++;
+                                    <tr>
+                                        <td>
+                                            @stt
+                                        </td>
+                                        <td>
+                                            @item.PHUHUYNH.TenPH
+                                        </td>
+                                        <td>
+                                            @item.TenTre
+                                        </td>
+                                        <td>
+                                            @item.NgaySinh.ToString("dd/MM/yyyy")
+                                        </td>
+                                        @{
+                                            if (item.GioiTinh)
+                                            {
+                                                <td>Nam</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Nữ</td>
+                                            }
+                                        }
+                                        <td>
+                                            @item.QueQuan
+                                        </td>
+                                        <td>
+                                            @item.DanToc
+                                        </td>
 
+                                        <td>
+                                            <img class="anh" src="~/Image/@item.Anh" />
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Chi tiết", "Details", new { id = item.MaTre })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                </div>
+        </div>
+
+
+
+        <dd>
     </dl>
 </div>
 <p>
