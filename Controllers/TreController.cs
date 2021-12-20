@@ -136,9 +136,9 @@ namespace QuanLyTruongMauGiao.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             TRE tRE = db.TREs.Find(id);
-            db.TREs.Remove(tRE);
             var lop = (from item in db.LOPs where item.MaLop == tRE.MaLop select item).FirstOrDefault();
-            lop.SiSo--;
+            db.TREs.Remove(tRE);
+            lop.SiSo = lop.SiSo - 1;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

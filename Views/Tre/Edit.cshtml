@@ -5,8 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     QLMauGiao db = new QLMauGiao();
     var ph = from item in db.PHUHUYNHs select item;
-    var ngaysinh = Model.NgaySinh.ToString("dd/MM/yyyy");
-    var ngaynhaphoc = Model.NgayNhapHoc.ToString("dd/MM/yyyy");
+    var ngaysinh = Model.NgaySinh.ToString("yyyy-MM-dd");
+    var ngaynhaphoc = Model.NgayNhapHoc.ToString("yyyy-MM-dd");
 }
 
 <h2>Thay đổi thông tin trẻ</h2>
@@ -65,10 +65,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <label class="control-label col-md-10">Ngày sinh hiện tại: @ngaysinh</label>
-                <label class="control-label col-md-10">Ngày sinh mới:</label>
-                <input type="date" value="2021/11/20"/>
-                @Html.EditorFor(model => model.NgaySinh ,new { htmlAttributes = new { @type = "date", @class = "form-control" } })
+                <input class ="form-control" id="NgaySinh" type="date" value="@ngaysinh"/>
                 @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -121,10 +118,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NgayNhapHoc, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <label class="control-label col-md-10">Ngày nhập học hiện tại: @ngaynhaphoc</label>
-                <label class="control-label col-md-10">Ngày nhập học mới:</label>
+                <input type="date" class="form-control" value="@ngaynhaphoc"/>
 
-                @Html.EditorFor(model => model.NgayNhapHoc, new { htmlAttributes = new { Type = "date", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NgayNhapHoc, "", new { @class = "text-danger" })
             </div>
         </div>

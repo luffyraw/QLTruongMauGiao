@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<QuanLyTruongMauGiao.Models.GIAOVIEN>
-
+@using QuanLyTruongMauGiao.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    QLMauGiao db = new QLMauGiao();
 }
 
 <h2>Index</h2>
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(Model => Model.TenTK)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.TAIKHOAN.MatKhau)
         </th>
@@ -25,37 +28,17 @@
             @Html.DisplayNameFor(model => model.GioiTinh)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.QueQuan)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.DienThoai)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoaiHopDong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Luong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.KinhNghiem)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrinhDo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChuyenNganh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoaiTotNghiep)
-        </th>
+        <th>Lớp </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(ModelItem => item .TenTK)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.TAIKHOAN.MatKhau)
         </td>
@@ -63,37 +46,28 @@
             @Html.DisplayFor(modelItem => item.TenGV)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NgaySinh)
+            @item.NgaySinh.ToString("dd/MM/yyyy")
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GioiTinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QueQuan)
-        </td>
+            @{ 
+                if(item.GioiTinh)
+                {
+                    <td>Nam</td>
+                }
+                else
+                {
+                    <td>Nữ</td>
+                }
+            }
         <td>
             @Html.DisplayFor(modelItem => item.DienThoai)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiHopDong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Luong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KinhNghiem)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrinhDo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChuyenNganh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiTotNghiep)
+            @{ 
+                var getMaLop = (from lop in db.PHANCONGGIAOVIENs where item.MaGV == lop.MaGV select lop).FirstOrDefault();
+                var tenlop = (from ten in db.LOPs where getMaLop.MaLop == ten.MaLop select ten).FirstOrDefault();
+
+            }
+            @tenlop.TenLop
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MaGV }) |
