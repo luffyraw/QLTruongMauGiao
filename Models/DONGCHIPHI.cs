@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.ComponentModel;
 
     [Table("DONGCHIPHI")]
     public partial class DONGCHIPHI
@@ -25,10 +25,7 @@
         [DisplayName("Số lượng")]
         public int SoLuong { get; set; }
 
-        [Required]
-        [StringLength(200)]
-        [DisplayName("Ghi chú")]
-        public string GhiChu { get; set; }
+
 
         public virtual CHIPHI CHIPHI { get; set; }
 

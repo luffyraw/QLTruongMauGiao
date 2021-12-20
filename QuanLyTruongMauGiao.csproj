@@ -145,11 +145,8 @@
     <Compile Include="Controllers\PhuHuynhController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThucDonController.cs" />
-
     <Compile Include="Controllers\ThuTienController.cs" />
-
     <Compile Include="Controllers\TreController.cs" />
-
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3714,7 +3711,6 @@
     <Content Include="Views\PHIEUDANHGIAs\Details.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Edit.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Index.cshtml" />
-
     <Content Include="Web.config" />
     <Content Include="Views\ThuTien\Create.cshtml" />
     <Content Include="Views\ThuTien\Delete.cshtml" />
@@ -3727,7 +3723,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-
     <Content Include="Views\Tre\Create.cshtml" />
     <Content Include="Views\Tre\Delete.cshtml" />
     <Content Include="Views\Tre\Details.cshtml" />
@@ -3738,7 +3733,6 @@
     <Content Include="Views\PhuHuynh\XemDanhGia.cshtml" />
     <Content Include="Views\PhuHuynh\DongHocPhi.cshtml" />
     <Content Include="Views\PhuHuynh\Index2.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
