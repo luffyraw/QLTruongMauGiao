@@ -8,7 +8,7 @@ namespace QuanLyTruongMauGiao.Models
     public partial class QLMauGiao : DbContext
     {
         public QLMauGiao()
-            : base("name=QLMauGiao1")
+            : base("name=QLMauGiao")
         {
         }
 
@@ -128,6 +128,10 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<PHANCONGGIAOVIEN>()
                 .Property(e => e.MaLop)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PHANCONGGIAOVIEN>()
+                .Property(e => e.NamHoc)
                 .IsUnicode(false);
 
             modelBuilder.Entity<PHIEUDANHGIA>()

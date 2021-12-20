@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyTruongMauGiao.Models;
+using QuanLyTruongMauGiao.Models.NoDatabase;
 
 namespace QuanLyTruongMauGiao.Controllers
 {
@@ -17,23 +18,56 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhanCongGiaoVien
         public ActionResult Index()
         {
-            var pHANCONGGIAOVIENs = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
-            return View(pHANCONGGIAOVIENs.ToList());
+            var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
+
+            var result = from p in phanCong
+                         group p by new { p.MaLop, p.NamHoc } into g
+                                      select new PCGiaoVien()
+                                      {
+                                          MaLop = g.Key.MaLop,
+                                          NamHoc = g.Key.NamHoc,
+                                          MaGV = g.Select(gv => gv.MaGV).ToList()
+                                      };
+            ViewBag.pHANCONGGIAOVIENs = phanCong.ToList();
+            return View(result.ToList());
         }
 
         // GET: PhanCongGiaoVien/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string id1, string id2)
         {
-            if (id == null)
+            if (id1 == null || id2 == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PHANCONGGIAOVIEN pHANCONGGIAOVIEN = db.PHANCONGGIAOVIENs.Find(id);
-            if (pHANCONGGIAOVIEN == null)
+
+            //PHANCONGGIAOVIEN pHANCONGGIAOVIEN = db.PHANCONGGIAOVIENs.Find(id);
+            //if (pHANCONGGIAOVIEN == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
+
+            var result = from p in phanCong
+                         group p by new { p.MaLop, p.NamHoc } into g
+                         select new PCGiaoVien()
+                         {
+                             MaLop = g.Key.MaLop,
+                             NamHoc = g.Key.NamHoc,
+                             MaGV = g.Select(gv => gv.MaGV).ToList()
+                         };
+            PCGiaoVien giaovien = null;
+            foreach(var item in result)
+            {
+                if(item.MaLop.Equals(id1) && item.NamHoc.Equals(id2))
+                {
+                    giaovien = item;
+                }
+            }
+            if(giaovien == null)
             {
                 return HttpNotFound();
             }
-            return View(pHANCONGGIAOVIEN);
+            return View(giaovien);
         }
 
         // GET: PhanCongGiaoVien/Create

@@ -19,7 +19,10 @@ namespace QuanLyTruongMauGiao.Models
         [StringLength(5)]
         public string MaLop { get; set; }
 
-        public int NamHoc { get; set; }
+        [Key]
+        [Column(Order = 2)]
+        [StringLength(5)]
+        public string NamHoc { get; set; }
 
         public virtual GIAOVIEN GIAOVIEN { get; set; }
 
