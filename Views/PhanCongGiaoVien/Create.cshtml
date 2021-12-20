@@ -3,9 +3,10 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+   
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create","PhanCongGiaoVien",FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -45,13 +46,28 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Giáo Viên 1</label>
                                 <div class="col-sm-10">
-                                    @Html.DropDownList("MaGV", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.DropDownList("MaGV1", new SelectList(ViewBag.MaGV, "MaGV", "TenGV"), htmlAttributes: new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-10 ml-sm-auto">
                                     @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Giáo Viên 2</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownList("MaGV2", new SelectList(ViewBag.MaGV, "MaGV", "TenGV"), htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-10 ml-sm-auto">
+                                    @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">  
+                                <div class="col-sm-10 ml-sm-auto">
+                                    <div class="text-danger">
+                                        @ViewBag.Error
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <div class="col-sm-10 ml-sm-auto">
                                     <button class="btn btn-info" type="submit">Thêm</button>

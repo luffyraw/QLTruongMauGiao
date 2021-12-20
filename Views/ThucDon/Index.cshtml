@@ -1,6 +1,32 @@
 ﻿@model PagedList.IPagedList<QuanLyTruongMauGiao.Models.THUCDONNGAY>
 @using PagedList.Mvc;
+<style>
+    .anh {
+        width: 100px;
+        height: 100px;
+    }
 
+    .pagination > li > a {
+        float: left;
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        border: 1px solid #ddd;
+    }
+
+    .pagination > .active a {
+        background-color: #337ab7;
+        color: #fff;
+    }
+
+    .pagination li:hover {
+        background-color: #687fff;
+    }
+
+    .pagination li a:hover {
+        color: #fff;
+    }
+</style>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,7 +42,7 @@
                 @using (Html.BeginForm())
                 {
                     <p>
-                        <input type="date" name="startdate" />to<input type="date" name="enddate" />
+                        <input type="date" name="startdate" /> to <input type="date" name="enddate" />
                         <input type="submit" value="Search" />
                     </p>
                 }
@@ -66,7 +92,7 @@
             <div class="col-sm-12 col-md-5">
                 Trang @(Model.PageCount < Model.PageNumber ?0:Model.PageNumber)/@Model.PageCount
             </div>
-            <div class="col-sm-12 col-md-7">
+            <div class="page">
                 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
                  new PagedListRenderOptions
                       {
@@ -74,7 +100,7 @@
                     LinkToPreviousPageFormat = "<",
                     LinkToNextPageFormat = ">",
                     LinkToLastPageFormat = ">>",
-                    MaximumPageNumbersToDisplay = 6,
+                    MaximumPageNumbersToDisplay = 10,
                     DisplayEllipsesWhenNotShowingAllPageNumbers = false
                  })
             </div>

@@ -146,7 +146,7 @@ CREATE TABLE PHUHUYNH
 	DiaChi nvarchar(100) not null,
 	DienThoai varchar(15) not null,
 	TenTK varchar(20) not null,
-	CONSTRAINT fkphv_tk FOREIGN KEY(TenTK) REFERENCES TAIKHOAN(TenTK),
+	CONSTRAINT fkphv_tk FOREIGN KEY(TenTK) REFERENCES TAIKHOAN(TenTK)
 )
 GO
 INSERT INTO PHUHUYNH VALUES ('ph001',N'Đặng Văn Sơn','1980/03/1',1,N'Hà Nội', '0391865281','ph001')
