@@ -3,45 +3,79 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+   
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create","PhanCongGiaoVien",FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>PHANCONGGIAOVIEN</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaGV, "MaGV", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MaGV", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaLop, "MaLop", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MaLop", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MaLop, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NamHoc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NamHoc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NamHoc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <div class="ibox-title">Phân công giáo viên</div>
+                        <div class="ibox-tools">
+                            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+                            <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
+                        </div>
+                    </div>
+                    <div class="ibox-body">
+                        <form class="form-horizontal">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Lớp</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownList("MaLop", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-10 ml-sm-auto">
+                                    @Html.ValidationMessageFor(model => model.MaLop, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Năm Học</label>
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.NamHoc, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                <div class="col-sm-10 ml-sm-auto">
+                                    @Html.ValidationMessageFor(model => model.NamHoc, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Giáo Viên 1</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownList("MaGV1", new SelectList(ViewBag.MaGV, "MaGV", "TenGV"), htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-10 ml-sm-auto">
+                                    @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Giáo Viên 2</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownList("MaGV2", new SelectList(ViewBag.MaGV, "MaGV", "TenGV"), htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-10 ml-sm-auto">
+                                    @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">  
+                                <div class="col-sm-10 ml-sm-auto">
+                                    <div class="text-danger">
+                                        @ViewBag.Error
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10 ml-sm-auto">
+                                    <button class="btn btn-info" type="submit">Thêm</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -50,3 +84,4 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+

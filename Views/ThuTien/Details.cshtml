@@ -1,0 +1,35 @@
+﻿@model QuanLyTruongMauGiao.Models.PHIEUTHUTIEN
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PHIEUTHUTIEN</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TRE.MaLop)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TRE.MaLop)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayLapPhieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayLapPhieu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaPhieu }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

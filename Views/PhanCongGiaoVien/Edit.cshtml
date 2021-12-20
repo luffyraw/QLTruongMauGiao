@@ -1,35 +1,77 @@
-﻿@model QuanLyTruongMauGiao.Models.PHANCONGGIAOVIEN
+﻿@model QuanLyTruongMauGiao.Models.NoDatabase.PCGiaoVien
+@using QuanLyTruongMauGiao.Models;
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.GV = Model;
 }
-
-<h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>PHANCONGGIAOVIEN</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MaGV)
-
-        @Html.HiddenFor(model => model.MaLop)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NamHoc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NamHoc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NamHoc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <div class="ibox-title">Sửa phân công giáo viên</div>
+                        <div class="ibox-tools">
+                            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+                            <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
+                        </div>
+                    </div>
+                    <div class="ibox-body">
+                        <form class="form-horizontal">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Lớp</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownList("MaLop", new SelectList(ViewBag.MaLop, "MaLop", "TenLop", Model.MaLop), htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.HiddenFor(m => m.MaLop)
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Năm Học</label>
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.NamHoc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } )
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Giáo Viên 1</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownList("MaGV1", new SelectList(ViewBag.MaGV, "MaGV", "TenGV", Model.MaGV[0]), htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-10 ml-sm-auto">
+                                    @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Giáo Viên 2</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownList("MaGV2", new SelectList(ViewBag.MaGV, "MaGV", "TenGV", Model.MaGV[1]), htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-10 ml-sm-auto">
+                                    @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10 ml-sm-auto">
+                                    <div class="text-danger">
+                                        @ViewBag.Error
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10 ml-sm-auto">
+                                    <button class="btn btn-info" type="submit">Sửa</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -38,3 +80,4 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
