@@ -144,6 +144,7 @@
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\ThucDonController.cs" />
+    <Compile Include="Controllers\ThuTienController.cs" />
     <Compile Include="Controllers\TreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3707,6 +3708,11 @@
     <Content Include="Web.config" />
     <Content Include="Views\ThongKe\Index.cshtml" />
     <Content Include="Views\Home\HomePageAdmin.cshtml" />
+    <Content Include="Views\ThuTien\Create.cshtml" />
+    <Content Include="Views\ThuTien\Delete.cshtml" />
+    <Content Include="Views\ThuTien\Details.cshtml" />
+    <Content Include="Views\ThuTien\Edit.cshtml" />
+    <Content Include="Views\ThuTien\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
