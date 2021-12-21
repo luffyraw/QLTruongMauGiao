@@ -1,4 +1,4 @@
-namespace QuanLyTruongMauGiao.Models
+﻿namespace QuanLyTruongMauGiao.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,26 +17,33 @@ namespace QuanLyTruongMauGiao.Models
 
         [Key]
         [StringLength(5)]
+        [Required(ErrorMessage = "Không được để trống")]
         public string MaPH { get; set; }
 
-        [Required]
+        
         [StringLength(50)]
+        [Required(ErrorMessage = "Không được để trống")]
         public string TenPH { get; set; }
 
         [Column(TypeName = "date")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime NamSinh { get; set; }
 
+        [Required(ErrorMessage = "Không được để trống")]
         public bool GioiTinh { get; set; }
 
-        [Required]
+        
         [StringLength(100)]
+        [Required(ErrorMessage = "Không được để trống")]
         public string DiaChi { get; set; }
 
-        [Required]
+        
         [StringLength(15)]
+        [Required(ErrorMessage = "Không được để trống")]
         public string DienThoai { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống")]
         [StringLength(20)]
         public string TenTK { get; set; }
 

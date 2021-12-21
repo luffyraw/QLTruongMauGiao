@@ -135,17 +135,15 @@
     <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ChiPhiController.cs" />
     <Compile Include="Controllers\GiaoVienController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LopController.cs" />
     <Compile Include="Controllers\PhanCongGiaoVienController.cs" />
     <Compile Include="Controllers\PHIEUDANHGIAsController.cs" />
     <Compile Include="Controllers\PhuHuynhController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\ThucDonController.cs" />
-    <Compile Include="Controllers\ThuTienController.cs" />
     <Compile Include="Controllers\TreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -205,6 +203,7 @@
     <Content Include="Content\assets\img\blog\magnifying-glass.jpg" />
     <Content Include="Content\assets\img\blog\seascape.jpg" />
     <Content Include="Content\assets\img\blog\storm.jpg" />
+    <Content Include="Content\assets\img\class.png" />
     <Content Include="Content\assets\img\file.png" />
     <Content Include="Content\assets\img\flags\Afghanistan.png" />
     <Content Include="Content\assets\img\flags\African Union%28OAS%29.png" />
@@ -3666,7 +3665,6 @@
     <Content Include="Views\XemDanhGia\Details.cshtml" />
     <Content Include="Views\XemDanhGia\Edit.cshtml" />
     <Content Include="Views\XemDanhGia\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\ThucDon\Create.cshtml" />
     <Content Include="Views\ThucDon\Delete.cshtml" />
     <Content Include="Views\ThucDon\Details.cshtml" />
@@ -3696,11 +3694,6 @@
     <Content Include="Views\PhanCongGiaoVien\Delete.cshtml" />
     <Content Include="Views\PhanCongGiaoVien\Edit.cshtml" />
     <Content Include="Views\PhanCongGiaoVien\Index.cshtml" />
-    <Content Include="Views\ChiPhi\Create.cshtml" />
-    <Content Include="Views\ChiPhi\Delete.cshtml" />
-    <Content Include="Views\ChiPhi\Details.cshtml" />
-    <Content Include="Views\ChiPhi\Edit.cshtml" />
-    <Content Include="Views\ChiPhi\Index.cshtml" />
     <Content Include="Views\Shared\LayoutGV.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\LayoutPH.cshtml" />
@@ -3712,11 +3705,8 @@
     <Content Include="Views\PHIEUDANHGIAs\Edit.cshtml" />
     <Content Include="Views\PHIEUDANHGIAs\Index.cshtml" />
     <Content Include="Web.config" />
-    <Content Include="Views\ThuTien\Create.cshtml" />
-    <Content Include="Views\ThuTien\Delete.cshtml" />
-    <Content Include="Views\ThuTien\Details.cshtml" />
-    <Content Include="Views\ThuTien\Edit.cshtml" />
-    <Content Include="Views\ThuTien\Index.cshtml" />
+    <Content Include="Views\ThongKe\Index.cshtml" />
+    <Content Include="Views\Home\HomePageAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

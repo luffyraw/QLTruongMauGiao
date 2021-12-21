@@ -28,7 +28,8 @@
 
         [DisplayName("Ngày lập phiếu")]
         public DateTime NgayLapPhieu { get; set; }
-
+        
+        public bool TrangThai { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DONGCHIPHI> DONGCHIPHIs { get; set; }
 

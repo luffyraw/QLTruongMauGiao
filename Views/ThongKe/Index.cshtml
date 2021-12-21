@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Dictionary<string, int> list = ViewBag.DSLop as Dictionary<string, int>;
+}
+
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="ibox bg-success color-white widget-stat">
+            <div class="ibox-body">
+                <h2 class="m-b-5 font-strong">@ViewBag.Tre</h2>
+                <div class="m-b-5">TRẺ</div><i class="fa fa-child widget-stat-icon"></i>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="ibox bg-info color-white widget-stat">
+            <div class="ibox-body">
+                <h2 class="m-b-5 font-strong">@ViewBag.GiaoVien</h2>
+                <div class="m-b-5">GIÁO VIÊN</div><i class="ti-user widget-stat-icon"></i>
+                @*<div><i class="fa fa-level-up m-r-5"></i><small>17% higher</small></div>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="ibox bg-warning color-white widget-stat">
+            <div class="ibox-body">
+                <h2 class="m-b-5 font-strong">@ViewBag.PhieuThuTien</h2>
+                <div class="m-b-5">CHƯA NỘP PHÍ</div><i class="fa fa-money widget-stat-icon"></i>
+                @*<div><i class="fa fa-level-up m-r-5"></i><small>22% higher</small></div>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="ibox bg-danger color-white widget-stat">
+            <div class="ibox-body">
+                <h2 class="m-b-5 font-strong">@ViewBag.AccountOL</h2>
+                <div class="m-b-5">ACCOUNT ONLINE</div><i class="fa fa-user widget-stat-icon"></i>
+                @*<div><i class="fa fa-level-down m-r-5"></i><small>-12% Lower</small></div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<div class="ibox-body">
+    <form class="form-inline">
+        @Html.DropDownList("NgayDiHoc", new SelectList(ViewBag.NgayDiHoc, "Ngay", "Ngay"), htmlAttributes: new { @class = "form-control", @type = "date" })
+        <input style="margin-left: 15px" type="submit" value="Thống kê" />
+    </form>
+</div>*@
+<div class="row" style="margin-top: 20px">
+    <div class="col-lg-4" style="max-width: 25%">
+        <div class="ibox">
+            <div class="ibox-head">
+                <div class="ibox-title">Danh sách các lớp</div>
+            </div>
+            <div class="ibox-body">
+                <ul class="media-list media-list-divider m-0">
+                    @foreach (var item in list)
+                    {
+                        <li class="media">
+                            <a class="media-img" href="#">
+                                <img src="~/Content/assets/img/class.png" width="30px;" />
+                            </a>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <a href="#">@item.Key</a>
+                                    <span class="font-16 float-right">@item.Value</span>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

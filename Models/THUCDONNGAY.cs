@@ -14,6 +14,7 @@ namespace QuanLyTruongMauGiao.Models
         public string MaTDN { get; set; }
 
         [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Ngay { get; set; }
 
         [Required]
