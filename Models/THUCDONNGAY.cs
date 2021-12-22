@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -12,11 +13,18 @@
     {
         [Key]
         [StringLength(10)]
+<<<<<<< Updated upstream
         [DisplayName("Mã")]
         public string MaTDN { get; set; }
 
         [Column(TypeName = "date")]
 
+=======
+        [DisplayName("Mã thực đơn ngày")]
+        public string MaTDN { get; set; }
+
+        [Column(TypeName = "date")]
+>>>>>>> Stashed changes
         [DisplayName("Ngày")]
         public DateTime Ngay { get; set; }
 

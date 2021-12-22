@@ -1,0 +1,50 @@
+﻿@model IEnumerable<QuanLyTruongMauGiao.Models.KETQUADANHGIA>
+@using QuanLyTruongMauGiao.Models;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "XemDanhGia";
+    Layout = "~/Views/Shared/LayoutPH.cshtml";
+}
+
+<div>
+    <head>
+        <h2><center>Kết quả đánh giá</center></h2>
+        <br />
+    </head>
+    <body>
+        <table class="table">
+            <tr>
+                <th>
+                    Tên trẻ
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NOIDUNGDANHGIA.NoiDungDanhGia1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.kq)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PHIEUDANHGIA.TRE.TenTre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NOIDUNGDANHGIA.NoiDungDanhGia1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.kq)
+                    </td>
+                </tr>
+            }
+        </table>
+        <p>
+            <center><input type="button" value="Quay lại" onclick="location.href = '@Url.Action("HomePagePH","Home")'" /></center>
+        </p>
+    </body>
+</div>
+

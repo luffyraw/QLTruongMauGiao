@@ -1,0 +1,62 @@
+﻿@model IEnumerable<QuanLyTruongMauGiao.Models.TRE>
+@using PagedList.Mvc;
+@using QuanLyTruongMauGiao.Models
+
+@{
+    ViewBag.Title = "DiemDanh";
+    Layout = "~/Views/Shared/LayoutGV.cshtml";
+}
+
+<h2>Điểm danh</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            Ngày
+        </th>
+        <th>
+            Tên trẻ
+        </th>
+        <th>
+            Tên phụ huynh
+        </th>
+        <th>
+            Điểm danh
+        </th>
+        <th></th>
+    </tr>
+    @{
+        int stt = 0;
+    }
+    @foreach (var item in Model)
+    {
+        if (item.LOP.TenLop == "Lá 1")
+        {
+            stt++;
+            <tr>
+                <td>
+                    @stt
+                </td>
+                <td>
+                    @DateTime.Now.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenTre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PHUHUYNH.TenPH)
+                </td>
+                <td>
+                    <input type="checkbox" />
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
+<p><center><input type="submit" value="Lưu" /><input type="reset" value="Hủy" style="margin-left:50px" /></center></p>
