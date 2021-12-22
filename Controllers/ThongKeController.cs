@@ -13,28 +13,42 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: ThongKe
         public ActionResult Index()
         {
-            ViewBag.Tre = db.TREs.Count();
-            ViewBag.GiaoVien = db.GIAOVIENs.Count();
-            ViewBag.PhieuThuTien = db.PHIEUTHUTIENs.Where(x => x.TrangThai == false).Count();
-            ViewBag.AccountOL = db.TAIKHOANs.Where(x => x.TrangThaiHD == true).Count();
-            ViewBag.NgayDiHoc = db.NGAYDIHOCs.ToList();
-
-            var queryDSL = from lop in db.LOPs
-                           join tre in db.TREs on lop.MaLop equals tre.MaLop
-                           group lop.MaLop by lop into g
-                           select new
-                           {
-                               //MaLop = g.Key.MaLop,
-                               TenLop = g.Key.TenLop,
-                               SoTre = g.Count()
-                            };
-            Dictionary<string, int> list = new Dictionary<string, int>();
-            foreach(var item in queryDSL.ToList())
+            if (Session["user"] != null)
             {
-                list.Add(item.TenLop, item.SoTre);
+                ViewBag.Tre = db.TREs.Count();
+                ViewBag.GiaoVien = db.GIAOVIENs.Count();
+                ViewBag.PhieuThuTien = db.PHIEUTHUTIENs.Where(x => x.TrangThai == false).Count();
+                ViewBag.AccountOL = db.TAIKHOANs.Where(x => x.TrangThaiHD == true).Count();
+                ViewBag.NgayDiHoc = db.NGAYDIHOCs.ToList();
+
+                var queryDSL = from tre in db.TREs
+                               group tre by tre.MaLop into g
+                               select new
+                               {
+                                   MaLop = g.Key,
+                                   SoTre = g.Count()
+                               };
+                var query = from lop in db.LOPs
+                            join x in queryDSL on lop.MaLop equals x.MaLop
+                            select new
+                            {
+                                MaLop = lop.MaLop,
+                                TenLop = lop.TenLop,
+                                SoTre = x.SoTre
+                            };
+
+                Dictionary<string, int> list = new Dictionary<string, int>();
+                foreach (var item in query.ToList())
+                {
+                    list.Add(item.TenLop, item.SoTre);
+                }
+                ViewBag.DSLop = list;
+                return View(); 
             }
-            ViewBag.DSLop = list;
-            return View();
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

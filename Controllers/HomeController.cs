@@ -71,6 +71,7 @@ namespace QuanLyTruongMauGiao.Controllers
 
             var users = db.TAIKHOANs.Where(x => x.TenTK == user.TenTK).FirstOrDefault();
             users.TrangThaiHD = false;
+            db.SaveChanges();
             Session.Remove("user");
             return View("Index");
         }

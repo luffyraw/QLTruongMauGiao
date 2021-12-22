@@ -18,37 +18,59 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: ThucDon
         public ActionResult Index(DateTime? startdate, DateTime? enddate, int? page)
         {
-            IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
-            
-            if(startdate != null && enddate != null)
+            if (Session["user"] != null)
             {
-                thucdons = thucdons.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
+                IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
+
+                if (startdate != null && enddate != null)
+                {
+                    thucdons = thucdons.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
+                }
+                thucdons = thucdons.OrderBy(td => td.Ngay);
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(thucdons.ToPagedList(pageNumber, pageSize)); 
             }
-            thucdons = thucdons.OrderBy(td => td.Ngay);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(thucdons.ToPagedList(pageNumber, pageSize));
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         // GET: ThucDon/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (Session["user"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                THUCDONNGAY tHUCDONNGAY = db.THUCDONNGAYs.Find(id);
+                if (tHUCDONNGAY == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tHUCDONNGAY); 
             }
-            THUCDONNGAY tHUCDONNGAY = db.THUCDONNGAYs.Find(id);
-            if (tHUCDONNGAY == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            return View(tHUCDONNGAY);
         }
 
         // GET: ThucDon/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["user"] != null)
+            {
+                return View(); 
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: ThucDon/Create
@@ -71,16 +93,23 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: ThucDon/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (Session["user"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                THUCDONNGAY tHUCDONNGAY = db.THUCDONNGAYs.Find(id);
+                if (tHUCDONNGAY == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tHUCDONNGAY); 
             }
-            THUCDONNGAY tHUCDONNGAY = db.THUCDONNGAYs.Find(id);
-            if (tHUCDONNGAY == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            return View(tHUCDONNGAY);
         }
 
         // POST: ThucDon/Edit/5
@@ -102,16 +131,23 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: ThucDon/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (Session["user"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                THUCDONNGAY tHUCDONNGAY = db.THUCDONNGAYs.Find(id);
+                if (tHUCDONNGAY == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tHUCDONNGAY); 
             }
-            THUCDONNGAY tHUCDONNGAY = db.THUCDONNGAYs.Find(id);
-            if (tHUCDONNGAY == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            return View(tHUCDONNGAY);
         }
 
         // POST: ThucDon/Delete/5

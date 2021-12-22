@@ -30,7 +30,7 @@
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime NamSinh { get; set; }
 
-        [Required(ErrorMessage = "Không được để trống")]
+        
         public bool GioiTinh { get; set; }
 
         
