@@ -12,13 +12,7 @@ namespace QuanLyTruongMauGiao.Models
     {
         [Key]
         [StringLength(10)]
-        public string MaTDN { get; set; }
-
-        [Column(TypeName = "date")]
-        [DisplayName("Mã")]
-        public string MaTDN { get; set; }
-
-        [Column(TypeName = "date")]
+       
         [DisplayName("Mã thực đơn ngày")]
         public string MaTDN { get; set; }
 
