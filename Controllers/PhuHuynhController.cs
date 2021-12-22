@@ -28,23 +28,6 @@ namespace QuanLyTruongMauGiao.Controllers
             int pageNumber = (page ?? 1);
             return View(phuHuynh.ToPagedList(pageNumber, pageSize));
         }
-
-        public ActionResult Index2()
-        {
-            return View();
-        }
-        public ActionResult DangKiBuaAn()
-        {
-            return View(db.THUCDONNGAYs.ToList());
-        }
-        public ActionResult XemDanhGia()
-        {
-            return View(db.KETQUADANHGIAs.ToList());
-        }
-        public ActionResult DongHocPhi()
-        {
-            return View(db.DONGCHIPHIs.ToList());
-        }
         // GET: PhuHuynh/Details/5
         public ActionResult Details(string id)
         {

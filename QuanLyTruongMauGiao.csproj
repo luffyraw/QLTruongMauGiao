@@ -136,6 +136,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ChiPhiController.cs" />
+    <Compile Include="Controllers\ChucNangGiaoVienController.cs" />
+    <Compile Include="Controllers\ChucNangPhuHuynhController.cs" />
     <Compile Include="Controllers\GiaoVienController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -3734,6 +3736,43 @@
     <Content Include="Views\PhuHuynh\DongHocPhi.cshtml" />
     <Content Include="Views\PhuHuynh\Index2.cshtml" />
     <Content Include="Views\TaiKhoan\IndexPartialView.cshtml" />
+    <Content Include="Views\Shared\LayoutGV.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\LayoutPH.cshtml" />
+    <Content Include="Views\Home\HomePageGV.cshtml" />
+    <Content Include="Views\Home\HomePagePH.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Create.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Delete.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Details.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Edit.cshtml" />
+    <Content Include="Views\PHIEUDANHGIAs\Index.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Views\ThuTien\Create.cshtml" />
+    <Content Include="Views\ThuTien\Delete.cshtml" />
+    <Content Include="Views\ThuTien\Details.cshtml" />
+    <Content Include="Views\ThuTien\Edit.cshtml" />
+    <Content Include="Views\ThuTien\Index.cshtml" />
+    <Content Include="Views\ChucNangPhuHuynh\DangKiBuaAn.cshtml" />
+    <Content Include="Views\ChucNangPhuHuynh\XemDanhGia.cshtml" />
+    <Content Include="Views\ChucNangPhuHuynh\Index.cshtml" />
+    <Content Include="Views\ChucNangGiaoVien\Index.cshtml" />
+    <Content Include="Views\ChucNangGiaoVien\DiemDanh.cshtml" />
+    <Content Include="Views\ChucNangGiaoVien\XemDanhSachLop.cshtml" />
+    <Content Include="Views\ChucNangGiaoVien\Xemchitiet.cshtml" />
+    <Content Include="Views\ChucNangGiaoVien\DanhGiaTre.cshtml" />
+    <Content Include="Views\ChucNangGiaoVien\DanhSachDanhGia.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <Content Include="Views\Tre\Create.cshtml" />
+    <Content Include="Views\Tre\Delete.cshtml" />
+    <Content Include="Views\Tre\Details.cshtml" />
+    <Content Include="Views\Tre\Edit.cshtml" />
+    <Content Include="Views\Tre\Index.cshtml" />
+    <Content Include="Views\Tre\IndexPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

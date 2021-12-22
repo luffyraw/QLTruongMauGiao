@@ -2,12 +2,22 @@
 
 @{
     ViewBag.Title = "DangKiBuaAn";
+    Layout = "~/Views/Shared/LayoutPH.cshtml";
 }
 
 <h2><center>Đăng kí bữa ăn</center></h2>
 <br />
 
 <table class="table">
+    <tr>
+        @using (Html.BeginForm())
+        {
+            <p>
+                <input type="date" name="startdate" /> to <input type="date" name="enddate" />
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </tr>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Ngay)
@@ -47,4 +57,6 @@
         </tr>
     }
 </table>
-<p><center><input type="submit" value="Đăng kí" /><input type="reset" value="Hủy" style="margin-left:50px" onclick="location.href = '@Url.Action("Index2","PhuHuynh")'" /></center></p>
+<p><center><input type="submit" value="Đăng kí" /><input type="reset" value="Hủy" style="margin-left:50px" onclick="location.href = '@Url.Action("HomePagePH","Home")'" /></center></p>
+
+

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<QuanLyTruongMauGiao.Models.TRE>
+@using PagedList.Mvc;
+@using QuanLyTruongMauGiao.Models
+
+@{
+    ViewBag.Title = "DanhSachDanhGia";
+    Layout = "~/Views/Shared/LayoutGV.cshtml";
+}
+
+<h2>Danh sách trẻ</h2>
+
+<table class="table">
+    <tr>
+        <th>STT</th>
+        <th>Tên trẻ</th>
+        <th>Tên phụ huynh</th>
+        <th></th>
+    </tr>
+    @{
+        int stt = 0;
+    }
+    @foreach (var item in Model)
+    {
+        if (item.LOP.TenLop == "Lá 1")
+        {
+            stt++;
+            <tr>
+                <td>
+                    @stt
+                </td>
+                <td>
+                    @item.TenTre
+                </td>
+                <td>
+                    @item.PHUHUYNH.TenPH
+                </td>
+                <td>
+                    @Html.ActionLink("Đánh giá trẻ", "DanhGiaTre"@*, new { id = item.MaTre }*@)
+                </td>
+            </tr>
+        }
+    }
+</table>
