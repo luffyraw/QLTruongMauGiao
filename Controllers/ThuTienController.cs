@@ -48,7 +48,7 @@ namespace QuanLyTruongMauGiao.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaPhieu,MaTre,NgayLapPhieu")] PHIEUTHUTIEN pHIEUTHUTIEN)
+        public ActionResult Create([Bind(Include = "MaPhieu,MaTre,NgayLapPhieu,TrangThai")] PHIEUTHUTIEN pHIEUTHUTIEN)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace QuanLyTruongMauGiao.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaPhieu,MaTre,NgayLapPhieu")] PHIEUTHUTIEN pHIEUTHUTIEN)
+        public ActionResult Edit([Bind(Include = "MaPhieu,MaTre,NgayLapPhieu,TrangThai")] PHIEUTHUTIEN pHIEUTHUTIEN)
         {
             if (ModelState.IsValid)
             {

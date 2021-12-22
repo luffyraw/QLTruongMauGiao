@@ -19,33 +19,47 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhanCongGiaoVien
         public ActionResult Index(string searchstr)
         {
-            var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
-            if (!String.IsNullOrEmpty(searchstr))
+            if (Session["user"] != null)
             {
-                phanCong = phanCong.Where(x => x.LOP.TenLop == searchstr);
-            }
+                var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
+                if (!String.IsNullOrEmpty(searchstr))
+                {
+                    phanCong = phanCong.Where(x => x.LOP.TenLop == searchstr);
+                }
 
-            var result = from p in phanCong
-                         group p by new { p.MaLop, p.NamHoc } into g
-                                      select new PCGiaoVien()
-                                      {
-                                          MaLop = g.Key.MaLop,
-                                          NamHoc = g.Key.NamHoc,
-                                          MaGV = g.Select(gv => gv.MaGV).ToList()
-                                      };
-            
-            ViewBag.pHANCONGGIAOVIENs = phanCong.ToList();
-            result = result.OrderBy(x => x.MaLop);
-            
-            return View(result.ToList());
+                var result = from p in phanCong
+                             group p by new { p.MaLop, p.NamHoc } into g
+                             select new PCGiaoVien()
+                             {
+                                 MaLop = g.Key.MaLop,
+                                 NamHoc = g.Key.NamHoc,
+                                 MaGV = g.Select(gv => gv.MaGV).ToList()
+                             };
+
+                ViewBag.pHANCONGGIAOVIENs = phanCong.ToList();
+                result = result.OrderBy(x => x.MaLop);
+
+                return View(result.ToList()); 
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // GET: PhanCongGiaoVien/Create
         public ActionResult Create()
         {
-            ViewBag.MaGV = db.GIAOVIENs;
-            ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop");
-            return View();
+            if (Session["user"] != null)
+            {
+                ViewBag.MaGV = db.GIAOVIENs;
+                ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop");
+                return View(); 
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
@@ -96,37 +110,44 @@ namespace QuanLyTruongMauGiao.Controllers
         }
         public ActionResult Edit(string id1, string id2)
         {
-            if (id1 == null || id2 == null)
+            if (Session["user"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
-
-            var result = from p in phanCong
-                         group p by new { p.MaLop, p.NamHoc } into g
-                         select new PCGiaoVien()
-                         {
-                             MaLop = g.Key.MaLop,
-                             NamHoc = g.Key.NamHoc,
-                             MaGV = g.Select(gv => gv.MaGV).ToList()
-                         };
-            PCGiaoVien giaovien = null;
-            foreach (var item in result)
-            {
-                if (item.MaLop.Equals(id1) && item.NamHoc.Equals(id2))
+                if (id1 == null || id2 == null)
                 {
-                    giaovien = item;
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+                var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
+
+                var result = from p in phanCong
+                             group p by new { p.MaLop, p.NamHoc } into g
+                             select new PCGiaoVien()
+                             {
+                                 MaLop = g.Key.MaLop,
+                                 NamHoc = g.Key.NamHoc,
+                                 MaGV = g.Select(gv => gv.MaGV).ToList()
+                             };
+                PCGiaoVien giaovien = null;
+                foreach (var item in result)
+                {
+                    if (item.MaLop.Equals(id1) && item.NamHoc.Equals(id2))
+                    {
+                        giaovien = item;
+                    }
+                }
+                if (giaovien == null)
+                {
+                    return HttpNotFound();
+                }
+
+                ViewBag.MaGV = db.GIAOVIENs;
+                ViewBag.MaLop = db.LOPs;
+
+                return View(giaovien); 
             }
-            if (giaovien == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-
-            ViewBag.MaGV = db.GIAOVIENs;
-            ViewBag.MaLop = db.LOPs;
-
-            return View(giaovien);
         }
 
         // POST: PhanCongGiaoVien/Edit/5
@@ -193,36 +214,43 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhanCongGiaoVien/Delete/5
         public ActionResult Delete(string id1,string id2)
         {
-            if (id1 == null || id2 == null)
+            if (Session["user"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
-
-            var result = from p in phanCong
-                         group p by new { p.MaLop, p.NamHoc } into g
-                         select new PCGiaoVien()
-                         {
-                             MaLop = g.Key.MaLop,
-                             NamHoc = g.Key.NamHoc,
-                             MaGV = g.Select(gv => gv.MaGV).ToList()
-                         };
-            PCGiaoVien giaovien = null;
-            foreach (var item in result)
-            {
-                if (item.MaLop.Equals(id1) && item.NamHoc.Equals(id2))
+                if (id1 == null || id2 == null)
                 {
-                    giaovien = item;
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+                var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
+
+                var result = from p in phanCong
+                             group p by new { p.MaLop, p.NamHoc } into g
+                             select new PCGiaoVien()
+                             {
+                                 MaLop = g.Key.MaLop,
+                                 NamHoc = g.Key.NamHoc,
+                                 MaGV = g.Select(gv => gv.MaGV).ToList()
+                             };
+                PCGiaoVien giaovien = null;
+                foreach (var item in result)
+                {
+                    if (item.MaLop.Equals(id1) && item.NamHoc.Equals(id2))
+                    {
+                        giaovien = item;
+                    }
+                }
+                if (giaovien == null)
+                {
+                    return HttpNotFound();
+                }
+
+                ViewBag.pHANCONGGIAOVIENs = phanCong.ToList();
+
+                return View(giaovien); 
             }
-            if (giaovien == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-
-            ViewBag.pHANCONGGIAOVIENs = phanCong.ToList();
-
-            return View(giaovien);
         }
 
         // POST: PhanCongGiaoVien/Delete/5

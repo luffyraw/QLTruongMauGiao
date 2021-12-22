@@ -18,6 +18,9 @@
         <th>
             @Html.DisplayNameFor(model => model.NgayLapPhieu)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </th>
         <th></th>
     </tr>
 
@@ -28,6 +31,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.NgayLapPhieu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrangThai)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MaPhieu }) |

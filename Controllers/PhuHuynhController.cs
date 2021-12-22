@@ -18,38 +18,59 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhuHuynh
         public ActionResult Index(string searchstr, int? page)
         {
-            var phuHuynh = db.PHUHUYNHs.Include(p => p.TAIKHOAN);
-            if (!String.IsNullOrEmpty(searchstr))
+            if (Session["user"] != null)
             {
-                phuHuynh = phuHuynh.Where(ph => ph.TenPH == searchstr);
+                var phuHuynh = db.PHUHUYNHs.Include(p => p.TAIKHOAN);
+                if (!String.IsNullOrEmpty(searchstr))
+                {
+                    phuHuynh = phuHuynh.Where(ph => ph.TenPH == searchstr);
+                }
+                phuHuynh = phuHuynh.OrderBy(ph => ph.TenPH);
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(phuHuynh.ToPagedList(pageNumber, pageSize)); 
             }
-            phuHuynh = phuHuynh.OrderBy(ph => ph.TenPH);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(phuHuynh.ToPagedList(pageNumber, pageSize));
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
         // GET: PhuHuynh/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (Session["user"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                PHUHUYNH pHUHUYNH = db.PHUHUYNHs.Find(id);
+                if (pHUHUYNH == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pHUHUYNH); 
             }
-            PHUHUYNH pHUHUYNH = db.PHUHUYNHs.Find(id);
-            if (pHUHUYNH == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            return View(pHUHUYNH);
         }
 
         // GET: PhuHuynh/Create
         public ActionResult Create()
         {
-            var taiKhoanPH = from ph in db.PHUHUYNHs
-                             select ph.TenTK;
-            ViewBag.TenTK = new SelectList(taiKhoanPH);
-            return View();
+            if(Session["user"] != null)
+            {
+                var taiKhoanPH = from ph in db.PHUHUYNHs
+                                 select ph.TenTK;
+                ViewBag.TenTK = new SelectList(taiKhoanPH);
+                return View();               
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: PhuHuynh/Create
@@ -73,19 +94,26 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhuHuynh/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (Session["user"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                PHUHUYNH pHUHUYNH = db.PHUHUYNHs.Find(id);
+                if (pHUHUYNH == null)
+                {
+                    return HttpNotFound();
+                }
+                var taiKhoanPH = from ph in db.PHUHUYNHs
+                                 select ph.TenTK;
+                ViewBag.TenTK = new SelectList(taiKhoanPH);
+                return View(pHUHUYNH); 
             }
-            PHUHUYNH pHUHUYNH = db.PHUHUYNHs.Find(id);
-            if (pHUHUYNH == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            var taiKhoanPH = from ph in db.PHUHUYNHs
-                             select ph.TenTK;
-            ViewBag.TenTK = new SelectList(taiKhoanPH);
-            return View(pHUHUYNH);
         }
 
         // POST: PhuHuynh/Edit/5
@@ -108,16 +136,23 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhuHuynh/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (Session["user"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                PHUHUYNH pHUHUYNH = db.PHUHUYNHs.Find(id);
+                if (pHUHUYNH == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pHUHUYNH); 
             }
-            PHUHUYNH pHUHUYNH = db.PHUHUYNHs.Find(id);
-            if (pHUHUYNH == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            return View(pHUHUYNH);
         }
 
         // POST: PhuHuynh/Delete/5

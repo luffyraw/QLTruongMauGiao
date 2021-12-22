@@ -12,7 +12,6 @@
                 <div class="ibox-title">Chi tiết thực đơn</div>
                 <div class="ibox-tools">
                     <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
-                    <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
                 </div>
             </div>
             <div class="ibox-body">
@@ -26,7 +25,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label" style="padding-top: 0">Ngày</label>
                         <div class="col-sm-10">
-                            @Html.DisplayFor(model => model.Ngay)
+                            @Html.DisplayFor(model => model.Ngay, new { htmlAttributes = new { @class = "datepicker" } })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -49,8 +48,11 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-10 ml-sm-auto">
-                            @Html.ActionLink("Sửa", "Edit", new { id = Model.MaTDN })
+                            @Html.ActionLink("Sửa", "Edit", new { id = Model.MaTDN })          
                         </div>
+                        
+                        
+                        
                     </div>
                 </form>
             </div>

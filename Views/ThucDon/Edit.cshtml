@@ -21,7 +21,6 @@
                     <div class="ibox-title">Sửa thực đơn</div>
                     <div class="ibox-tools">
                         <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
-                        <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
                     </div>
                 </div>
                 <div class="ibox-body">
@@ -29,7 +28,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ngày</label>
                             <div class="col-sm-10">
-                                @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control"} })
+                                @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control", @Value = Model.Ngay.ToString("dd-MM-yyyy") } })
                             </div>
                             <div class="col-sm-10 ml-sm-auto">
                                 @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
