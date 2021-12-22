@@ -4,13 +4,24 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    h1{
+        color: #bc0000;
+    }
+</style>
+@{
+    if (ViewBag.Message != null)
+    {
+        <h1> @ViewBag.Message </h1>
 
+    }
+}
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>TAIKHOAN</h4>
         <hr />
@@ -26,7 +37,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MatKhau, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control", Type = "password" } })
                 @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -34,7 +45,11 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PhanQuyen, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhanQuyen, new { htmlAttributes = new { @class = "form-control" } })
+                <select class="form-control dropdown" id="PhanQuyen" name="PhanQuyen">
+                    <option value="Quản lý">Quản lí</option>
+                    <option value="Giáo viên">Giáo viên</option>
+                    <option value="Phụ huynh">Phụ huynh</option>
+                </select>
                 @Html.ValidationMessageFor(model => model.PhanQuyen, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +58,9 @@
             @Html.LabelFor(model => model.TrangThaiHD, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.TrangThaiHD)
+                    <input class="check-box" data-val="true" data-val-required="The Trạng thái hoạt động field is required." id="TrangThaiHD" name="TrangThaiHD" type="checkbox" value="true" checked="checked" />
+                    <input name="TrangThaiHD" type="hidden" value="false" />
+
                     @Html.ValidationMessageFor(model => model.TrangThaiHD, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -66,5 +83,6 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Danh sách tài khoản", "Index")
+    <a href="~/GiaoVien/Create">Thêm giáo viên</a>
 </div>

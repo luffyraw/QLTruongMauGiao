@@ -5,8 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     QLMauGiao db = new QLMauGiao();
     var ph = from item in db.PHUHUYNHs select item;
-    var ngaysinh = Model.NgaySinh.ToString("dd/MM/yyyy");
-    var ngaynhaphoc = Model.NgayNhapHoc.ToString("dd/MM/yyyy");
+    var ngaysinh = Model.NgaySinh.ToString("yyyy-MM-dd");
+    var ngaynhaphoc = Model.NgayNhapHoc.ToString("yyyy-MM-dd");
 }
 
 <h2>Thay đổi thông tin trẻ</h2>
@@ -38,7 +38,70 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MaPH, new { htmlAttributes = new { @list = "ide", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MaPH, "", new { @class = "text-danger" })
-                Không có trong danh sách?<a href="~/phuhuynh/create"> Thêm mới</a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="ibox">
+                            <div class="ibox-head">
+                                <div class="ibox-title">Chi tiết phụ huynh </div>
+                                <div class="ibox-tools">
+                                    <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+                                    <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
+                                </div>
+                            </div>
+                            <div class="ibox-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Họ tên</b></label>
+                                        <div class="col-sm-10">
+                                            @Html.DisplayFor(model => model.PHUHUYNH.TenPH)
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Ngày sinh</b></label>
+                                        <div class="col-sm-10">
+                                            @Model.PHUHUYNH.NamSinh.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Giới tính</b></label>
+                                        @if (Model.PHUHUYNH.GioiTinh)
+                                        {
+                                            <div class="col-sm-10">
+                                                Nam
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-sm-10">
+                                                Nữ
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Địa chỉ</b></label>
+                                        <div class="col-sm-10">
+                                            @Html.DisplayFor(model => model.PHUHUYNH.DiaChi)
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Số điện thoại</b></label>
+                                        <div class="col-sm-10">
+                                            @Html.DisplayFor(model => model.PHUHUYNH.DienThoai)
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Tài khoản</b></label>
+                                        <div class="col-sm-10">
+                                            @Html.DisplayFor(model => model.PHUHUYNH.TenTK)
+                                        </div>
+                                    </div>
+                                    <a href="~/PHUHUYNH/Edit/@Model.PHUHUYNH.MaPH">Sửa</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <b> Không có trong danh sách? </b><a href="~/phuhuynh/create"> Thêm mới</a>
             </div>
         </div>
         <datalist id="ide">
@@ -65,9 +128,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <label class="control-label col-md-10">Ngày sinh hiện tại: @ngaysinh</label>
-                <label class="control-label col-md-10">Ngày sinh mới:</label>
-                @Html.EditorFor(model => model.NgaySinh ,new { htmlAttributes = new { @type = "date", @class = "form-control" } })
+                <input class ="form-control" id="NgaySinh" type="date" value="@ngaysinh"/>
                 @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -120,10 +181,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NgayNhapHoc, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <label class="control-label col-md-10">Ngày nhập học hiện tại: @ngaynhaphoc</label>
-                <label class="control-label col-md-10">Ngày nhập học mới:</label>
+                <input type="date" class="form-control" value="@ngaynhaphoc"/>
 
-                @Html.EditorFor(model => model.NgayNhapHoc, new { htmlAttributes = new { Type = "date", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NgayNhapHoc, "", new { @class = "text-danger" })
             </div>
         </div>

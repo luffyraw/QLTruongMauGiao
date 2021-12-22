@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using QuanLyTruongMauGiao.Models;
 
 namespace QuanLyTruongMauGiao.Controllers
@@ -15,11 +16,30 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: TaiKhoan
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.TAIKHOANs.ToList());
-        }
+            var taikhoan = from item in db.TAIKHOANs select item;
+            //var taikhoan = from item in db.TAIKHOANs select item;
 
+            taikhoan = taikhoan.OrderBy(tr => tr.TenTK);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View(taikhoan.ToPagedList(pageNumber,pageSize));
+
+        }
+        public PartialViewResult GetQuyen(string quyen, int? page)
+        {
+            //var taikhoan = db.TAIKHOANs.Where(x => x.PhanQuyen.Contains(quyen));
+            var taikhoan = from item in db.TAIKHOANs 
+                           where item.PhanQuyen.Contains(quyen) 
+                           orderby item.TenTK
+                           select item;
+
+            int pageSize = 7;
+            int pageNumber = (page ?? 1);
+            return PartialView("Index", taikhoan.ToPagedList(pageNumber, pageSize));
+        }
         // GET: TaiKhoan/Details/5
         public ActionResult Details(string id)
         {
@@ -51,8 +71,18 @@ namespace QuanLyTruongMauGiao.Controllers
             if (ModelState.IsValid)
             {
                 db.TAIKHOANs.Add(tAIKHOAN);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    ViewBag.Message = "Thêm tài khoản " + tAIKHOAN.TenTK + " thành công";
+                    return View("Create");
+                }
+                catch
+                {
+                    ViewBag.Message = "Tên tài khoản " + tAIKHOAN.TenTK + "đã tồn tại";
+                    return View("Create");
+                }
+               
             }
 
             return View(tAIKHOAN);

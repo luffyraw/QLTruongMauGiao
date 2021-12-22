@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyTruongMauGiao.Models;
-
+using PagedList;
 namespace QuanLyTruongMauGiao.Controllers
 {
     public class LopController : Controller
@@ -15,9 +15,13 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: Lop
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.LOPs.ToList());
+            var dslop = from item in db.LOPs select item;
+            dslop = dslop.OrderBy(lop => lop.MaLop);
+            int pagenumber = (page ?? 1);
+            int pagesize = 10;
+            return View(dslop.ToPagedList(pagenumber,pagesize));
         }
 
         // GET: Lop/Details/5

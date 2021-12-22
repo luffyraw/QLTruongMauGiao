@@ -19,8 +19,8 @@ namespace QuanLyTruongMauGiao.Controllers
         public ActionResult Index(int? page)
         {
             var tREs = db.TREs.Include(t => t.LOP).Include(t => t.PHUHUYNH);
+            
             tREs = tREs.OrderBy(tr => tr.TenTre);
-
             int pageSize = 7;
             int pageNumber = (page ?? 1);
             return View(tREs.ToPagedList(pageNumber, pageSize));
@@ -67,6 +67,8 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             if (ModelState.IsValid)
             {
+                var lop = (from item in db.LOPs where item.MaLop == tRE.MaLop select item).FirstOrDefault();
+                lop.SiSo++;
                 db.TREs.Add(tRE);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -124,6 +126,7 @@ namespace QuanLyTruongMauGiao.Controllers
             {
                 return HttpNotFound();
             }
+           
             return View(tRE);
         }
 
@@ -133,7 +136,9 @@ namespace QuanLyTruongMauGiao.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             TRE tRE = db.TREs.Find(id);
+            var lop = (from item in db.LOPs where item.MaLop == tRE.MaLop select item).FirstOrDefault();
             db.TREs.Remove(tRE);
+            lop.SiSo = lop.SiSo - 1;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

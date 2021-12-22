@@ -3733,6 +3733,7 @@
     <Content Include="Views\PhuHuynh\XemDanhGia.cshtml" />
     <Content Include="Views\PhuHuynh\DongHocPhi.cshtml" />
     <Content Include="Views\PhuHuynh\Index2.cshtml" />
+    <Content Include="Views\TaiKhoan\IndexPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

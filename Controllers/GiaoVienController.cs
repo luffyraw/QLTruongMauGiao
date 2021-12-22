@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyTruongMauGiao.Models;
-
+using PagedList;
 namespace QuanLyTruongMauGiao.Controllers
 {
     public class GiaoVienController : Controller
@@ -15,10 +15,13 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: GiaoVien
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var gIAOVIENs = db.GIAOVIENs.Include(g => g.TAIKHOAN);
-            return View(gIAOVIENs.ToList());
+            gIAOVIENs = gIAOVIENs.OrderBy(gv => gv.TenGV);
+            int pageNumber = (page ?? 1);
+            int pageSize = 10;
+            return View(gIAOVIENs.ToPagedList(pageNumber,pageSize));
         }
 
         // GET: GiaoVien/Details/5
@@ -115,6 +118,13 @@ namespace QuanLyTruongMauGiao.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             GIAOVIEN gIAOVIEN = db.GIAOVIENs.Find(id);
+            var pcGV = (from item in db.PHANCONGGIAOVIENs where item.MaGV == id select item).FirstOrDefault();
+            db.PHANCONGGIAOVIENs.Remove(pcGV);
+            var pdg = from item in db.PHIEUDANHGIAs where item.MaGV == id select item;
+            foreach (var item in pdg)
+            {
+                db.PHIEUDANHGIAs.Remove(item);
+            }
             db.GIAOVIENs.Remove(gIAOVIEN);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -1,8 +1,12 @@
 ﻿@model QuanLyTruongMauGiao.Models.LOP
-
+@using QuanLyTruongMauGiao.Models
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    QLMauGiao db = new QLMauGiao();
+    var solop = (from item in db.LOPs select item).Count();
+    var mslop = "LOP";
+    mslop += (solop + 1).ToString();
 }
 
 <h2>Create</h2>
@@ -16,9 +20,10 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.MaLop, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MaLop, htmlAttributes: new { @class = "control-label col-md-2" }) 
+            <label class="control-label col-md-3"> @mslop</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MaLop, new { htmlAttributes = new { @class = "form-control" } })
+                <input hidden="hidden" id="MaLop" name="MaLop" value="@mslop"/>
                 @Html.ValidationMessageFor(model => model.MaLop, "", new { @class = "text-danger" })
             </div>
         </div>

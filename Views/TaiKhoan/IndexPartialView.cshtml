@@ -1,11 +1,5 @@
-﻿@model PagedList.PagedList<QuanLyTruongMauGiao.Models.GIAOVIEN>
-@using QuanLyTruongMauGiao.Models
+﻿@model PagedList.IPagedList<QuanLyTruongMauGiao.Models.TAIKHOAN>
 @using PagedList.Mvc;
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    QLMauGiao db = new QLMauGiao();
-}
 <style>
     .anh {
         width: 100px;
@@ -35,7 +29,6 @@
 </style>
 
 
-<h3>Danh sách giáo viên</h3>
 <div class="ibox">
     <div class="ibox-head">
         <div class="ibox-title">@Html.ActionLink("Thêm", "Create")</div>
@@ -44,13 +37,24 @@
         <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <td>STT</td>
-                    <th>Tài khoản</th>
-                    <th>Họ tên</th>
-                    <th>Ngày sinh</th>
-                    <th>Giới tính</th>
-                    <th>Số điện thoại</th>
-                    </tr>
+                    <th>
+                        Tài khoản
+                    </th>
+                    <th>
+                        Mật khẩu
+                    </th>
+                    <th>
+                        Quyền truy cập
+                    </th>
+                    <th>
+                        Trạng thái hoạt động
+                    </th>
+                    <th>
+                        Ảnh đại diện
+                    </th>
+                    <th></th>
+                </tr>
+
             </thead>
             @{
                 int stt = 0;
@@ -58,53 +62,46 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    stt++;
                     <tr>
-                        <td>
-                            @stt
-                        </td>
                         <td>
                             @item.TenTK
                         </td>
                         <td>
-                            @item.TenGV
+                            @item.MatKhau
                         </td>
                         <td>
-                            @item.NgaySinh.ToString("dd/MM/yyyy")
+                            @item.PhanQuyen
                         </td>
-                      
-                        @{
-                            if (item.GioiTinh)
+                        <td>
+                            @if (item.TrangThaiHD)
                             {
-                                <td>Nam</td>
+                                <p>Đang hoạt động</p>
                             }
                             else
                             {
-                                <td>Nữ</td>
+                                <p>Không hoạt động</p>
                             }
-                        }
-
-                        <td>
-                            @item.DienThoai
                         </td>
                         <td>
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.MaGV }) |
-                            @Html.ActionLink("Chi tiết", "Details", new { id = item.MaGV }) |
-                            @Html.ActionLink("Xóa", "Delete", new { id = item.MaGV })
+                            <img class="anh" src="~/Image/@item.AnhDaiDien" />
+                        </td>
+                        <td>
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.TenTK }) |
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.TenTK }) |
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.TenTK })
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-
+        <br />
+        <div class="page">
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page }))
+        </div>
 
 
     </div>
 
 </div>
-<center>
-    <div class="page">
-        @Html.PagedListPager(Model, page => Url.Action("Index",
-            new { page }))
-    </div>
-</center>
+

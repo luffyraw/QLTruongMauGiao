@@ -5,12 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>GIAOVIEN</h4>
+<div class="form-control col-5">
+    <h4>Thông tin giáo viên @Model.TenGV</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            Tài khoản
+        </dt>
+        <dd>
+            @Model.TAIKHOAN.TenTK
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.TAIKHOAN.MatKhau)
         </dt>
@@ -32,16 +37,21 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NgaySinh)
+            @Model.NgaySinh.ToString("dd/MM/yyyy")
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.GioiTinh)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.GioiTinh)
-        </dd>
+        @if(Model.GioiTinh)
+            {
+                <dd>Nam</dd>
+            }
+            else
+            {
+                <dd>Nữ</dd>
+            }
 
         <dt>
             @Html.DisplayNameFor(model => model.QueQuan)
