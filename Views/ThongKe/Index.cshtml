@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     Dictionary<string, int> list = ViewBag.DSLop as Dictionary<string, int>;
+    Dictionary<int, float> listDT = ViewBag.DoTuoi as Dictionary<int, float>;
 }
 
 <div class="row">
@@ -69,6 +70,32 @@
                                 <div class="media-heading" style="padding-top: 10px">
                                     <a href="#">@item.Key</a>
                                     <span class="font-16 float-right">@item.Value</span>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4" style="max-width: 25%">
+        <div class="ibox">
+            <div class="ibox-head">
+                <div class="ibox-title">Thống kê theo độ tuổi</div>
+            </div>
+            <div class="ibox-body">
+                <ul class="media-list media-list-divider m-0">
+                    @foreach (var item in listDT)
+                    {
+                        <li class="media">
+                            <a class="media-img" href="#">
+                                <i class="fa fa-child"></i>
+                            </a>
+                            <div class="media-body">
+                                <div class="media-heading" style="padding-top: 10px">
+                                    <a href="#">@item.Key tuổi</a>
+                                    <span class="font-16 float-right">@item.Value %</span>
                                 </div>
                             </div>
                         </li>

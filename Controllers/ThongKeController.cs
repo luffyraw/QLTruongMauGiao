@@ -34,6 +34,7 @@ namespace QuanLyTruongMauGiao.Controllers
                             {
                                 MaLop = lop.MaLop,
                                 TenLop = lop.TenLop,
+                                DoTuoi = lop.DoTuoi,
                                 SoTre = x.SoTre
                             };
 
@@ -43,6 +44,21 @@ namespace QuanLyTruongMauGiao.Controllers
                     list.Add(item.TenLop, item.SoTre);
                 }
                 ViewBag.DSLop = list;
+
+                var queryDoTuoi = from t in query
+                                  group t by t.DoTuoi into gr
+                                  select new 
+                                  {
+                                      DoTuoi = gr.Key,
+                                      SoTre = gr.Sum(x=>x.SoTre)
+                                  };
+                
+                Dictionary<int, float> listDT = new Dictionary<int, float>();
+                foreach (var item in queryDoTuoi.ToList())
+                {
+                    listDT.Add(item.DoTuoi,(float)item.SoTre * 100 / db.TREs.Count());
+                }
+                ViewBag.DoTuoi = listDT;
                 return View(); 
             }
             else
