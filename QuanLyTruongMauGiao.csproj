@@ -3714,12 +3714,10 @@
     <Content Include="Views\ChiPhi\Details.cshtml" />
     <Content Include="Views\ChiPhi\Edit.cshtml" />
     <Content Include="Views\ChiPhi\Index.cshtml" />
-<<<<<<< Updated upstream
     <Content Include="Views\PhuHuynh\DangKiBuaAn.cshtml" />
     <Content Include="Views\PhuHuynh\XemDanhGia.cshtml" />
     <Content Include="Views\PhuHuynh\DongHocPhi.cshtml" />
     <Content Include="Views\PhuHuynh\Index2.cshtml" />
-=======
     <Content Include="Views\Shared\LayoutGV.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\LayoutPH.cshtml" />
@@ -3757,7 +3755,6 @@
     <Content Include="Views\Tre\Edit.cshtml" />
     <Content Include="Views\Tre\Index.cshtml" />
     <Content Include="Views\Tre\IndexPartialView.cshtml" />
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
