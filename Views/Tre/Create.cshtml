@@ -8,15 +8,8 @@
     var ph = from item in db.PHUHUYNHs select item;
     var sotre = (from item in db.TREs select item).Count();
     var masotre = "TRE";
-    if (sotre < 10)
-    {
-        masotre += "0" + (sotre + 1).ToString();
-    }
-    else
-    {
-        masotre += (sotre + 1).ToString();
-
-    }
+    masotre += (sotre + 1).ToString();
+       
 }
 
 

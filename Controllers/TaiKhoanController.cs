@@ -71,8 +71,18 @@ namespace QuanLyTruongMauGiao.Controllers
             if (ModelState.IsValid)
             {
                 db.TAIKHOANs.Add(tAIKHOAN);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    ViewBag.Message = "Thêm tài khoản " + tAIKHOAN.TenTK + " thành công";
+                    return View("Create");
+                }
+                catch
+                {
+                    ViewBag.Message = "Tên tài khoản " + tAIKHOAN.TenTK + "đã tồn tại";
+                    return View("Create");
+                }
+               
             }
 
             return View(tAIKHOAN);

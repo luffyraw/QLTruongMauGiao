@@ -23,40 +23,42 @@
         [DisplayName("Mã số")]
         public string MaTre { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống l")]
         [StringLength(5)]
         [DisplayName("Mã lớp")]
         public string MaLop { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống phụ huynh")]
         [StringLength(5)]
         [DisplayName("Mã phụ huynh")]
         public string MaPH { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống tên trẻ")]
         [StringLength(100)]
         [DisplayName("Tên trẻ")]
         public string TenTre { get; set; }
 
+        [Required(ErrorMessage = "Không được để trống ngày sinh")]
         [Column(TypeName = "date")]
         [DisplayName("Ngày sinh")]
+
         public DateTime NgaySinh { get; set; }
         [DisplayName("Giới tính")]
         public bool GioiTinh { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống quê quán")]
         [StringLength(50)]
         [DisplayName("Quê quán")]
         public string QueQuan { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống dân tộc")]
         [StringLength(30)]
         [DisplayName("Dân tộc")]
         public string DanToc { get; set; }
         [DisplayName("Ngày nhập học")]
         public DateTime NgayNhapHoc { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống ảnh")]
         [StringLength(30)]
         [DisplayName("Ảnh")]
         public string Anh { get; set; }

@@ -93,13 +93,15 @@
                 }
             </tbody>
         </table>
-        <br />
-        <div class="page">
-            @Html.PagedListPager(Model, page => Url.Action("Index",
-                new { page }))
-        </div>
+
 
 
     </div>
 
 </div>
+<center>
+    <div class="page">
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page }))
+    </div>
+</center>

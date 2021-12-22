@@ -18,11 +18,12 @@
         }
 
         [Key]
+        [Required(ErrorMessage = "Không được để trống tên tài khoản")]
         [StringLength(20)]
         [DisplayName("Tên tài khoản")]
         public string TenTK { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống mật khẩu")]
         [StringLength(30)]
         [DisplayName("Mật khẩu")]
         public string MatKhau { get; set; }
@@ -35,8 +36,9 @@
 
         public bool TrangThaiHD { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Không được để trống ảnh đại diện")]
         [StringLength(30)]
+
         [DisplayName("Ảnh đại diện")]
         public string AnhDaiDien { get; set; }
 
