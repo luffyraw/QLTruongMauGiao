@@ -76,5 +76,48 @@ namespace QuanLyTruongMauGiao.Controllers
             return View("Index");
         }
 
+        public ActionResult ChangePassword()
+        {
+            if(Session["user"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(string password_old,string password_new1,string password_new2)
+        {
+            if (password_old == "" || password_new1 == "" || password_new2 == "")
+            {
+                ViewBag.Error = "Không được để trống.";
+            }
+            else
+            {
+                TAIKHOAN user = (TAIKHOAN)Session["user"];
+                if (password_old != user.MatKhau)
+                {
+                    ViewBag.Error = "Mật khẩu hiện tại không đúng.";
+                }
+                else
+                {
+                    if (password_new1 != password_new2)
+                    {
+                        ViewBag.Error = "Nhập lại mật khẩu mới phải trùng với mật khẩu mới.";
+                    }
+                    else
+                    {
+                        var users = db.TAIKHOANs.Where(x => x.TenTK == user.TenTK).FirstOrDefault();
+                        users.MatKhau = password_new1;
+                        db.SaveChanges();
+                        ViewBag.msg = "Đổi mật khẩu thành công.";
+                    }
+                }
+                
+            }
+            return View();
+        }
     }
 }

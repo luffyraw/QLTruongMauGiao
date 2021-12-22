@@ -3713,6 +3713,7 @@
     <Content Include="Views\ThuTien\Details.cshtml" />
     <Content Include="Views\ThuTien\Edit.cshtml" />
     <Content Include="Views\ThuTien\Index.cshtml" />
+    <Content Include="Views\Home\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
