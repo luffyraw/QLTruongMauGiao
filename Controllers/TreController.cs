@@ -14,16 +14,28 @@ namespace QuanLyTruongMauGiao.Controllers
     public class TreController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
-
+        public Boolean CheckLogin()
+        {
+            var user = Session["user"] as TAIKHOAN;
+            if (user != null && user.PhanQuyen == "Quản lý")
+                return true;
+            else return false;
+            
+        }
         // GET: Tre
         public ActionResult Index(int? page)
         {
-            var tREs = db.TREs.Include(t => t.LOP).Include(t => t.PHUHUYNH);
+            if (CheckLogin())
+            {
+                var tREs = db.TREs.Include(t => t.LOP).Include(t => t.PHUHUYNH);
+
+                tREs = tREs.OrderBy(tr => tr.TenTre);
+                int pageSize = 7;
+                int pageNumber = (page ?? 1);
+                return View(tREs.ToPagedList(pageNumber, pageSize));
+            }
+            else return RedirectToAction("index", "Home");
             
-            tREs = tREs.OrderBy(tr => tr.TenTre);
-            int pageSize = 7;
-            int pageNumber = (page ?? 1);
-            return View(tREs.ToPagedList(pageNumber, pageSize));
         }
 
         public PartialViewResult GetName(string name, int? page)
@@ -38,24 +50,34 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Tre/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (CheckLogin())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                 if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TRE tRE = db.TREs.Find(id);
+                if (tRE == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tRE);
             }
-            TRE tRE = db.TREs.Find(id);
-            if (tRE == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tRE);
+            else return RedirectToAction("Index", "Home");
+           
         }
 
         // GET: Tre/Create
         public ActionResult Create()
         {
-            ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop");
-            ViewBag.MaPH = new SelectList(db.PHUHUYNHs, "MaPH", "TenPH");
-            return View();
+            if (CheckLogin())
+            {
+                ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop");
+                ViewBag.MaPH = new SelectList(db.PHUHUYNHs, "MaPH", "TenPH");
+                return View();
+            }
+            else return RedirectToAction("Index", "Home");
+           
         }
 
         // POST: Tre/Create
@@ -82,18 +104,23 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Tre/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (CheckLogin())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TRE tRE = db.TREs.Find(id);
+                if (tRE == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop", tRE.MaLop);
+                ViewBag.MaPH = new SelectList(db.PHUHUYNHs, "MaPH", "TenPH", tRE.MaPH);
+                return View(tRE);
             }
-            TRE tRE = db.TREs.Find(id);
-            if (tRE == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop", tRE.MaLop);
-            ViewBag.MaPH = new SelectList(db.PHUHUYNHs, "MaPH", "TenPH", tRE.MaPH);
-            return View(tRE);
+            else return RedirectToAction("Index", "Home");
+            
         }
 
         // POST: Tre/Edit/5
@@ -117,17 +144,22 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Tre/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (CheckLogin())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TRE tRE = db.TREs.Find(id);
-            if (tRE == null)
-            {
-                return HttpNotFound();
-            }
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TRE tRE = db.TREs.Find(id);
+                if (tRE == null)
+                {
+                    return HttpNotFound();
+                }
            
-            return View(tRE);
+                return View(tRE);
+            }
+            else return RedirectToAction("Index", "Home");
+            
         }
 
         // POST: Tre/Delete/5

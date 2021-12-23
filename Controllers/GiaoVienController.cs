@@ -13,37 +13,59 @@ namespace QuanLyTruongMauGiao.Controllers
     public class GiaoVienController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
+        public Boolean CheckLogin()
+        {
+            var user = Session["user"] as TAIKHOAN;
+            if (user != null && user.PhanQuyen == "Quản lý")
+                return true;
+            else return false;
 
+        }
         // GET: GiaoVien
         public ActionResult Index(int? page)
         {
-            var gIAOVIENs = db.GIAOVIENs.Include(g => g.TAIKHOAN);
-            gIAOVIENs = gIAOVIENs.OrderBy(gv => gv.TenGV);
-            int pageNumber = (page ?? 1);
-            int pageSize = 10;
-            return View(gIAOVIENs.ToPagedList(pageNumber,pageSize));
+            if (CheckLogin())
+            {
+                var gIAOVIENs = db.GIAOVIENs.Include(g => g.TAIKHOAN);
+                gIAOVIENs = gIAOVIENs.OrderBy(gv => gv.TenGV);
+                int pageNumber = (page ?? 1);
+                int pageSize = 10;
+                return View(gIAOVIENs.ToPagedList(pageNumber,pageSize));
+            }
+            else return RedirectToAction("index", "Home");
+           
         }
 
         // GET: GiaoVien/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (CheckLogin())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                GIAOVIEN gIAOVIEN = db.GIAOVIENs.Find(id);
+                if (gIAOVIEN == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(gIAOVIEN);
             }
-            GIAOVIEN gIAOVIEN = db.GIAOVIENs.Find(id);
-            if (gIAOVIEN == null)
-            {
-                return HttpNotFound();
-            }
-            return View(gIAOVIEN);
+            else return RedirectToAction("index", "Home");
+           
         }
 
         // GET: GiaoVien/Create
         public ActionResult Create()
         {
-            ViewBag.TenTK = new SelectList(db.TAIKHOANs, "TenTK", "MatKhau");
-            return View();
+            if (CheckLogin())
+            {
+                 ViewBag.TenTK = new SelectList(db.TAIKHOANs, "TenTK", "MatKhau");
+                 return View();
+            }
+            else return RedirectToAction("index", "Home");
+           
         }
 
         // POST: GiaoVien/Create
@@ -67,17 +89,21 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: GiaoVien/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (CheckLogin())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                GIAOVIEN gIAOVIEN = db.GIAOVIENs.Find(id);
+                if (gIAOVIEN == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.TenTK = new SelectList(db.TAIKHOANs, "TenTK", "MatKhau", gIAOVIEN.TenTK);
+                return View(gIAOVIEN);
             }
-            GIAOVIEN gIAOVIEN = db.GIAOVIENs.Find(id);
-            if (gIAOVIEN == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.TenTK = new SelectList(db.TAIKHOANs, "TenTK", "MatKhau", gIAOVIEN.TenTK);
-            return View(gIAOVIEN);
+            else return RedirectToAction("index", "Home");
         }
 
         // POST: GiaoVien/Edit/5
@@ -100,16 +126,21 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: GiaoVien/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (CheckLogin())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                GIAOVIEN gIAOVIEN = db.GIAOVIENs.Find(id);
+                if (gIAOVIEN == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(gIAOVIEN);
             }
-            GIAOVIEN gIAOVIEN = db.GIAOVIENs.Find(id);
-            if (gIAOVIEN == null)
-            {
-                return HttpNotFound();
-            }
-            return View(gIAOVIEN);
+            else return RedirectToAction("index", "Home");
+
         }
 
         // POST: GiaoVien/Delete/5

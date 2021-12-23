@@ -13,36 +13,57 @@ namespace QuanLyTruongMauGiao.Controllers
     public class LopController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
+        public Boolean CheckLogin()
+        {
+            var user = Session["user"] as TAIKHOAN;
+            if (user != null && user.PhanQuyen == "Quản lý")
+                return true;
+            else return false;
 
+        }
         // GET: Lop
         public ActionResult Index(int? page)
         {
-            var dslop = from item in db.LOPs select item;
-            dslop = dslop.OrderBy(lop => lop.MaLop);
-            int pagenumber = (page ?? 1);
-            int pagesize = 10;
-            return View(dslop.ToPagedList(pagenumber,pagesize));
+            if (CheckLogin())
+            {
+                var dslop = from item in db.LOPs select item;
+                dslop = dslop.OrderBy(lop => lop.MaLop);
+                int pagenumber = (page ?? 1);
+                int pagesize = 10;
+                return View(dslop.ToPagedList(pagenumber,pagesize));
+            }
+            else return RedirectToAction("index", "Home");
+ 
         }
 
         // GET: Lop/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (CheckLogin())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LOP lOP = db.LOPs.Find(id);
+                if (lOP == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lOP);
             }
-            LOP lOP = db.LOPs.Find(id);
-            if (lOP == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lOP);
+            else return RedirectToAction("index", "Home");
+ 
         }
 
         // GET: Lop/Create
         public ActionResult Create()
         {
-            return View();
+            if (CheckLogin())
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Lop/Create
@@ -65,16 +86,21 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Lop/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if(CheckLogin())
+            {  
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LOP lOP = db.LOPs.Find(id);
+                if (lOP == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lOP);
             }
-            LOP lOP = db.LOPs.Find(id);
-            if (lOP == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lOP);
+            return RedirectToAction("Index", "Home");
+          
         }
 
         // POST: Lop/Edit/5
@@ -96,16 +122,21 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Lop/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (CheckLogin())
+            { 
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LOP lOP = db.LOPs.Find(id);
+                if (lOP == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lOP);
             }
-            LOP lOP = db.LOPs.Find(id);
-            if (lOP == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lOP);
+            return RedirectToAction("Index", "Home");
+           
         }
 
         // POST: Lop/Delete/5
