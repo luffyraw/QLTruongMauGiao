@@ -13,18 +13,27 @@ namespace QuanLyTruongMauGiao.Controllers
     public class LopController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
-        public Boolean CheckLogin()
+        public int CheckLogin()
         {
             var user = Session["user"] as TAIKHOAN;
             if (user != null && user.PhanQuyen == "Quản lý")
-                return true;
-            else return false;
-
+                return 0;
+            if (user != null && user.PhanQuyen == "Phụ huynh")
+                return 1;
+            if (user != null && user.PhanQuyen == "Giáo viên")
+                return 2;
+            return -1;
         }
         // GET: Lop
         public ActionResult Index(int? page)
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
                 var dslop = from item in db.LOPs select item;
                 dslop = dslop.OrderBy(lop => lop.MaLop);
@@ -32,14 +41,19 @@ namespace QuanLyTruongMauGiao.Controllers
                 int pagesize = 10;
                 return View(dslop.ToPagedList(pagenumber,pagesize));
             }
-            else return RedirectToAction("index", "Home");
  
         }
 
         // GET: Lop/Details/5
         public ActionResult Details(string id)
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
                 if (id == null)
                 {
@@ -52,14 +66,19 @@ namespace QuanLyTruongMauGiao.Controllers
                 }
                 return View(lOP);
             }
-            else return RedirectToAction("index", "Home");
  
         }
 
         // GET: Lop/Create
         public ActionResult Create()
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
                 return View();
             }
@@ -86,7 +105,13 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Lop/Edit/5
         public ActionResult Edit(string id)
         {
-            if(CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {  
                 if (id == null)
                 {
@@ -122,7 +147,13 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Lop/Delete/5
         public ActionResult Delete(string id)
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             { 
                 if (id == null)
                 {

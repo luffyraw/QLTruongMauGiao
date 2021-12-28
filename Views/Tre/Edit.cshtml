@@ -8,23 +8,29 @@
     var ngaysinh = Model.NgaySinh.ToString("yyyy-MM-dd");
     var ngaynhaphoc = Model.NgayNhapHoc.ToString("yyyy-MM-dd");
 }
-
+<script>
+    var loadFile = function (event) {
+        var image = document.getElementById("output");
+        image.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
 <h2>Thay đổi thông tin trẻ</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("edit", "tre", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @*
             Mã trẻ
-            *@
+        *@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <label class="control-label col-md-10"><h4>Mã trẻ: @Model.MaTre </h4></label>
+        <input id="MaTre" name="MaTre" value="@Model.MaTre" hidden="hidden" />
         @*
-        Lớp
-            *@
+            Lớp
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.MaLop, "Lớp", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -115,7 +121,7 @@
 
 
         @*Tên trẻ
-            *@
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.TenTre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -124,16 +130,16 @@
             </div>
         </div>
         @* ngày sinh
-            *@
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class ="form-control" id="NgaySinh" type="date" value="@ngaysinh"/>
+                <input class="form-control" id="NgaySinh" name="NgaySinh" type="date" value="@ngaysinh" />
                 @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
             </div>
         </div>
         @*
-        Giới tính    
+            Giới tính
         *@
         <div class="form-group">
             @Html.LabelFor(model => model.GioiTinh, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -141,14 +147,14 @@
                 @{
                     if (Model.GioiTinh == true)
                     {
-                        <input type="radio" value="true" id="GioiTinh" name="GioiTinh" checked="checked" class="radio"/> <span>Nam</span>
-                        <input type="radio" value="false" id="GioiTinh" name="GioiTinh" class="radio"/> <span>Nữ</span>
+                        <input type="radio" value="true" id="GioiTinh" name="GioiTinh" checked="checked" class="radio" /> <span>Nam</span>
+                        <input type="radio" value="false" id="GioiTinh" name="GioiTinh" class="radio" /> <span>Nữ</span>
 
                     }
                     else
                     {
                         <input type="radio" value="true" id="GioiTinh" name="GioiTinh" class="radio" /> <span>Nam</span>
-                        <input type="radio" value="false" id="GioiTinh" name="GioiTinh" checked="checked" class="radio"/> <span>Nữ</span>
+                        <input type="radio" value="false" id="GioiTinh" name="GioiTinh" checked="checked" class="radio" /> <span>Nữ</span>
                     }
                 }
 
@@ -156,7 +162,7 @@
             </div>
         </div>
         @*
-        Quê quán    
+            Quê quán
         *@
         <div class="form-group">
             @Html.LabelFor(model => model.QueQuan, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -166,7 +172,7 @@
             </div>
         </div>
         @*
-        Dân tộc    
+            Dân tộc
         *@
         <div class="form-group">
             @Html.LabelFor(model => model.DanToc, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -176,28 +182,32 @@
             </div>
         </div>
         @*
-        Ngày nhập học    
+            Ngày nhập học
         *@
         <div class="form-group">
             @Html.LabelFor(model => model.NgayNhapHoc, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="date" class="form-control" value="@ngaynhaphoc"/>
+                <input type="date" id="NgayNhapHoc" name="NgayNhapHoc" class="form-control" value="@ngaynhaphoc" />
 
                 @Html.ValidationMessageFor(model => model.NgayNhapHoc, "", new { @class = "text-danger" })
             </div>
         </div>
         @*
-        Ảnh    
+            Ảnh
         *@
         <div class="form-group">
             @Html.LabelFor(model => model.Anh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Anh, new { htmlAttributes = new { @class = "form-control" } })
+                <input class="form-control" id="anh" name="anh" type="text" value="@Model.Anh" hidden="hidden" />
+                <input type="file" id="inputimg" name="inputimg" onchange="loadFile(event)" />
+                <br />
+                <img id="output" alt="anh" width="200" height="200" src="~/Image/Tre/@Model.Anh" />
+
                 @Html.ValidationMessageFor(model => model.Anh, "", new { @class = "text-danger" })
             </div>
         </div>
         @*
-        Save    
+            Save
         *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

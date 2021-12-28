@@ -52,7 +52,6 @@ namespace QuanLyTruongMauGiao.Models
 
         public DateTime NgayNhapHoc { get; set; }
 
-        [Required(ErrorMessage = "Không được để trống ảnh")]
         [StringLength(30)]
         public string Anh { get; set; }
 

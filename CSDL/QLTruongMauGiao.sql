@@ -246,7 +246,7 @@ CREATE TABLE TRE
 	QueQuan nvarchar(50) not null,
 	DanToc nvarchar(30) not null,
 	NgayNhapHoc datetime not null,
-	Anh varchar(30) not null
+	Anh varchar(100) not null
 	CONSTRAINT fk_TRE_LOP FOREIGN KEY (MaLop) REFERENCES LOP(MaLop),
 	CONSTRAINT fk_TRE_PH FOREIGN KEY (MaPH) REFERENCES PHUHUYNH(MaPH) 
 )

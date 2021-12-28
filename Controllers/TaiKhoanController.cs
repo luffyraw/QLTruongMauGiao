@@ -14,18 +14,27 @@ namespace QuanLyTruongMauGiao.Controllers
     public class TaiKhoanController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
-        public Boolean CheckLogin()
+        public int CheckLogin()
         {
             var user = Session["user"] as TAIKHOAN;
             if (user != null && user.PhanQuyen == "Quản lý")
-                return true;
-            else return false;
-
+                return 0;
+            if (user != null && user.PhanQuyen == "Phụ huynh")
+                return 1;
+            if (user != null && user.PhanQuyen == "Giáo viên")
+                return 2;
+            return -1;
         }
         // GET: TaiKhoan
         public ActionResult Index(int? page)
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
                 var taikhoan = from item in db.TAIKHOANs select item;
                 //var taikhoan = from item in db.TAIKHOANs select item;
@@ -36,7 +45,6 @@ namespace QuanLyTruongMauGiao.Controllers
 
                 return View(taikhoan.ToPagedList(pageNumber,pageSize));
             }
-            else return RedirectToAction("Index", "Home");
            
 
         }
@@ -55,7 +63,13 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: TaiKhoan/Details/5
         public ActionResult Details(string id)
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
                 if (id == null)
                 {
@@ -68,19 +82,23 @@ namespace QuanLyTruongMauGiao.Controllers
                 }
                 return View(tAIKHOAN);
             }
-            else return RedirectToAction("Index", "Home");
             
         }
 
         // GET: TaiKhoan/Create
         public ActionResult Create()
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
             return View();
 
             }
-            else return RedirectToAction("Index", "Home");
         }
 
         // POST: TaiKhoan/Create
@@ -113,7 +131,13 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: TaiKhoan/Edit/5
         public ActionResult Edit(string id)
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
                 if (id == null)
                 {
@@ -126,7 +150,6 @@ namespace QuanLyTruongMauGiao.Controllers
                 }
                 return View(tAIKHOAN);
             }
-            else return RedirectToAction("Index", "Home");
            
         }
 
@@ -149,7 +172,13 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: TaiKhoan/Delete/5
         public ActionResult Delete(string id)
         {
-            if (CheckLogin())
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
                  if (id == null)
                 {
@@ -162,7 +191,6 @@ namespace QuanLyTruongMauGiao.Controllers
                 }
                 return View(tAIKHOAN);
             }
-            else return RedirectToAction("Index", "Home");
           
         }
 
