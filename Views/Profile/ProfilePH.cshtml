@@ -1,33 +1,30 @@
 ﻿@using QuanLyTruongMauGiao.Models
+
 @{
-    ViewBag.Title = "ProfileAdmin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ProfilePH";
+    Layout = "~/Views/Shared/LayoutPH.cshtml";
     var account = Session["user"] as TAIKHOAN;
     QLMauGiao db = new QLMauGiao();
-    var user = (from item in db.GIAOVIENs where item.TenTK == account.TenTK select item).FirstOrDefault();
+    var user = (from item in db.PHUHUYNHs where item.TenTK == account.TenTK select item).FirstOrDefault();
 }
 
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
+<h2>Thông tin phụ huynh @user.TenPH</h2>
 
-<script>
-    var loadFile = function (event) {
-        var image = document.getElementById("output");
-        image.src = URL.createObjectURL(event.target.files[0]);
-    }
-</script>
-
-<h2>Thông tin giáo viên @user.TenGV</h2>
-
-@using (Html.BeginForm("EditAdmin", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditPH", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <input id="MaGV" name="MaGV" class="form-control" type="text" value="@user.MaGV" hidden="hidden" />
+    <input id="MaPH" name="MaPH" class="form-control" type="text" value="@user.MaPH" hidden="hidden" />
 
     <div class="form-horizontal">
 
         <div class="form-group">
             <label class="control-label col-md-2">Họ tên</label>
             <div class="col-md-10">
-                <input id="TenGV" name="TenGV" class="form-control" type="text" value="@user.TenGV" disabled="disabled" />
+                <input id="TenPH" name="TenPH" class="form-control" type="text" value="@user.TenPH" disabled="disabled" />
             </div>
         </div>
         <div class="form-group">
@@ -43,20 +40,10 @@
                 <input id="DienThoai" name="DienThoai" class="form-control" type="tel" pattern="[0-9]{7,}" value="@user.DienThoai" required />
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Email</label>
-            <div class="col-md-10">
-                <input id="Email" name="Email" class="form-control" type="email" value="@user.Email" required />
-            </div>
-        </div>
         <div class="form-group">
             <label class="control-label col-md-2">Ảnh đại diện</label>
             <div class="col-md-10">
-                <input type="file" id="inputimg" name="inputimg" onchange="loadFile(event)" />
-                <br />
-                <img id="output" alt="anh" width="200" height="200" src="~/Image/GiaoVien/@account.AnhDaiDien" />
-
+                <img src="~/Image/PhuHuynh/@account.AnhDaiDien" width="200" height="200" />
             </div>
         </div>
 
@@ -69,5 +56,6 @@
 }
 
 <div>
-    <label><a href="/home/homepageadmin">Trở lại</a></label>
+    <label><a href="/home/homepagegv">Trở lại</a></label>
 </div>
+

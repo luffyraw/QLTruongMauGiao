@@ -82,7 +82,6 @@ namespace QuanLyTruongMauGiao.Controllers
             {
                 return View();
             }
-            return RedirectToAction("Index", "Home");
         }
 
         // POST: Lop/Create
@@ -124,7 +123,6 @@ namespace QuanLyTruongMauGiao.Controllers
                 }
                 return View(lOP);
             }
-            return RedirectToAction("Index", "Home");
           
         }
 
@@ -166,7 +164,6 @@ namespace QuanLyTruongMauGiao.Controllers
                 }
                 return View(lOP);
             }
-            return RedirectToAction("Index", "Home");
            
         }
 

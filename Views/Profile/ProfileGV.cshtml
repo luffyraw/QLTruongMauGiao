@@ -1,12 +1,12 @@
 ﻿@using QuanLyTruongMauGiao.Models
+
 @{
-    ViewBag.Title = "ProfileAdmin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ProfileGV";
+    Layout = "~/Views/Shared/LayoutGV.cshtml";
     var account = Session["user"] as TAIKHOAN;
     QLMauGiao db = new QLMauGiao();
     var user = (from item in db.GIAOVIENs where item.TenTK == account.TenTK select item).FirstOrDefault();
 }
-
 
 <script>
     var loadFile = function (event) {
@@ -14,10 +14,9 @@
         image.src = URL.createObjectURL(event.target.files[0]);
     }
 </script>
-
 <h2>Thông tin giáo viên @user.TenGV</h2>
 
-@using (Html.BeginForm("EditAdmin", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditGV", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <input id="MaGV" name="MaGV" class="form-control" type="text" value="@user.MaGV" hidden="hidden" />
@@ -59,7 +58,6 @@
 
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Lưu" class="btn btn-default" />
@@ -69,5 +67,6 @@
 }
 
 <div>
-    <label><a href="/home/homepageadmin">Trở lại</a></label>
+    <label><a href="/home/homepagegv">Trở lại</a></label>
 </div>
+

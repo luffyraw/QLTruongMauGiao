@@ -87,7 +87,7 @@ CREATE TABLE GIAOVIEN
 	NgaySinh Date not null,
 	GioiTinh bit not null,
 	QueQuan nvarchar(30) not null,
-	DienThoai char(15) not null,
+	DienThoai varchar(15) not null,
 	Email varchar(100) not null,
 	LoaiHopDong nvarchar(30) not null,
 	Luong money not null,
@@ -99,6 +99,8 @@ CREATE TABLE GIAOVIEN
 	CONSTRAINT fk_fv_tk FOREIGN KEY(TenTK) REFERENCES TAIKHOAN(TenTK),
 )
 GO
+INSERT INTO GIAOVIEN VALUES ('admin',N'Nguyễn Thu Huyền','1990/05/20',0,N'Hà Nội','0395231832','thuhuyen@gmail.com',N'Biên chế',6000000,N'5 năm',N'Cao đẳng',N'Mầm non',N'Giỏi','Admin')
+
 INSERT INTO GIAOVIEN VALUES ('gv001',N'Nguyễn Thu Huyền','1990/05/20',0,N'Hà Nội','0395231832','thuhuyen@gmail.com',N'Biên chế',6000000,N'5 năm',N'Cao đẳng',N'Mầm non',N'Giỏi','gv001')
 INSERT INTO GIAOVIEN VALUES ('gv002',N'Nguyễn Thị Hà','1991/07/10',0,N'Hà Nội','0395482752','NguyenHa@gmail.com',N'Biên chế',5500000,N'4 năm',N'Cao đẳng',N'Mầm non',N'Giỏi','gv002')
 INSERT INTO GIAOVIEN VALUES ('gv003',N'Đặng Thị Thu Trang','1990/10/11',0,N'Hà Nội','0983059483','thuTrang@gmail.com',N'Biên chế',8000000,N'10 năm',N'Cao đẳng',N'Mầm non',N'Khá','gv003')

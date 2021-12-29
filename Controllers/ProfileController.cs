@@ -1,10 +1,13 @@
 ﻿using QuanLyTruongMauGiao.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace QuanLyTruongMauGiao.Controllers
 {
@@ -20,25 +23,81 @@ namespace QuanLyTruongMauGiao.Controllers
                 return RedirectToAction("Index", "home");
             }
             else if (user.PhanQuyen == "Quản lý")
-                return RedirectToAction("ProfileAdmin", "Profile");
+                return View("ProfileAdmin");
             else if (user.PhanQuyen == "Giáo viên")
-                return RedirectToAction("ProfileGV", "Profile");
+                return View("ProfileGV");
             else
-                return RedirectToAction("ProfilePH", "Profile");
+                return View("ProfilePH");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaGV,TenGV,NgaySinh,GioiTinh,QueQuan,DienThoai,Email,LoaiHopDong,Luong,KinhNghiem,TrinhDo,ChuyenNganh,LoaiTotNghiep,TenTK")] GIAOVIEN gIAOVIEN)
+        public ActionResult EditAdmin()
         {
-            if (ModelState.IsValid)
+            string magv = Request.Form["MaGV"];
+            var user = (from item in db.GIAOVIENs where item.MaGV == magv select item).FirstOrDefault();
+            user.DienThoai = Request.Form["DienThoai"];
+            user.Email = Request.Form["Email"];
+
+            var f = Request.Files["inputimg"];
+
+            if (f != null)
             {
-                db.Entry(gIAOVIEN).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
+                string uploadPath = Server.MapPath("~/Image/GiaoVien/") + magv + ".png";
+                if (System.IO.File.Exists(uploadPath))
+                    System.IO.File.Delete(uploadPath);
+                account.AnhDaiDien = user.MaGV + ".png";
+                f.SaveAs(uploadPath);
+
             }
-            ViewBag.TenTK = new SelectList(db.TAIKHOANs, "TenTK", "MatKhau", gIAOVIEN.TenTK);
-            return View(gIAOVIEN);
+
+
+            db.SaveChanges();
+            ViewBag.Message = "Lưu thành công";
+
+            return RedirectToAction("Index", "Profile");
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditGV()
+        {
+            string magv = Request.Form["MaGV"];
+            var user = (from item in db.GIAOVIENs where item.MaGV == magv select item).FirstOrDefault();
+            user.DienThoai = Request.Form["DienThoai"];
+            user.Email = Request.Form["Email"];
+            var f = Request.Files["inputimg"];
+
+            if (f != null)
+            {
+                var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
+                string uploadPath = Server.MapPath("~/Image/GiaoVien/") + magv + ".png";
+                if (System.IO.File.Exists(uploadPath))
+                    System.IO.File.Delete(uploadPath);
+                account.AnhDaiDien = user.MaGV + ".png";
+                f.SaveAs(uploadPath);
+
+            }
+
+            db.SaveChanges();
+            ViewBag.Message = "Lưu thành công";
+            return RedirectToAction("Index", "Profile");
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPH()
+        {
+            string maph = Request.Form["MaPH"];
+            var user = (from item in db.PHUHUYNHs where item.MaPH == maph select item).FirstOrDefault();
+            user.DienThoai = Request.Form["DienThoai"];
+
+            db.SaveChanges();
+            ViewBag.Message = "Lưu thành công";
+            return RedirectToAction("Index", "Profile");
+
         }
 
     }
