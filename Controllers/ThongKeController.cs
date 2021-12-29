@@ -52,13 +52,23 @@ namespace QuanLyTruongMauGiao.Controllers
                                       DoTuoi = gr.Key,
                                       SoTre = gr.Sum(x=>x.SoTre)
                                   };
-                
+
                 Dictionary<int, float> listDT = new Dictionary<int, float>();
                 foreach (var item in queryDoTuoi.ToList())
                 {
-                    listDT.Add(item.DoTuoi,(float)item.SoTre * 100 / db.TREs.Count());
+                    listDT.Add(item.DoTuoi, (float)item.SoTre * 100 / db.TREs.Count());
                 }
-                ViewBag.DoTuoi = listDT;
+                ViewBag.DT = listDT;
+
+                List<string> listDoTuoi = new List<string>();
+                List<string> listPhanTram = new List<string>();
+                foreach (var item in queryDoTuoi.ToList())
+                {
+                    listDoTuoi.Add(item.DoTuoi.ToString());
+                    listPhanTram.Add(((float)item.SoTre * 100 / db.TREs.Count()).ToString());
+                }
+                ViewBag.DoTuoi = String.Join(",",listDoTuoi);
+                ViewBag.PhanTram = String.Join(",", listPhanTram);
                 return View(); 
             }
             else

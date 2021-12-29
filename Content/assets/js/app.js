@@ -4,7 +4,7 @@ var APP = function() {
     // PATHS
     // ======================
     //this.ASSETS_PATH = '../../assets/';
-    this.ASSETS_PATH = '~/Content/assets/';
+    this.ASSETS_PATH = './Content/assets/';
     this.SERVER_PATH = this.ASSETS_PATH + 'demo/server/';
 
     // GLOBAL HELPERS
