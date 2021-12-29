@@ -143,6 +143,7 @@
     <Compile Include="Controllers\PhanCongGiaoVienController.cs" />
     <Compile Include="Controllers\PHIEUDANHGIAsController.cs" />
     <Compile Include="Controllers\PhuHuynhController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\ThucDonController.cs" />
@@ -3143,6 +3144,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Image\Default.png" />
+    <Content Include="Image\GiaoVien\Default.png" />
     <Content Include="Image\Tre\Default.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -3717,6 +3719,7 @@
     <Content Include="Views\ThuTien\Edit.cshtml" />
     <Content Include="Views\ThuTien\Index.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Profile\ProfileAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

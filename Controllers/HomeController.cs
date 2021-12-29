@@ -67,7 +67,7 @@ namespace QuanLyTruongMauGiao.Controllers
         }
         public ActionResult Logout()
         {
-            TAIKHOAN user =(TAIKHOAN) Session["user"];
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
 
             var users = db.TAIKHOANs.Where(x => x.TenTK == user.TenTK).FirstOrDefault();
             users.TrangThaiHD = false;
@@ -78,7 +78,7 @@ namespace QuanLyTruongMauGiao.Controllers
 
         public ActionResult ChangePassword()
         {
-            if(Session["user"] != null)
+            if (Session["user"] != null)
             {
                 return View();
             }
@@ -88,7 +88,7 @@ namespace QuanLyTruongMauGiao.Controllers
             }
         }
         [HttpPost]
-        public ActionResult ChangePassword(string password_old,string password_new1,string password_new2)
+        public ActionResult ChangePassword(string password_old, string password_new1, string password_new2)
         {
             if (password_old == "" || password_new1 == "" || password_new2 == "")
             {
@@ -115,9 +115,10 @@ namespace QuanLyTruongMauGiao.Controllers
                         ViewBag.msg = "Đổi mật khẩu thành công.";
                     }
                 }
-                
+
             }
             return View();
         }
+     
     }
 }

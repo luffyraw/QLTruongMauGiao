@@ -1,0 +1,169 @@
+﻿@using QuanLyTruongMauGiao.Models
+@{
+    ViewBag.Title = "ProfileAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var account = Session["user"] as TAIKHOAN;
+    QLMauGiao db = new QLMauGiao();
+    var user = (from item in db.GIAOVIENs where item.TenTK == account.TenTK select item).FirstOrDefault();
+}
+<h2>Chỉnh sửa thông tin giáo viên @user.TenGV</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+       
+        <div class="form-group">
+            <label class="control-label col-md-2">Họ tên</label>
+            <div class="col-md-10">
+                <input id="TenGV" name="TenGV" class="form-control" type="text" value="@user.TenGV" disabled="disabled"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Ngày sinh</label>
+            <div class="col-md-10">
+                <input class="form-control" type="date" id="NgaySinh" name="NgaySinh" value="@user.NgaySinh.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Giới tính</label>
+            <div class="col-md-10">
+                <div class="col-md-10">
+                    @{
+                        if (user.GioiTinh == true)
+                        {
+                            <input type="radio" value="true" id="GioiTinh" name="GioiTinh" checked="checked" class="radio" disabled="disabled" /> <span>Nam</span>
+                            <input type="radio" value="false" id="GioiTinh" name="GioiTinh" class="radio" /> <span>Nữ</span>
+
+                        }
+                        else
+                        {
+                            <input type="radio" value="true" id="GioiTinh" name="GioiTinh" class="radio" /> <span>Nam</span>
+                            <input type="radio" value="false" id="GioiTinh" name="GioiTinh" checked="checked" class="radio" /> <span>Nữ</span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Quê quán</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.QueQuan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.QueQuan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Số điện thoại</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DienThoai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Email</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Loại hợp đồng</label>
+            <div class="col-md-10">
+                <select id="LoaiHopDong" name="LoaiHopDong" class="col-md-12">
+                    <option value="Biên chế">Biên chế</option>
+                    <option value="Hợp đồng">Hợp đồng</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.LoaiHopDong, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Lương</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Luong, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Luong, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Kinh nghiệm</label>
+            <div class="col-md-10">
+                <select id="KinhNghiem" name="KinhNghiem" class="col-md-12">
+                    <option value="Chưa có kinh nghiệm">Chưa có kinh nghiệm</option>
+                    <option value="1 năm">1 năm</option>
+                    <option value="2 năm">2 năm</option>
+                    <option value="3 năm">3 năm</option>
+                    <option value="4 năm">4 năm</option>
+                    <option value="5 năm">5 năm</option>
+                    <option value="trên 5 năm">Trên 5 năm</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.KinhNghiem, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Trình độ</label>
+            <div class="col-md-10">
+                <select id="TrinhDo" name="TrinhDo" class="col-md-12">
+                    <option value="Nghề">Nghề</option>
+                    <option value="Cao đẳng">Cao đẳng</option>
+                    <option value="Đại học">Đại học</option>
+                    <option value="Thạc sĩ">Thạc sĩ</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.TrinhDo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Chuyên ngành</label>
+            <div class="col-md-10">
+                <select id="ChuyenNganh" name="ChuyenNganh" class="col-md-12">
+                    <option value="Mần non">Mầm non</option>
+                    <option value="Tiểu học">Tiểu học</option>
+                    <option value="Trung học cơ sở">Trung học cơ sở</option>
+                    <option value="Trung học phổ thông">Trung học phổ thông</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.ChuyenNganh, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Loại tốt nghiệp</label>
+            <div class="col-md-10">
+                <select id="LoaiTotNghiep" name="LoaiTotNghiep" class="col-md-12">
+                    <option value="Giỏi">Giỏi</option>
+                    <option value="Giỏi">Khá</option>
+                    <option value="Giỏi">Khá</option>
+                    <option value="Giỏi">Trung bình</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.LoaiTotNghiep, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Tài khoản</label>
+            <div class="col-md-10">
+                @Model.TenTK
+                @Html.DropDownList("TenTK", null, htmlAttributes: new { @class = "form-control", @hidden = "hidden" })
+                @Html.ValidationMessageFor(model => model.TenTK, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Lưu" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở lại", "Index")
+</div>
