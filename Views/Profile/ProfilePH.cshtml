@@ -7,11 +7,12 @@
     QLMauGiao db = new QLMauGiao();
     var user = (from item in db.PHUHUYNHs where item.TenTK == account.TenTK select item).FirstOrDefault();
 }
-
-@if (ViewBag.Message != null)
-{
-    <p>@ViewBag.Message</p>
-}
+<script>
+    var loadFile = function (event) {
+        var image = document.getElementById("output");
+        image.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
 <h2>Thông tin phụ huynh @user.TenPH</h2>
 
 @using (Html.BeginForm("EditPH", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -43,7 +44,12 @@
         <div class="form-group">
             <label class="control-label col-md-2">Ảnh đại diện</label>
             <div class="col-md-10">
-                <img src="~/Image/PhuHuynh/@account.AnhDaiDien" width="200" height="200" />
+                <input type="file" id="inputimg" name="inputimg" onchange="loadFile(event)" />
+
+
+                <br />
+                <img id="output" alt="anh" width="200" height="200" src="~/Image/PhuHuynh/@account.AnhDaiDien" />
+
             </div>
         </div>
 
@@ -56,6 +62,6 @@
 }
 
 <div>
-    <label><a href="/home/homepagegv">Trở lại</a></label>
+    <label><a href="/home/homepageph">Trở lại</a></label>
 </div>
 

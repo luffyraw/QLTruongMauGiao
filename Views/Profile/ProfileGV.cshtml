@@ -14,11 +14,20 @@
         image.src = URL.createObjectURL(event.target.files[0]);
     }
 </script>
-<h2>Thông tin giáo viên @user.TenGV</h2>
+<style>
+    .warning {
+        font-size: 30px;
+        color: red;
+    }
+</style>
 
 @using (Html.BeginForm("EditGV", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+
+
+    <h2>Thông tin giáo viên @user.TenGV</h2>
+
     <input id="MaGV" name="MaGV" class="form-control" type="text" value="@user.MaGV" hidden="hidden" />
 
     <div class="form-horizontal">
@@ -53,6 +62,8 @@
             <label class="control-label col-md-2">Ảnh đại diện</label>
             <div class="col-md-10">
                 <input type="file" id="inputimg" name="inputimg" onchange="loadFile(event)" />
+
+
                 <br />
                 <img id="output" alt="anh" width="200" height="200" src="~/Image/GiaoVien/@account.AnhDaiDien" />
 

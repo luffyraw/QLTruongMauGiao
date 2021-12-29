@@ -49,13 +49,10 @@ namespace QuanLyTruongMauGiao.Controllers
                     System.IO.File.Delete(uploadPath);
                 account.AnhDaiDien = user.MaGV + ".png";
                 f.SaveAs(uploadPath);
+                Session["user"] = account;
 
             }
-
-
             db.SaveChanges();
-            ViewBag.Message = "Lưu thành công";
-
             return RedirectToAction("Index", "Profile");
 
         }
@@ -68,6 +65,8 @@ namespace QuanLyTruongMauGiao.Controllers
             var user = (from item in db.GIAOVIENs where item.MaGV == magv select item).FirstOrDefault();
             user.DienThoai = Request.Form["DienThoai"];
             user.Email = Request.Form["Email"];
+
+
             var f = Request.Files["inputimg"];
 
             if (f != null)
@@ -78,13 +77,11 @@ namespace QuanLyTruongMauGiao.Controllers
                     System.IO.File.Delete(uploadPath);
                 account.AnhDaiDien = user.MaGV + ".png";
                 f.SaveAs(uploadPath);
+                Session["user"] = account;
 
-            }
-
+            }           
             db.SaveChanges();
-            ViewBag.Message = "Lưu thành công";
             return RedirectToAction("Index", "Profile");
-
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -94,8 +91,20 @@ namespace QuanLyTruongMauGiao.Controllers
             var user = (from item in db.PHUHUYNHs where item.MaPH == maph select item).FirstOrDefault();
             user.DienThoai = Request.Form["DienThoai"];
 
+            var f = Request.Files["inputimg"];
+
+            if (f != null)
+            {
+                var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
+                string uploadPath = Server.MapPath("~/Image/PhuHuynh/") + maph + ".png";
+                if (System.IO.File.Exists(uploadPath))
+                    System.IO.File.Delete(uploadPath);
+                account.AnhDaiDien = maph + ".png";
+                f.SaveAs(uploadPath);
+                Session["user"] = account;
+
+            }
             db.SaveChanges();
-            ViewBag.Message = "Lưu thành công";
             return RedirectToAction("Index", "Profile");
 
         }
