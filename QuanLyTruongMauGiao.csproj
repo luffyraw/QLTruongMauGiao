@@ -3723,6 +3723,8 @@
     <Content Include="Views\Profile\ProfileAdmin.cshtml" />
     <Content Include="Views\Profile\ProfileGV.cshtml" />
     <Content Include="Views\Profile\ProfilePH.cshtml" />
+    <Content Include="Views\Lop\AddTre.cshtml" />
+    <Content Include="Views\Lop\AddTrePV.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

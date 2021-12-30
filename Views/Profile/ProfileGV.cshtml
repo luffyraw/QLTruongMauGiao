@@ -3,9 +3,14 @@
 @{
     ViewBag.Title = "ProfileGV";
     Layout = "~/Views/Shared/LayoutGV.cshtml";
+    
     var account = Session["user"] as TAIKHOAN;
     QLMauGiao db = new QLMauGiao();
     var user = (from item in db.GIAOVIENs where item.TenTK == account.TenTK select item).FirstOrDefault();
+    var MaLop = (from item in db.PHANCONGGIAOVIENs where item.MaGV == user.MaGV select item.MaLop).FirstOrDefault();
+
+
+
 }
 
 <script>

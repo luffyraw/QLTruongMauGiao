@@ -43,10 +43,18 @@ namespace QuanLyTruongMauGiao.Controllers
             }
  
         }
-        public ActionResult AddTre(string MaLop)
+        public ActionResult AddTre(string id)
         {
-
-            return View();
+            LOP Lop = db.LOPs.Find(id);
+            return View(Lop);
+        }
+        public PartialViewResult AddTrePV(string id, string MaLop)
+        {
+            TRE tre = (from item in db.TREs where item.MaTre == id select item).FirstOrDefault();
+            tre.MaLop = MaLop;
+            LOP Lop = db.LOPs.Find(MaLop);
+            db.SaveChanges();
+            return PartialView("AddTre", Lop);
         }
         // GET: Lop/Details/5
         public ActionResult Details(string id)
