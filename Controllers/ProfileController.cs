@@ -40,19 +40,21 @@ namespace QuanLyTruongMauGiao.Controllers
             user.Email = Request.Form["Email"];
 
             var f = Request.Files["inputimg"];
+            var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
+            string filename = magv + ".png";
 
             if (f != null)
             {
-                var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
-                string uploadPath = Server.MapPath("~/Image/GiaoVien/") + magv + ".png";
+                string uploadPath = Server.MapPath("~/Image/GiaoVien/") + filename;
                 if (System.IO.File.Exists(uploadPath))
                     System.IO.File.Delete(uploadPath);
-                account.AnhDaiDien = user.MaGV + ".png";
+                account.AnhDaiDien = filename;
                 f.SaveAs(uploadPath);
-                Session["user"] = account;
 
             }
             db.SaveChanges();
+            Session["user"] = account;
+
             return RedirectToAction("Index", "Profile");
 
         }
@@ -68,19 +70,20 @@ namespace QuanLyTruongMauGiao.Controllers
 
 
             var f = Request.Files["inputimg"];
+            string filename = magv + ".png";
+            var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
 
             if (f != null)
             {
-                var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
-                string uploadPath = Server.MapPath("~/Image/GiaoVien/") + magv + ".png";
+                string uploadPath = Server.MapPath("~/Image/GiaoVien/") + filename;
                 if (System.IO.File.Exists(uploadPath))
                     System.IO.File.Delete(uploadPath);
-                account.AnhDaiDien = user.MaGV + ".png";
+                account.AnhDaiDien = filename;
                 f.SaveAs(uploadPath);
-                Session["user"] = account;
 
-            }           
+            }
             db.SaveChanges();
+            Session["user"] = account;
             return RedirectToAction("Index", "Profile");
         }
         [HttpPost]
@@ -92,19 +95,20 @@ namespace QuanLyTruongMauGiao.Controllers
             user.DienThoai = Request.Form["DienThoai"];
 
             var f = Request.Files["inputimg"];
+            string filename = maph + ".png";
+            var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
 
             if (f != null)
             {
-                var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
-                string uploadPath = Server.MapPath("~/Image/PhuHuynh/") + maph + ".png";
+                string uploadPath = Server.MapPath("~/Image/PhuHuynh/") + filename;
                 if (System.IO.File.Exists(uploadPath))
                     System.IO.File.Delete(uploadPath);
-                account.AnhDaiDien = maph + ".png";
+                account.AnhDaiDien = filename;
                 f.SaveAs(uploadPath);
-                Session["user"] = account;
 
             }
             db.SaveChanges();
+            Session["user"] = account;
             return RedirectToAction("Index", "Profile");
 
         }

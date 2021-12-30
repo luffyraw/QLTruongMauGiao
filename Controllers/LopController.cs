@@ -43,7 +43,11 @@ namespace QuanLyTruongMauGiao.Controllers
             }
  
         }
+        public ActionResult AddTre(string MaLop)
+        {
 
+            return View();
+        }
         // GET: Lop/Details/5
         public ActionResult Details(string id)
         {

@@ -14,97 +14,82 @@
 <h2>Thông tin lớp @Model.TenLop</h2>
 
 <div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SiSo)
-        </dt>
+    <h3>
+        Sĩ số: @Html.DisplayFor(model => model.SiSo)
+    </h3>
+    <h3>
+        Độ tuổi: @Html.DisplayFor(model => model.DoTuoi)
 
-        <dd>
-            @Html.DisplayFor(model => model.SiSo)
-        </dd>
+    </h3>
+    <h3>
+        Khối: @Html.DisplayFor(model => model.Khoi)
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DoTuoi)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DoTuoi)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Khoi)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Khoi)
-        </dd>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="ibox">
-                    <div class="ibox-head">
-                        <div class="ibox-title">Danh sách trẻ trong lớp</div>
-                        <div class="ibox-tools">
-                            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
-                            <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
-                        </div>
-                    </div>
-                    <div class="ibox-body">
-                        <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên phụ huynh</th>
-                                    <th>Tên trẻ</th>
-                                    <th>Ngày sinh</th>
-                                    <th>Giới tính</th>
-                                </tr>
-                            </thead>
-                            @{
-                                int stt = 0;
-                            }
-                            <tbody>
-                                @foreach (var item in lisths)
-                                {
-                                    stt++;
-                                    <tr>
-                                        <td>
-                                            @stt
-                                        </td>
-                                        <td>
-                                            @item.PHUHUYNH.TenPH
-                                        </td>
-                                        <td>
-                                            @item.TenTre
-                                        </td>
-                                        <td>
-                                            @item.NgaySinh.ToString("dd/MM/yyyy")
-                                        </td>
-                                        @{
-                                            if (item.GioiTinh)
-                                            {
-                                                <td>Nam</td>
-                                            }
-                                            else
-                                            {
-                                                <td>Nữ</td>
-                                            }
-                                        }
-                                        <td>
-                                            <a href="~/Tre/Details/@item.MaTre">Chi tiết</a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <a href="#">Thêm trẻ vào lớp</a>
+    </h3>
+    <a href="#">Thêm trẻ vào lớp</a>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox">
+                <div class="ibox-head">
+                    <div class="ibox-title">Danh sách trẻ trong lớp</div>
+                    <div class="ibox-tools">
+                        <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+                        <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
                     </div>
                 </div>
+                <div class="ibox-body">
+                    <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên phụ huynh</th>
+                                <th>Tên trẻ</th>
+                                <th>Ngày sinh</th>
+                                <th>Giới tính</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int stt = 0;
+                        }
+                        <tbody>
+                            @foreach (var item in lisths)
+                            {
+                                stt++;
+                                <tr>
+                                    <td>
+                                        @stt
+                                    </td>
+                                    <td>
+                                        @item.PHUHUYNH.TenPH
+                                    </td>
+                                    <td>
+                                        @item.TenTre
+                                    </td>
+                                    <td>
+                                        @item.NgaySinh.ToString("dd/MM/yyyy")
+                                    </td>
+                                    @{
+                                        if (item.GioiTinh)
+                                        {
+                                            <td>Nam</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Nữ</td>
+                                        }
+                                    }
+                                    <td>
+                                        <a href="~/Tre/Details/@item.MaTre">Chi tiết</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
+    </div>
 
-
-        <dd>
-    </dl>
 </div>
 <p>
     @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.MaLop }) |
