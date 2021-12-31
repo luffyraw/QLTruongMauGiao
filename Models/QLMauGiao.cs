@@ -24,6 +24,7 @@ namespace QuanLyTruongMauGiao.Models
         public virtual DbSet<PHIEUDANHGIA> PHIEUDANHGIAs { get; set; }
         public virtual DbSet<PHIEUTHUTIEN> PHIEUTHUTIENs { get; set; }
         public virtual DbSet<PHUHUYNH> PHUHUYNHs { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TAIKHOAN> TAIKHOANs { get; set; }
         public virtual DbSet<THUCDONNGAY> THUCDONNGAYs { get; set; }
         public virtual DbSet<TRE> TREs { get; set; }
@@ -61,7 +62,6 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<GIAOVIEN>()
                 .Property(e => e.DienThoai)
-                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<GIAOVIEN>()
@@ -99,14 +99,18 @@ namespace QuanLyTruongMauGiao.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<LOP>()
+                .Property(e => e.NamHoc)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<LOP>()
                 .HasMany(e => e.PHANCONGGIAOVIENs)
                 .WithRequired(e => e.LOP)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<LOP>()
                 .HasMany(e => e.TREs)
-                .WithRequired(e => e.LOP)
-                .WillCascadeOnDelete(false);
+                .WithMany(e => e.LOPs)
+                .Map(m => m.ToTable("LOP_TRE").MapLeftKey("MaLop").MapRightKey("MaTre"));
 
             modelBuilder.Entity<NGAYDIHOC>()
                 .HasMany(e => e.DIEMDANHs)
@@ -209,10 +213,6 @@ namespace QuanLyTruongMauGiao.Models
 
             modelBuilder.Entity<TRE>()
                 .Property(e => e.MaTre)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<TRE>()
-                .Property(e => e.MaLop)
                 .IsUnicode(false);
 
             modelBuilder.Entity<TRE>()
