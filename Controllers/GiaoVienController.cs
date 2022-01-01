@@ -95,7 +95,13 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.GIAOVIENs.Add(gIAOVIEN);
+                TAIKHOAN tk = new TAIKHOAN();
+                tk.TenTK = gIAOVIEN.TenTK;
+                tk.MatKhau = "123456";
+                tk.PhanQuyen = "Giáo viên";
+                tk.TrangThaiHD = false;
+                db.TAIKHOANs.Add(tk);
+                db.GIAOVIENs.Add(gIAOVIEN); 
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -178,12 +184,17 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             GIAOVIEN gIAOVIEN = db.GIAOVIENs.Find(id);
             var pcGV = (from item in db.PHANCONGGIAOVIENs where item.MaGV == id select item).FirstOrDefault();
-            db.PHANCONGGIAOVIENs.Remove(pcGV);
+            if (pcGV != null)
+                db.PHANCONGGIAOVIENs.Remove(pcGV);
             var pdg = from item in db.PHIEUDANHGIAs where item.MaGV == id select item;
-            foreach (var item in pdg)
+            if (pdg != null)
             {
-                db.PHIEUDANHGIAs.Remove(item);
+                foreach (var item in pdg)
+                {
+                    db.PHIEUDANHGIAs.Remove(item);
+                }
             }
+           
             db.GIAOVIENs.Remove(gIAOVIEN);
             db.SaveChanges();
             return RedirectToAction("Index");

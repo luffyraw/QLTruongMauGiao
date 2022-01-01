@@ -84,7 +84,15 @@ namespace QuanLyTruongMauGiao.Controllers
             }
             
         }
-
+        public ActionResult ResetPass(string id)
+        {
+            TAIKHOAN tAIKHOAN = db.TAIKHOANs.Find(id);
+            if (tAIKHOAN == null)
+            {
+                return HttpNotFound();
+            }
+            return View(tAIKHOAN);
+        }
         // GET: TaiKhoan/Create
         public ActionResult Create()
         {

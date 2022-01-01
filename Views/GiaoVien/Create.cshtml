@@ -64,7 +64,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.DienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DienThoai, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.DienThoai, new { htmlAttributes = new { @class = "form-control", @type = "tel", @pattern = "[0-9]{7,}" } })
             @Html.ValidationMessageFor(model => model.DienThoai, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -72,7 +72,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -91,7 +91,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Luong, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Luong, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Luong, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
             @Html.ValidationMessageFor(model => model.Luong, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -152,25 +152,17 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.TenTK, "TenTK", htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-5"> Tên tài khoản</label>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.TenTK, new { htmlAttributes = new { @list = "ide", @class = "form-control" } })
+            <input type="text" id="TenTK" name="TenTK" value="@magv" disabled="disabled" class="form-control" />
 
             @Html.ValidationMessageFor(model => model.TenTK, "", new { @class = "text-danger" })
         </div>
+        <label class="control-label col-md-5"> Mật khẩu mặc định: 123456</label>
     </div>
-    <datalist id="ide">
-        @foreach (var item in db.TAIKHOANs)
-        {
-            <option value="@item.TenTK"></option>
-        }
+  
 
-    </datalist>
-
-
-    <div class="form-group">
-        <label class="control-label col-md-5">Chưa có tài khoản? <a href="~/TaiKhoan/Create">Tạo tài khoản</a></label>
-    </div>
+    
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Thêm" class="btn btn-default" />

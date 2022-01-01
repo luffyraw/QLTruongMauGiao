@@ -1,0 +1,20 @@
+﻿@model QuanLyTruongMauGiao.Models.TAIKHOAN
+@using QuanLyTruongMauGiao.Models
+@{
+    ViewBag.Title = "ResetPass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    QLMauGiao db = new QLMauGiao();
+    var gv = (from item in db.GIAOVIENs where item.TenTK == Model.TenTK select item).FirstOrDefault();
+}
+<h3>Bạn có muốn đặt lại mật khẩu</h3>
+<b><label class="form-control">Tên tài khoản: @Model.TenTK </label></b>
+<b><label class="form-control">Giáo viên: @gv.TenGV </label></b>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

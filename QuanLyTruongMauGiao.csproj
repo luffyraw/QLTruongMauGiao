@@ -3725,6 +3725,7 @@
     <Content Include="Views\Profile\ProfilePH.cshtml" />
     <Content Include="Views\Lop\AddTre.cshtml" />
     <Content Include="Views\Lop\AddTrePV.cshtml" />
+    <Content Include="Views\TaiKhoan\ResetPass.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
