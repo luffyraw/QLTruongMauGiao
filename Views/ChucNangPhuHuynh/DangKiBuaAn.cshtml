@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<QuanLyTruongMauGiao.Models.THUCDONNGAY>
+@using QuanLyTruongMauGiao.Models
 
 @{
     ViewBag.Title = "DangKiBuaAn";
@@ -9,7 +10,7 @@
 <br />
 
 <table class="table">
-    <tr>
+    @*<tr>
         @using (Html.BeginForm())
         {
             <p>
@@ -17,19 +18,19 @@
                 <input type="submit" value="Search" />
             </p>
         }
-    </tr>
+    </tr>*@
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Ngay)
+            Ngày
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BuaSang)
+            Bữa sáng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BuaTrua)
+            Bữa trưa
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BuaXe)
+            Bữa xế
         </th>
         <th>
             Chọn
@@ -52,11 +53,11 @@
                 @item.BuaXe
             </td>
             <td>
-                <input type="checkbox" />
+                <input type="checkbox" value="choice" />
             </td>
         </tr>
     }
 </table>
-<p><center><input type="submit" value="Đăng kí" /><input type="reset" value="Hủy" style="margin-left:50px" onclick="location.href = '@Url.Action("HomePagePH","Home")'" /></center></p>
+<p><center><button type="submit">Đăng kí</button><input type="reset" value="Hủy" style="margin-left:50px" onclick="location.href = '@Url.Action("HomePagePH","Home")'" /></center></p>
 
 

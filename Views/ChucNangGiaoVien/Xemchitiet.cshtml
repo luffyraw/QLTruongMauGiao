@@ -5,13 +5,98 @@
     Layout = "~/Views/Shared/LayoutGV.cshtml";
 }
 
-<h2>Thông tin chi tiết</h2>
+<style>
+    .ibox {
+        background-color: #f1f1f1;
+    }
 
+    .anh {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+<div class="form-control col-10">
+    <h4>Thông tin chi tiết trẻ @Model.MaTre </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên lớp
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOP.TenLop)
+        </dd>
+
+        @*<dt>
+            Phụ huynh
+        </dt>
+        <dd>@Model.PHUHUYNH.TenPH </dd>*@
+        <dt>
+            Tên trẻ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenTre)
+        </dd>
+
+        <dt>
+            Ngày sinh
+        </dt>
+
+        <dd>
+            @Model.NgaySinh.ToString("dd/MM/yyyy")
+        </dd>
+
+        <dt>
+            Giới tính
+        </dt>
+
+        @{
+            if (Model.GioiTinh)
+            {
+                <dd>Nam</dd>
+            }
+            else
+            {
+                <dd>Nữ</dd>
+            }
+        }
+        <dt>
+            Quê quán
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QueQuan)
+        </dd>
+
+        <dt>
+            Dân tộc
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DanToc)
+        </dd>
+
+        <dt>
+            Ngày nhập học
+        </dt>
+
+        <dd>
+            @Model.NgayNhapHoc.ToString("dd/MM/yyyy")
+        </dd>
+
+        <dt>
+            Ảnh
+        </dt>
+
+        <dd>
+            <img src="~/Image/Tre/@Model.Anh" class="anh" />
+        </dd>
         <div class="row">
             <div class="col-md-6">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Chi tiết trẻ</div>
+                        <div class="ibox-title">Chi tiết phụ huynh </div>
                         <div class="ibox-tools">
                             <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
                             <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
@@ -20,105 +105,48 @@
                     <div class="ibox-body">
                         <form class="form-horizontal">
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Mã trẻ</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.MaTre)
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Họ Tên</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.TenTre)
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Ngày Sinh</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.NgaySinh)
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Giới Tính</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.GioiTinh)
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Địa Chỉ</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.QueQuan)
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Dân tộc</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.DanToc)
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Ngày nhập học</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.NgayNhapHoc)
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Ảnh</label>
-                                <div class="col-sm-10 ml-sm-auto">
-                                    @Html.DisplayFor(model => model.Anh)
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="ibox">
-                    <div class="ibox-head">
-                        <div class="ibox-title">Chi tiết phụ huynh</div>
-                        <div class="ibox-tools">
-                            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
-                            <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
-                        </div>
-                    </div>
-                    <div class="ibox-body">
-                        <form class="form-horizontal">
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Mã phụ huynh</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.MaPH)
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Họ Tên</label>
+                                <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Họ tên</b></label>
                                 <div class="col-sm-10">
                                     @Html.DisplayFor(model => model.PHUHUYNH.TenPH)
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Ngày Sinh</label>
+                                <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Ngày sinh</b></label>
                                 <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.PHUHUYNH.NamSinh)
+                                    @Model.PHUHUYNH.NamSinh.ToString("dd/MM/yyyy")
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Giới Tính</label>
-                                <div class="col-sm-10">
-                                    @Html.DisplayFor(model => model.PHUHUYNH.GioiTinh)
-                                </div>
+                                <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Giới tính</b></label>
+                                @if (Model.PHUHUYNH.GioiTinh)
+                                {
+                                    <div class="col-sm-10">
+                                        Nam
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-10">
+                                        Nữ
+                                    </div>
+                                }
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Địa Chỉ</label>
+                                <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Địa chỉ</b></label>
                                 <div class="col-sm-10">
                                     @Html.DisplayFor(model => model.PHUHUYNH.DiaChi)
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="padding-top: 0">Điện Thoại</label>
+                                <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Điện thoại</b></label>
                                 <div class="col-sm-10">
                                     @Html.DisplayFor(model => model.PHUHUYNH.DienThoai)
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label" style="padding-top: 0"><b>Tài khoản</b></label>
+                                <div class="col-sm-10">
+                                    @Html.DisplayFor(model => model.PHUHUYNH.TenTK)
                                 </div>
                             </div>
                         </form>
@@ -127,6 +155,8 @@
             </div>
         </div>
 
+    </dl>
+</div>
 <p>
     @Html.ActionLink("Back to List", "XemDanhSachlop")
 </p>

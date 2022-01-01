@@ -18,24 +18,41 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             return View();
         }
-        public ActionResult DangKiBuaAn(DateTime? startdate, DateTime? enddate, int? page)
+        public ActionResult DangKiBuaAn()
         {
-            IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
-
-            if (startdate != null && enddate != null)
+            if (Session["user"] != null)
             {
-                thucdons = thucdons.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
+                return View(db.THUCDONNGAYs.ToList());
             }
-            thucdons = thucdons.OrderBy(td => td.Ngay);
-            return View(db.THUCDONNGAYs.ToList());
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        public ActionResult DangKiBuaAn(bool choice)
+        {
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            var users = db.DIEMDANHs.Where(x => x.TRE.PHUHUYNH.TenTK == user.TenTK).FirstOrDefault();
+            if (choice == true)
+                users.DangKiBuaAn = true;
+            else users.DangKiBuaAn = false;
+            db.SaveChanges();
+            ViewBag.msg = "Đăng kí thành công!!!";
+            return View();
         }
         public ActionResult XemDanhGia()
         {
-            return View(db.KETQUADANHGIAs.ToList());
+            return View();
         }
         public ActionResult DongHocPhi()
         {
-            return View(db.DONGCHIPHIs.ToList());
+            TAIKHOAN account = (TAIKHOAN)Session["user"];
+            var user = (from item in db.PHIEUTHUTIENs where item.TRE.PHUHUYNH.TenTK == account.TenTK select item).FirstOrDefault();
+            user.TrangThai = false;
+            db.SaveChanges();
+            ViewBag.msg("Đóng tiền thành công");
+            return View();
         }
     }
 }
