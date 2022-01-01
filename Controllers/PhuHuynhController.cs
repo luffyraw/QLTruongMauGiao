@@ -18,7 +18,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhuHuynh
         public ActionResult Index(string searchstr, int? page)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 var phuHuynh = db.PHUHUYNHs.Include(p => p.TAIKHOAN);
                 if (!String.IsNullOrEmpty(searchstr))
@@ -38,7 +39,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhuHuynh/Details/5
         public ActionResult Details(string id)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 if (id == null)
                 {
@@ -56,15 +58,40 @@ namespace QuanLyTruongMauGiao.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
+        public string SinhMaPH()
+        {
+            var ph = from item in db.PHUHUYNHs
+                      select item;
+            int soPH = ph.Count() + 1;
+            string maPH = "";
+            if (soPH < 10)
+            {
+                maPH = String.Format("{0}00{1}", "ph", soPH);
+            }
+            else if (soPH < 100)
+            {
+                maPH = String.Format("{0}0{1}", "ph", soPH);
+            }
+            else if (soPH < 1000)
+            {
+                maPH = String.Format("{0}{1}", "ph", soPH);
+            }
+            else
+            {
+                maPH = soPH.ToString();
+            }
+            return maPH;
+        }
         // GET: PhuHuynh/Create
         public ActionResult Create()
         {
-            if(Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
-                var taiKhoanPH = from ph in db.PHUHUYNHs
-                                 select ph.TenTK;
+                var taiKhoanPH = (from ph in db.PHUHUYNHs
+                                 select ph.TenTK).Distinct();
                 ViewBag.TenTK = new SelectList(taiKhoanPH);
+                ViewBag.MaPH = SinhMaPH();
                 return View();               
             }
             else
@@ -78,23 +105,42 @@ namespace QuanLyTruongMauGiao.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaPH,TenPH,NamSinh,GioiTinh,DiaChi,DienThoai,TenTK")] PHUHUYNH pHUHUYNH)
+        public ActionResult Create(/*FormCollection frm*/[Bind(Include = "MaPH,TenPH,NamSinh,GioiTinh,DiaChi,DienThoai,TenTK")] PHUHUYNH pHUHUYNH)
         {
+            
             if (ModelState.IsValid)
             {
-                db.PHUHUYNHs.Add(pHUHUYNH);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    //PHUHUYNH ph = new PHUHUYNH();
+                    //ph.MaPH = frm["MaPH"];
+                    //ph.TenPH = frm["TenPH"];
+                    //ph.NamSinh = DateTime.Parse(frm["NamSinh"]);
+                    //ph.GioiTinh = Boolean.Parse(frm["GioiTinh"]);
+                    //ph.DiaChi = frm["DiaChi"];
+                    //ph.DienThoai = frm["DienThoai"];
+                    //ph.TenTK = frm["TenTK"];
+                    db.PHUHUYNHs.Add(pHUHUYNH);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.msg = ex.Message;
+                    
+                }
             }
-
-            ViewBag.TenTK = new SelectList(db.TAIKHOANs, "TenTK", "MatKhau", pHUHUYNH.TenTK);
+            var taiKhoanPH = (from ph in db.PHUHUYNHs
+                              select ph.TenTK).Distinct();
+            ViewBag.TenTK = new SelectList(taiKhoanPH);
             return View(pHUHUYNH);
         }
 
         // GET: PhuHuynh/Edit/5
         public ActionResult Edit(string id)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 if (id == null)
                 {
@@ -105,8 +151,8 @@ namespace QuanLyTruongMauGiao.Controllers
                 {
                     return HttpNotFound();
                 }
-                var taiKhoanPH = from ph in db.PHUHUYNHs
-                                 select ph.TenTK;
+                var taiKhoanPH = (from ph in db.PHUHUYNHs
+                                  select ph.TenTK).Distinct();
                 ViewBag.TenTK = new SelectList(taiKhoanPH);
                 return View(pHUHUYNH); 
             }
@@ -136,7 +182,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhuHuynh/Delete/5
         public ActionResult Delete(string id)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 if (id == null)
                 {

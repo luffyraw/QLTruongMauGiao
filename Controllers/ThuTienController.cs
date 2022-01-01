@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyTruongMauGiao.Models;
+using PagedList;
 
 namespace QuanLyTruongMauGiao.Controllers
 {
@@ -15,110 +16,150 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: ThuTien
-        public ActionResult Index()
+        public ActionResult Index(string TrangThai,int? page)
         {
-            var pHIEUTHUTIENs = db.PHIEUTHUTIENs.Include(p => p.TRE);
-            return View(pHIEUTHUTIENs.ToList());
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
+            {
+                var pHIEUTHUTIENs = db.PHIEUTHUTIENs.Include(p => p.TRE);
+                if (TrangThai == "HoanThanh")
+                {
+                    pHIEUTHUTIENs = pHIEUTHUTIENs.Where(x => x.TrangThai == true);
+                }
+                if (TrangThai == "ChuaHoanThanh")
+                {
+                    pHIEUTHUTIENs = pHIEUTHUTIENs.Where(x => x.TrangThai == false);
+                }
+                pHIEUTHUTIENs = pHIEUTHUTIENs.OrderBy(p => p.MaPhieu);
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(pHIEUTHUTIENs.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // GET: ThuTien/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                PHIEUTHUTIEN pHIEUTHUTIEN = db.PHIEUTHUTIENs.Find(id);
+                if (pHIEUTHUTIEN == null)
+                {
+                    return HttpNotFound();
+                }
+                var list = from d in db.DONGCHIPHIs
+                           join cp in db.CHIPHIs on d.MaChiPhi equals cp.MaChiPhi
+                           where d.MaPhieu == id
+                           select new
+                           {
+                               MaPhieu = id,
+                               Ma = d.MaChiPhi,
+                               ThanhTien = cp.DonGia * d.SoLuong
+                           };
+                var listChiPhi = from d in db.DONGCHIPHIs
+                                 where d.MaPhieu == id
+                                 select d;
+                ViewBag.ListChiPhi = listChiPhi.ToList();
+                decimal tongTien = 0;
+                foreach (var item in list.ToList())
+                {
+                    tongTien += item.ThanhTien;
+                }
+                ViewBag.TongTien = (long)tongTien;
+                return View(pHIEUTHUTIEN); 
             }
-            PHIEUTHUTIEN pHIEUTHUTIEN = db.PHIEUTHUTIENs.Find(id);
-            if (pHIEUTHUTIEN == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            return View(pHIEUTHUTIEN);
+        }
+
+        public string SinhMaPhieu()
+        {
+            var phieu = from item in db.PHIEUTHUTIENs
+                        select item;
+            int soPhieu = phieu.Count() + 1;
+            string maPhieu = "";
+            if(soPhieu < 10)
+            {
+                maPhieu = String.Format("{0}00{1}", "PT", soPhieu);
+            }
+            else if (soPhieu < 100)
+            {
+                maPhieu = String.Format("{0}0{1}", "PT", soPhieu);
+            }
+            else if (soPhieu < 1000)
+            {
+                maPhieu = String.Format("{0}{1}", "PT", soPhieu);
+            }
+            else
+            {
+                maPhieu = soPhieu.ToString();
+            }
+            return maPhieu;
         }
 
         // GET: ThuTien/Create
         public ActionResult Create()
         {
-            ViewBag.MaTre = new SelectList(db.TREs, "MaTre", "MaLop");
-            return View();
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
+            {
+                ViewBag.MaPhieu = SinhMaPhieu();
+                ViewBag.NgayLap = DateTime.Now.ToString("dd-MM-yyyy");
+                ViewBag.Tre = db.TREs;
+                ViewBag.ChiPhi = db.CHIPHIs;
+                return View(db.CHIPHIs.ToList()); 
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: ThuTien/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaPhieu,MaTre,NgayLapPhieu,TrangThai")] PHIEUTHUTIEN pHIEUTHUTIEN)
+        public ActionResult Create(string maPhieu, string maTre,IEnumerable<DONGCHIPHI> chiPhi) 
         {
-            if (ModelState.IsValid)
+            if (maPhieu != null && maTre != null && chiPhi != null)
             {
-                db.PHIEUTHUTIENs.Add(pHIEUTHUTIEN);
+                PHIEUTHUTIEN phieu = new PHIEUTHUTIEN();
+                phieu.MaPhieu = maPhieu;
+                phieu.MaTre = maTre;
+                phieu.NgayLapPhieu = DateTime.Now;
+                phieu.TrangThai = false;
+
+                db.PHIEUTHUTIENs.Add(phieu);
+
+                foreach (var item in chiPhi.ToList())
+                {
+                    DONGCHIPHI dongCP = new DONGCHIPHI();
+                    dongCP.MaPhieu = item.MaPhieu;
+                    dongCP.MaChiPhi = item.MaChiPhi;
+                    dongCP.SoLuong = item.SoLuong;
+                    db.DONGCHIPHIs.Add(dongCP);
+                }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json("Tạo phiếu thu thành công", JsonRequestBehavior.AllowGet);
             }
-
-            ViewBag.MaTre = new SelectList(db.TREs, "MaTre", "MaLop", pHIEUTHUTIEN.MaTre);
-            return View(pHIEUTHUTIEN);
+            ViewBag.MaPhieu = SinhMaPhieu();
+            ViewBag.NgayLap = DateTime.Now.ToString("dd-MM-yyyy");
+            ViewBag.Tre = db.TREs;
+            ViewBag.ChiPhi = db.CHIPHIs;
+            return View(db.CHIPHIs.ToList());
         }
 
-        // GET: ThuTien/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PHIEUTHUTIEN pHIEUTHUTIEN = db.PHIEUTHUTIENs.Find(id);
-            if (pHIEUTHUTIEN == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.MaTre = new SelectList(db.TREs, "MaTre", "MaLop", pHIEUTHUTIEN.MaTre);
-            return View(pHIEUTHUTIEN);
-        }
-
-        // POST: ThuTien/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaPhieu,MaTre,NgayLapPhieu,TrangThai")] PHIEUTHUTIEN pHIEUTHUTIEN)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(pHIEUTHUTIEN).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.MaTre = new SelectList(db.TREs, "MaTre", "MaLop", pHIEUTHUTIEN.MaTre);
-            return View(pHIEUTHUTIEN);
-        }
-
-        // GET: ThuTien/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PHIEUTHUTIEN pHIEUTHUTIEN = db.PHIEUTHUTIENs.Find(id);
-            if (pHIEUTHUTIEN == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pHIEUTHUTIEN);
-        }
-
-        // POST: ThuTien/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            PHIEUTHUTIEN pHIEUTHUTIEN = db.PHIEUTHUTIENs.Find(id);
-            db.PHIEUTHUTIENs.Remove(pHIEUTHUTIEN);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

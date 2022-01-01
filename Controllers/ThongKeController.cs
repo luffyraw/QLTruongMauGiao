@@ -13,7 +13,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: ThongKe
         public ActionResult Index()
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 ViewBag.Tre = db.TREs.Count();
                 ViewBag.GiaoVien = db.GIAOVIENs.Count();

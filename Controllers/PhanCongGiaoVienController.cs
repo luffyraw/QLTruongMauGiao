@@ -15,11 +15,11 @@ namespace QuanLyTruongMauGiao.Controllers
     public class PhanCongGiaoVienController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
-
         // GET: PhanCongGiaoVien
         public ActionResult Index(string searchstr)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 var phanCong = db.PHANCONGGIAOVIENs.Include(p => p.GIAOVIEN).Include(p => p.LOP);
                 if (!String.IsNullOrEmpty(searchstr))
@@ -50,7 +50,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhanCongGiaoVien/Create
         public ActionResult Create()
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 ViewBag.MaGV = db.GIAOVIENs;
                 ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop");
@@ -110,7 +111,8 @@ namespace QuanLyTruongMauGiao.Controllers
         }
         public ActionResult Edit(string id1, string id2)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 if (id1 == null || id2 == null)
                 {
@@ -214,7 +216,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: PhanCongGiaoVien/Delete/5
         public ActionResult Delete(string id1,string id2)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 if (id1 == null || id2 == null)
                 {

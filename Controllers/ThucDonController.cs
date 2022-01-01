@@ -18,7 +18,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: ThucDon
         public ActionResult Index(DateTime? startdate, DateTime? enddate, int? page)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
 
@@ -41,7 +42,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: ThucDon/Details/5
         public ActionResult Details(string id)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 if (id == null)
                 {
@@ -59,12 +61,37 @@ namespace QuanLyTruongMauGiao.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
+        public string SinhMaTDN()
+        {
+            var tdn = from item in db.THUCDONNGAYs
+                        select item;
+            int soTDN = tdn.Count() + 1;
+            string maTDN = "";
+            if (soTDN < 10)
+            {
+                maTDN = String.Format("{0}00{1}", "TDN", soTDN);
+            }
+            else if (soTDN < 100)
+            {
+                maTDN = String.Format("{0}0{1}", "TDN", soTDN);
+            }
+            else if (soTDN < 1000)
+            {
+                maTDN = String.Format("{0}{1}", "TDN", soTDN);
+            }
+            else
+            {
+                maTDN = soTDN.ToString();
+            }
+            return maTDN;
+        }
         // GET: ThucDon/Create
         public ActionResult Create()
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
+                ViewBag.MaTDN = SinhMaTDN();
                 return View(); 
             }
             else
@@ -78,22 +105,37 @@ namespace QuanLyTruongMauGiao.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaTDN,Ngay,BuaSang,BuaTrua,BuaXe")] THUCDONNGAY tHUCDONNGAY)
+        public ActionResult Create(FormCollection frm)
         {
             if (ModelState.IsValid)
             {
-                db.THUCDONNGAYs.Add(tHUCDONNGAY);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                try
+                {
+                    THUCDONNGAY tdn = new THUCDONNGAY();
+                    tdn.MaTDN = frm["MaTDN"];
+                    tdn.Ngay = DateTime.Parse(frm["Ngay"]);
+                    tdn.BuaSang = frm["BuaSang"];
+                    tdn.BuaTrua = frm["BuaTrua"];
+                    tdn.BuaXe = frm["BuaXe"];
+                    db.THUCDONNGAYs.Add(tdn);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
 
-            return View(tHUCDONNGAY);
+                    @ViewBag.msg = ex.Message;
+                }
+            }
+            ViewBag.MaTDN = SinhMaTDN();
+            return View();
         }
 
         // GET: ThucDon/Edit/5
         public ActionResult Edit(string id)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 if (id == null)
                 {
@@ -131,7 +173,8 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: ThucDon/Delete/5
         public ActionResult Delete(string id)
         {
-            if (Session["user"] != null)
+            TAIKHOAN user = (TAIKHOAN)Session["user"];
+            if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 if (id == null)
                 {
