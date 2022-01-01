@@ -1,5 +1,5 @@
 ﻿@model QuanLyTruongMauGiao.Models.TAIKHOAN
-
+@using QuanLyTruongMauGiao.Models
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,49 +12,49 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Tài khoản: @Model.TenTK</h4>
-    <h4>Giáo viên: @gv.TenGv</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.TenTK)
 
-    <div class="form-group">
-<label class = "control-label col-md-5">Mật khẩu: không hiển thị</label>        
-        <input id="MatKhau" name="MatKhau" value="@Model.MatKhau" hidden="hidden"/>
-        <button class="btn btn-default"><a href="~/TaiKhoan/ResetPass/@Model.TenTK">Đặt lại mật khẩu</a></button> 
-    </div>
+    <div class="form-horizontal">
+        <h4>Tài khoản: @Model.TenTK</h4>
+        <h4>Giáo viên: @gv.TenGV</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.TenTK)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PhanQuyen, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <select id="PhanQuyen" name="PhanQuyen" class="form-control">
-                <option value="Quản lý">Quản lý</option>
-                <option value="Giáo viên">Giáo viên</option>
-                <option value="Phụ huynh">Phụ huynh</option>
-            </select>
-            @Html.ValidationMessageFor(model => model.PhanQuyen, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-5">Mật khẩu: không hiển thị</label>
+            <input id="MatKhau" name="MatKhau" value="@Model.MatKhau" hidden="hidden" />
+            <a href="~/TaiKhoan/ResetPass/@Model.TenTK">Đặt lại mật khẩu</a>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhanQuyen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="PhanQuyen" name="PhanQuyen" class="form-control">
+                    <option value="Quản lý">Quản lý</option>
+                    <option value="Giáo viên">Giáo viên</option>
+                    <option value="Phụ huynh">Phụ huynh</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.PhanQuyen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.EditorFor(model => model.TrangThaiHD, new { htmlAttributes = new { @hidden = "hidden" } })
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AnhDaiDien, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AnhDaiDien, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.AnhDaiDien, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Lưu" class="btn btn-default" />
+            </div>
         </div>
     </div>
-    @Html.EditorFor(model => model.TrangThaiHD, new { htmlAttributes = new { @hidden = "hidden" } })
-
-    
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.AnhDaiDien, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.AnhDaiDien, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.AnhDaiDien, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Lưu" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>

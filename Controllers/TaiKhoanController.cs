@@ -93,6 +93,13 @@ namespace QuanLyTruongMauGiao.Controllers
             }
             return View(tAIKHOAN);
         }
+        [HttpPost, ActionName("ResetPass")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmReset(string id)
+        {
+
+            return RedirectToAction("Index");
+        }
         // GET: TaiKhoan/Create
         public ActionResult Create()
         {

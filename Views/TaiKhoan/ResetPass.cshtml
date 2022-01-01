@@ -4,17 +4,23 @@
     ViewBag.Title = "ResetPass";
     Layout = "~/Views/Shared/_Layout.cshtml";
     QLMauGiao db = new QLMauGiao();
-    var gv = (from item in db.GIAOVIENs where item.TenTK == Model.TenTK select item).FirstOrDefault();
+    string gv = (from item in db.GIAOVIENs where item.TenTK == Model.TenTK select item.TenGV).FirstOrDefault();
 }
-<h3>Bạn có muốn đặt lại mật khẩu</h3>
-<b><label class="form-control">Tên tài khoản: @Model.TenTK </label></b>
-<b><label class="form-control">Giáo viên: @gv.TenGV </label></b>
+<h3>Bạn có muốn đặt lại mật khẩu?</h3>
+
+<div class="form-actions no-color">
+    <label class="col-4">Tên tài khoản</label>
+    <input class="form-control" value="@Model.TenTK" disabled="disabled" />
+    <label class="col-4">Giáo viên</label>
+    <input class="form-control" value="@gv" disabled="disabled" />
+    <br />
+
+</div>
+
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+    <input class="form-control" id="TenTK" name="TenTK" value="@Model.TenTK" hidden="hidden" />
+    <input type="submit" value="Đặt lại mật khẩu" class="btn btn-default" />
+    <a href="~/TaiKhoan/edit/@Model.TenTK">Trở về</a>
+@Html.AntiForgeryToken()
 }
