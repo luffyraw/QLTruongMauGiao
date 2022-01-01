@@ -32,8 +32,8 @@ namespace QuanLyTruongMauGiao.Controllers
         [HttpPost]
         public ActionResult DangKiBuaAn(bool choice)
         {
-            TAIKHOAN user = (TAIKHOAN)Session["user"];
-            var users = db.DIEMDANHs.Where(x => x.TRE.PHUHUYNH.TenTK == user.TenTK).FirstOrDefault();
+            TAIKHOAN account = (TAIKHOAN)Session["user"];
+            var users = (from item in db.DIEMDANHs where item.TRE.PHUHUYNH.TenTK == account.TenTK select item).FirstOrDefault();
             if (choice == true)
                 users.DangKiBuaAn = true;
             else users.DangKiBuaAn = false;
@@ -49,10 +49,9 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             TAIKHOAN account = (TAIKHOAN)Session["user"];
             var user = (from item in db.PHIEUTHUTIENs where item.TRE.PHUHUYNH.TenTK == account.TenTK select item).FirstOrDefault();
-            user.TrangThai = false;
+            user.TrangThai = true;
             db.SaveChanges();
-            ViewBag.msg("Đóng tiền thành công");
-            return View();
+            return View(db.DONGCHIPHIs.ToList());
         }
     }
 }

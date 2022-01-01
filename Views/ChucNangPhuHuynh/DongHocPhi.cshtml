@@ -13,46 +13,48 @@
 
 <h2>Đóng học phí</h2>
 <hr />
-
-<div class="form-control col-10" style="width:50%">
-    <br /><center><h4>Phiếu thu</h4></center>
-    <br />
-    <dl class="dl-horizontal">
-        <dd>Mã phiếu: @user.MaPhieu</dd>
-        <dd>Ngày lập: @user.NgayLapPhieu.ToString("dd/MM/yyyy")</dd>
-        <dd>Họ tên trẻ: @user.TRE.TenTre</dd>
-        <dd>Ngày sinh: @user.TRE.NgaySinh.ToString("dd/MM/yyyy")</dd>
-        <dd>Lớp: @user.TRE.LOP.TenLop</dd>
-        <table class="table">
-            <tr>
-                <th>STT</th>
-                <th>Dịch vụ</th>
-                <th>Đơn giá</th>
-            </tr>
-            @{
-                int stt = 0;
-                decimal TongTien = 0;
-            }
-            @foreach (var item in Model)
-            {
-                if (item.PHIEUTHUTIEN.MaPhieu == user.MaPhieu)
-                {
-                    stt++;
-                    <tr>
-                        <td>@stt</td>
-                        <td>@item.CHIPHI.NoiDung</td>
-                        <td>@item.CHIPHI.DonGia.ToString("000,000")</td>
-                    </tr>
-                    TongTien = TongTien + @item.CHIPHI.DonGia;
+@using (Html.BeginForm("donghocphi", "chucnangphuhuynh", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-control col-10" style="width:50%">
+        <br /><center><h4>Phiếu thu</h4></center>
+        <br />
+        <dl class="dl-horizontal">
+            <dd>Mã phiếu: @user.MaPhieu</dd>
+            <dd>Ngày lập: @user.NgayLapPhieu.ToString("dd/MM/yyyy")</dd>
+            <dd>Họ tên trẻ: @user.TRE.TenTre</dd>
+            <dd>Ngày sinh: @user.TRE.NgaySinh.ToString("dd/MM/yyyy")</dd>
+            <dd>Lớp: @user.TRE.LOP.TenLop</dd>
+            <table class="table">
+                <tr>
+                    <th>STT</th>
+                    <th>Dịch vụ</th>
+                    <th>Đơn giá</th>
+                </tr>
+                @{
+                    int stt = 0;
+                    decimal TongTien = 0;
                 }
-            }
-        </table>
-        <dt style="margin-left:250px">Tổng tiền: @TongTien.ToString("000,000") VND</dt>
-    </dl>
-</div>
-<br />
-<div class="form-group row">
-    <div class="col-sm-10 ml-sm-auto">
-        <button class="btn btn-info" type="submit">Đóng tiền</button>
+                @foreach (var item in Model)
+                {
+                    if (item.PHIEUTHUTIEN.MaPhieu == user.MaPhieu)
+                    {
+                        stt++;
+                        <tr>
+                            <td>@stt</td>
+                            <td>@item.CHIPHI.NoiDung</td>
+                            <td>@item.CHIPHI.DonGia.ToString("000,000")</td>
+                        </tr>
+                        TongTien = TongTien + @item.CHIPHI.DonGia;
+                    }
+                }
+            </table>
+            <dt style="margin-left:250px">Tổng tiền: @TongTien.ToString("000,000") VND</dt>
+        </dl>
     </div>
-</div>
+    <br />
+    <div class="form-group row">
+        <div class="col-sm-10 ml-sm-auto">
+            <button class="btn btn-info" type="submit">Đóng tiền</button>
+        </div>
+    </div>
+}

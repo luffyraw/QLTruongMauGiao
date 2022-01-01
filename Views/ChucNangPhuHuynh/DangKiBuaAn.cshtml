@@ -6,58 +6,61 @@
     Layout = "~/Views/Shared/LayoutPH.cshtml";
 }
 
-<h2><center>Đăng kí bữa ăn</center></h2>
+<h2>Đăng kí bữa ăn</h2>
 <br />
 
-<table class="table">
-    @*<tr>
-        @using (Html.BeginForm())
-        {
-            <p>
-                <input type="date" name="startdate" /> to <input type="date" name="enddate" />
-                <input type="submit" value="Search" />
-            </p>
-        }
-    </tr>*@
-    <tr>
-        <th>
-            Ngày
-        </th>
-        <th>
-            Bữa sáng
-        </th>
-        <th>
-            Bữa trưa
-        </th>
-        <th>
-            Bữa xế
-        </th>
-        <th>
-            Chọn
-        </th>
-    </tr>
+@using (Html.BeginForm("dangkibuaan", "chucnangphuhuynh", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-control col-10" style="width:70%">
+        <dl class="dl-horizontal">
+            <table class="table">
+                <tr>
+                    <th>
+                        Ngày
+                    </th>
+                    <th>
+                        Bữa sáng
+                    </th>
+                    <th>
+                        Bữa trưa
+                    </th>
+                    <th>
+                        Bữa xế
+                    </th>
+                    <th>
+                        Chọn
+                    </th>
+                </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @item.Ngay.ToString("dd/MM/yyyy")
-            </td>
-            <td>
-                @item.BuaSang
-            </td>
-            <td>
-                @item.BuaTrua
-            </td>
-            <td>
-                @item.BuaXe
-            </td>
-            <td>
-                <input type="checkbox" value="choice" />
-            </td>
-        </tr>
-    }
-</table>
-<p><center><button type="submit">Đăng kí</button><input type="reset" value="Hủy" style="margin-left:50px" onclick="location.href = '@Url.Action("HomePagePH","Home")'" /></center></p>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Ngay.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @item.BuaSang
+                        </td>
+                        <td>
+                            @item.BuaTrua
+                        </td>
+                        <td>
+                            @item.BuaXe
+                        </td>
+                        <td>
+                            <input type="checkbox" value="choice" />
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dl>
+    </div>
+    <br />
+    <div class="form-group row">
+        <div class="col-sm-10 ml-sm-auto">
+            <button class="btn btn-info" type="submit" style="margin:0 30px 0 50px">Đăng kí</button><button class="btn btn-info" style="background-color:grey" type="reset">Hủy</button>
+        </div>
+    </div>
+}
 
 
