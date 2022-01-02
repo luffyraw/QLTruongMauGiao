@@ -12,36 +12,39 @@
 }
 
 <h2>Danh sách trẻ</h2>
+@using (Html.BeginForm())
+{
 
-<table class="table">
-    <tr>
-        <th>STT</th>
-        <th>Tên trẻ</th>
-        <th>Tên phụ huynh</th>
-        <th></th>
-    </tr>
-    @{
-        int stt = 0;
-    }
-    @foreach (var item in Model)
-    {
-        if (item.LOP.MaLop == MaLop)
-        {
-            stt++;
-            <tr>
-                <td>
-                    @stt
-                </td>
-                <td>
-                    @item.TenTre
-                </td>
-                <td>
-                    @item.PHUHUYNH.TenPH
-                </td>
-                <td>
-                    @Html.ActionLink("Đánh giá trẻ", "DanhGiaTre", new { id = item.MaTre })
-                </td>
-            </tr>
+    <table class="table">
+        <tr>
+            <th>STT</th>
+            <th>Tên trẻ</th>
+            <th>Tên phụ huynh</th>
+            <th></th>
+        </tr>
+        @{
+            int stt = 0;
         }
-    }
-</table>
+        @foreach (var item in Model)
+        {
+            if (item.LOP.MaLop == MaLop)
+            {
+                stt++;
+                <tr>
+                    <td>
+                        @stt
+                    </td>
+                    <td>
+                        @item.TenTre
+                    </td>
+                    <td>
+                        @item.PHUHUYNH.TenPH
+                    </td>
+                    <td>
+                        @Html.ActionLink("Đánh giá trẻ", "DanhGiaTre", new { id = item.MaTre })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+}

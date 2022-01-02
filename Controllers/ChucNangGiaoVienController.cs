@@ -131,7 +131,7 @@ namespace QuanLyTruongMauGiao.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KETQUADANHGIA tRE = db.KETQUADANHGIAs.Find(id);
+            KETQUADANHGIA tRE = (from item in db.KETQUADANHGIAs where item.MaPhieu == id select item).FirstOrDefault();
             if (tRE == null)
             {
                 return HttpNotFound();
