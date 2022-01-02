@@ -26,33 +26,27 @@ namespace QuanLyTruongMauGiao.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index","Home");
             }
         }
 
         public class ParamDangKyBuaAn
         {
-            public DateTime? Date { get; set; }
-            public bool? Select { get; set; }
+            public DateTime date { get; set; }
+            public bool select { get; set; }
         }
 
         [HttpPost]
-        public ActionResult DangKiBuaAn(List<ParamDangKyBuaAn> param, DateTime? startdate, DateTime? enddate)
+        public ActionResult DangKiBuaAn(ParamDangKyBuaAn[] data)
         {
-            IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
-            if (startdate != null && enddate != null)
-            {
-                thucdons = thucdons.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
-            }
-            thucdons = thucdons.OrderBy(td => td.Ngay);
-
             TAIKHOAN account = (TAIKHOAN)Session["user"];
             var phuhuynh = (from ph in db.PHUHUYNHs
                             where ph.TenTK == account.TenTK
                             select ph).FirstOrDefault();
             var MaTre = (from t in db.TREs
-                         where t.MaPH == phuhuynh.MaPH
-                         select t).FirstOrDefault().MaTre;
+
+                       where t.MaPH == phuhuynh.MaPH
+                       select t).FirstOrDefault().MaTre;
             try
             {
                 if (data != null)
@@ -80,10 +74,12 @@ namespace QuanLyTruongMauGiao.Controllers
                     return Json("Đăng kí thành công", JsonRequestBehavior.AllowGet);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
+
             return View(db.THUCDONNGAYs.ToList());
 
             //IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
@@ -169,7 +165,6 @@ namespace QuanLyTruongMauGiao.Controllers
         //    }
         //    return View();
         //}
-
 
 
 

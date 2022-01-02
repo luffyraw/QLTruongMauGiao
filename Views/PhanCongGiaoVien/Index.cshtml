@@ -110,23 +110,7 @@
                 }
             </tbody>
         </table>
-        @*<div class="row">
-            <div class="col-sm-12 col-md-5">
-                Trang @(Model.PageCount < Model.PageNumber ?0:Model.PageNumber)/@Model.PageCount
-            </div>
-            <div class="page">
-                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
-                 new PagedListRenderOptions
-                      {
-                    LinkToFirstPageFormat = "<<",
-                    LinkToPreviousPageFormat = "<",
-                    LinkToNextPageFormat = ">",
-                    LinkToLastPageFormat = ">>",
-                    MaximumPageNumbersToDisplay = 10,
-                    DisplayEllipsesWhenNotShowingAllPageNumbers = false
-                 })
-            </div>
-        </div>*@
+        
     </div>
 
 </div>

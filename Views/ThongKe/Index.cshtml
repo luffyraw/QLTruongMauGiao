@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     Dictionary<string, int> list = ViewBag.DSLop as Dictionary<string, int>;
-    Dictionary<int, float> listDT = ViewBag.DT as Dictionary<int, float>;
+    Dictionary<string, string> listDT = ViewBag.DT as Dictionary<string, string>;
 }
 
 <div class="row">
@@ -63,11 +63,11 @@
                     {
                         <li class="media">
                             <a class="media-img" href="#">
-                                <img src="~/Content/assets/img/class.png" width="30px;" />
+                                <img src="~/Content/assets/img/class.png" width="30" />
                             </a>
                             <div class="media-body">
                                 <div class="media-heading" style="padding-top: 10px">
-                                    <a href="#">@item.Key</a>
+                                    <span style="color: #23B7E5">@item.Key</span>
                                     <span class="font-16 float-right">@item.Value</span>
                                 </div>
                             </div>

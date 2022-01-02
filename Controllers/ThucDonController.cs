@@ -16,17 +16,12 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: ThucDon
-        public ActionResult Index(DateTime? startdate, DateTime? enddate, int? page)
+        public ActionResult Index(int? page)
         {
             TAIKHOAN user = (TAIKHOAN)Session["user"];
             if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
-
-                if (startdate != null && enddate != null)
-                {
-                    thucdons = thucdons.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
-                }
                 thucdons = thucdons.OrderBy(td => td.Ngay);
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
@@ -37,6 +32,15 @@ namespace QuanLyTruongMauGiao.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+        }
+        public PartialViewResult GetThucDonByDate(DateTime? startdate, DateTime? enddate, int? page)
+        {
+            var thucDons = db.THUCDONNGAYs.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
+            thucDons = thucDons.OrderBy(td => td.Ngay);
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return PartialView("Index", thucDons.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: ThucDon/Details/5
