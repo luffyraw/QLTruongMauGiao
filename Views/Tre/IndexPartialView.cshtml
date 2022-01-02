@@ -29,10 +29,11 @@
 </style>
 
 
-<h3>Danh sách trẻ</h3>
+
 <div class="ibox">
     <div class="ibox-head">
         <div class="ibox-title">@Html.ActionLink("Thêm", "Create")</div>
+
     </div>
     <div class="ibox-body">
         <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
@@ -59,7 +60,9 @@
                             @stt
                         </td>
                         <td>
-                            @item.LOP.TenLop
+                            <a href="~/Lop/Details/@item.LOP.MaLop">
+                                @item.LOP.TenLop
+                            </a>
                         </td>
                         <td>
                             @item.PHUHUYNH.TenPH
@@ -82,7 +85,7 @@
                         }
                    
                         <td>
-                            <img class="anh" src="~/Image/@item.Anh" />
+                            <img class="anh" src="~/Image/Tre/@item.Anh" />
                         </td>
                         <td>
                             @Html.ActionLink("Sửa", "Edit", new { id = item.MaTre }) |

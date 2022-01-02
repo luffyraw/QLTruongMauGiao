@@ -3,23 +3,25 @@
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string path;
+    if (Model.PhanQuyen == "Phụ huynh")
+    {
+        path = "PhuHuynh";
+    }
+    else
+    {
+        path = "GiaoVien";
+
+    }
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Bạn có muốn xóa tài khoản @Model.TenTK không?</h3>
 <div>
-    <h4>TAIKHOAN</h4>
+   
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MatKhau)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MatKhau)
-        </dd>
-
+     
         <dt>
             @Html.DisplayNameFor(model => model.PhanQuyen)
         </dt>
@@ -29,19 +31,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TrangThaiHD)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TrangThaiHD)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.AnhDaiDien)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AnhDaiDien)
+            <img src="~/Image/@path/@Model.AnhDaiDien" width="200" height="200"/>
         </dd>
 
     </dl>

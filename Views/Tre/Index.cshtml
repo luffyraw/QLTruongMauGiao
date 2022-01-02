@@ -9,6 +9,7 @@
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<h1>Danh sách trẻ</h1>
 
 @using (Ajax.BeginForm("GetName", "tre", new AjaxOptions
 {
@@ -22,4 +23,6 @@
     <p> </p>
     <hr />
 }
+
+
 @Html.Partial("IndexPartialView")

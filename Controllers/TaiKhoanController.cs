@@ -14,18 +14,38 @@ namespace QuanLyTruongMauGiao.Controllers
     public class TaiKhoanController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
-
+        public int CheckLogin()
+        {
+            var user = Session["user"] as TAIKHOAN;
+            if (user != null && user.PhanQuyen == "Quản lý")
+                return 0;
+            if (user != null && user.PhanQuyen == "Phụ huynh")
+                return 1;
+            if (user != null && user.PhanQuyen == "Giáo viên")
+                return 2;
+            return -1;
+        }
         // GET: TaiKhoan
         public ActionResult Index(int? page)
         {
-            var taikhoan = from item in db.TAIKHOANs select item;
-            //var taikhoan = from item in db.TAIKHOANs select item;
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
+            {
+                var taikhoan = from item in db.TAIKHOANs select item;
+                //var taikhoan = from item in db.TAIKHOANs select item;
 
-            taikhoan = taikhoan.OrderBy(tr => tr.TenTK);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
+                taikhoan = taikhoan.OrderBy(tr => tr.TenTK);
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
 
-            return View(taikhoan.ToPagedList(pageNumber,pageSize));
+                return View(taikhoan.ToPagedList(pageNumber,pageSize));
+            }
+           
 
         }
         public PartialViewResult GetQuyen(string quyen, int? page)
@@ -43,10 +63,29 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: TaiKhoan/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TAIKHOAN tAIKHOAN = db.TAIKHOANs.Find(id);
+                if (tAIKHOAN == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tAIKHOAN);
             }
+            
+        }
+        public ActionResult ResetPass(string id)
+        {
             TAIKHOAN tAIKHOAN = db.TAIKHOANs.Find(id);
             if (tAIKHOAN == null)
             {
@@ -54,11 +93,29 @@ namespace QuanLyTruongMauGiao.Controllers
             }
             return View(tAIKHOAN);
         }
-
+        [HttpPost, ActionName("ResetPass")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmReset(string TenTK)
+        {
+            var tk = db.TAIKHOANs.Find(TenTK);
+            tk.MatKhau = "123456";
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: TaiKhoan/Create
         public ActionResult Create()
         {
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
+            {
             return View();
+
+            }
         }
 
         // POST: TaiKhoan/Create
@@ -91,16 +148,26 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: TaiKhoan/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TAIKHOAN tAIKHOAN = db.TAIKHOANs.Find(id);
+                if (tAIKHOAN == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tAIKHOAN);
             }
-            TAIKHOAN tAIKHOAN = db.TAIKHOANs.Find(id);
-            if (tAIKHOAN == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tAIKHOAN);
+           
         }
 
         // POST: TaiKhoan/Edit/5
@@ -122,16 +189,26 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: TaiKhoan/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                 if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TAIKHOAN tAIKHOAN = db.TAIKHOANs.Find(id);
+                if (tAIKHOAN == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tAIKHOAN);
             }
-            TAIKHOAN tAIKHOAN = db.TAIKHOANs.Find(id);
-            if (tAIKHOAN == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tAIKHOAN);
+          
         }
 
         // POST: TaiKhoan/Delete/5

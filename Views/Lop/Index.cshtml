@@ -69,8 +69,14 @@
                             @item.Khoi
                         </td>
                         <td>
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.MaLop }) |
-                            @Html.ActionLink("Chi tiết", "Details", new { id = item.MaLop }) |
+                            @Html.ActionLink("Thêm trẻ", "AddTre", new { id = item.MaLop })
+                            <br />
+
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.MaLop })
+                            <br />
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.MaLop })
+                            <br />
+
                             @Html.ActionLink("Xóa", "Delete", new { id = item.MaLop })
                         </td>
                     </tr>

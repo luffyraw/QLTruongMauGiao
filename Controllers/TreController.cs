@@ -14,16 +14,36 @@ namespace QuanLyTruongMauGiao.Controllers
     public class TreController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
-
+        public int CheckLogin()
+        {
+            var user = Session["user"] as TAIKHOAN; 
+            if (user != null && user.PhanQuyen == "Quản lý")
+                return 0;
+            if (user != null && user.PhanQuyen == "Phụ huynh")
+                return 1;
+            if (user != null && user.PhanQuyen == "Giáo viên")
+                return 2;
+            return -1;
+        }
+        
         // GET: Tre
         public ActionResult Index(int? page)
         {
-            var tREs = db.TREs.Include(t => t.LOP).Include(t => t.PHUHUYNH);
-            
-            tREs = tREs.OrderBy(tr => tr.TenTre);
-            int pageSize = 7;
-            int pageNumber = (page ?? 1);
-            return View(tREs.ToPagedList(pageNumber, pageSize));
+            if(CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
+            {
+                var tREs = db.TREs.Include(t => t.LOP).Include(t => t.PHUHUYNH);
+
+                tREs = tREs.OrderBy(tr => tr.TenTre);
+                int pageSize = 7;
+                int pageNumber = (page ?? 1);
+                return View(tREs.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         public PartialViewResult GetName(string name, int? page)
@@ -38,24 +58,42 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Tre/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TRE tRE = db.TREs.Find(id);
+                if (tRE == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tRE);
             }
-            TRE tRE = db.TREs.Find(id);
-            if (tRE == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tRE);
         }
 
         // GET: Tre/Create
         public ActionResult Create()
         {
-            ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop");
-            ViewBag.MaPH = new SelectList(db.PHUHUYNHs, "MaPH", "TenPH");
-            return View();
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
+            {
+                ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop");
+                ViewBag.MaPH = new SelectList(db.PHUHUYNHs, "MaPH", "TenPH");
+                return View();
+            }
         }
 
         // POST: Tre/Create
@@ -63,12 +101,24 @@ namespace QuanLyTruongMauGiao.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaTre,MaLop,MaPH,TenTre,NgaySinh,GioiTinh,QueQuan,DanToc,NgayNhapHoc,Anh")] TRE tRE)
+       public ActionResult Create([Bind(Include = "MaTre,MaLop,MaPH,TenTre,NgaySinh,GioiTinh,QueQuan,DanToc,NgayNhapHoc,Anh")] TRE tRE)
         {
             if (ModelState.IsValid)
             {
                 var lop = (from item in db.LOPs where item.MaLop == tRE.MaLop select item).FirstOrDefault();
                 lop.SiSo++;
+                var f = Request.Files["inputimg"];
+                string filename;
+                if (f!=null)
+                {
+                    filename = System.IO.Path.GetFileName(f.FileName);
+                    string uploadPath = Server.MapPath("~/Image/Tre/") + tRE.MaTre.ToString() + ".png";
+                    tRE.Anh = tRE.MaTre + ".png";
+                    f.SaveAs(uploadPath);
+                }
+
+
+
                 db.TREs.Add(tRE);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,18 +132,27 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Tre/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TRE tRE = db.TREs.Find(id);
+                if (tRE == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop", tRE.MaLop);
+                ViewBag.MaPH = new SelectList(db.PHUHUYNHs, "MaPH", "TenPH", tRE.MaPH);
+                return View(tRE);
             }
-            TRE tRE = db.TREs.Find(id);
-            if (tRE == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop", tRE.MaLop);
-            ViewBag.MaPH = new SelectList(db.PHUHUYNHs, "MaPH", "TenPH", tRE.MaPH);
-            return View(tRE);
         }
 
         // POST: Tre/Edit/5
@@ -105,7 +164,22 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                var f = Request.Files["inputimg"];
+                string filename;
+                
+                if (f != null)
+                {
+                    filename = System.IO.Path.GetFileName(f.FileName);
+                    string uploadPath = Server.MapPath("~/Image/Tre/") + tRE.MaTre.ToString() + ".png";
+                    if (System.IO.File.Exists("~/Image/Tre/" + tRE.Anh))
+                        System.IO.File.Delete("~/Image/Tre/" + tRE.Anh);
+                    tRE.Anh = tRE.MaTre + ".png";
+                    f.SaveAs(uploadPath);
+                }
+
                 db.Entry(tRE).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -117,17 +191,26 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Tre/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TRE tRE = db.TREs.Find(id);
+                if (tRE == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(tRE);
             }
-            TRE tRE = db.TREs.Find(id);
-            if (tRE == null)
-            {
-                return HttpNotFound();
-            }
-           
-            return View(tRE);
         }
 
         // POST: Tre/Delete/5

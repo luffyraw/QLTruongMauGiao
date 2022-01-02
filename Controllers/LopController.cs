@@ -13,36 +13,87 @@ namespace QuanLyTruongMauGiao.Controllers
     public class LopController : Controller
     {
         private QLMauGiao db = new QLMauGiao();
-
+        public int CheckLogin()
+        {
+            var user = Session["user"] as TAIKHOAN;
+            if (user != null && user.PhanQuyen == "Quản lý")
+                return 0;
+            if (user != null && user.PhanQuyen == "Phụ huynh")
+                return 1;
+            if (user != null && user.PhanQuyen == "Giáo viên")
+                return 2;
+            return -1;
+        }
         // GET: Lop
         public ActionResult Index(int? page)
         {
-            var dslop = from item in db.LOPs select item;
-            dslop = dslop.OrderBy(lop => lop.MaLop);
-            int pagenumber = (page ?? 1);
-            int pagesize = 10;
-            return View(dslop.ToPagedList(pagenumber,pagesize));
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
+            {
+                var dslop = from item in db.LOPs select item;
+                dslop = dslop.OrderBy(lop => lop.MaLop);
+                int pagenumber = (page ?? 1);
+                int pagesize = 10;
+                return View(dslop.ToPagedList(pagenumber,pagesize));
+            }
+ 
         }
-
+        public ActionResult AddTre(string id)
+        {
+            LOP Lop = db.LOPs.Find(id);
+            return View(Lop);
+        }
+        public PartialViewResult AddTrePV(string id, string MaLop)
+        {
+            TRE tre = (from item in db.TREs where item.MaTre == id select item).FirstOrDefault();
+            tre.MaLop = MaLop;
+            LOP Lop = db.LOPs.Find(MaLop);
+            db.SaveChanges();
+            return PartialView("AddTre", Lop);
+        }
         // GET: Lop/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LOP lOP = db.LOPs.Find(id);
+                if (lOP == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lOP);
             }
-            LOP lOP = db.LOPs.Find(id);
-            if (lOP == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lOP);
+ 
         }
 
         // GET: Lop/Create
         public ActionResult Create()
         {
-            return View();
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
+            {
+                return View();
+            }
         }
 
         // POST: Lop/Create
@@ -65,16 +116,26 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Lop/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
+            {  
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LOP lOP = db.LOPs.Find(id);
+                if (lOP == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lOP);
             }
-            LOP lOP = db.LOPs.Find(id);
-            if (lOP == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lOP);
+          
         }
 
         // POST: Lop/Edit/5
@@ -96,16 +157,26 @@ namespace QuanLyTruongMauGiao.Controllers
         // GET: Lop/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (CheckLogin() == -1)
+                return RedirectToAction("index", "Home");
+            if (CheckLogin() == 1)
+                return RedirectToAction("HomePagePH", "Home");
+            if (CheckLogin() == 2)
+                return RedirectToAction("HomePageGV", "Home");
+            else
+            { 
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LOP lOP = db.LOPs.Find(id);
+                if (lOP == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lOP);
             }
-            LOP lOP = db.LOPs.Find(id);
-            if (lOP == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lOP);
+           
         }
 
         // POST: Lop/Delete/5
