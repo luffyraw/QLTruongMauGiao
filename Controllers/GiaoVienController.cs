@@ -100,6 +100,7 @@ namespace QuanLyTruongMauGiao.Controllers
                 tk.MatKhau = "123456";
                 tk.PhanQuyen = "Giáo viên";
                 tk.TrangThaiHD = false;
+                tk.AnhDaiDien = "Default.png";
                 db.TAIKHOANs.Add(tk);
                 db.GIAOVIENs.Add(gIAOVIEN); 
                 db.SaveChanges();

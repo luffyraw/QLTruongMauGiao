@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<QuanLyTruongMauGiao.Models.TAIKHOAN>
 @using PagedList.Mvc;
+
 <style>
     .anh {
         width: 100px;
@@ -83,7 +84,18 @@
                             }
                         </td>
                         <td>
-                            <img class="anh" src="~/Image/@item.AnhDaiDien" />
+                            @{
+                                if (item.PhanQuyen == "Phụ huynh")
+                                {
+                                    <img class="anh" src="~/Image/PhuHuynh/@item.AnhDaiDien" />
+
+                                }
+                                else
+                                {
+                                    <img class="anh" src="~/Image/GiaoVien/@item.AnhDaiDien" />
+
+                                }
+                            }
                         </td>
                         <td>
                             @Html.ActionLink("Sửa", "Edit", new { id = item.TenTK }) |
