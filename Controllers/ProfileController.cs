@@ -41,7 +41,7 @@ namespace QuanLyTruongMauGiao.Controllers
 
             var f = Request.Files["inputimg"];
             var account = (from item in db.TAIKHOANs where item.TenTK == user.TenTK select item).FirstOrDefault();
-            string filename = magv + ".png";
+            string filename = magv + ".jpg";
 
             if (f != null)
             {

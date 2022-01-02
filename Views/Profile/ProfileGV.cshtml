@@ -51,6 +51,95 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label col-md-2">
+                Ngày sinh
+            </label>
+            <div class="col-md-10">
+                @user.NgaySinh.ToString("dd/MM/yyyy")
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Giới tính
+            </label>
+            <div class="col-md-10">
+
+                @if (user.GioiTinh)
+                {
+                    <input class="form-control" type="text" value="Nam" disabled="disabled" />
+                }
+                else
+                {
+                    <input class="form-control" type="text" value="Nữ" disabled="disabled" />
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Quê quán
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" value="@user.QueQuan" disabled="disabled" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Loại hợp đồng
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" value="@user.LoaiHopDong" disabled="disabled" />
+
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Lương
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" value="@user.Luong" disabled="disabled" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Kinh nghiệm
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" value="@user.KinhNghiem" disabled="disabled" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Trình độ
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" value="@user.TrinhDo" disabled="disabled" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Chuyên ngành
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" value="@user.ChuyenNganh" disabled="disabled" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Loại tốt nghiệp
+
+            </label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" value="@user.LoaiTotNghiep" disabled="disabled" />
+
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-md-2">Số điện thoại</label>
             <div class="col-md-10">
                 <input id="DienThoai" name="DienThoai" class="form-control" type="tel" pattern="[0-9]{7,}" value="@user.DienThoai" required />

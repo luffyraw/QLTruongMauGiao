@@ -172,8 +172,8 @@ namespace QuanLyTruongMauGiao.Controllers
                 {
                     filename = System.IO.Path.GetFileName(f.FileName);
                     string uploadPath = Server.MapPath("~/Image/Tre/") + tRE.MaTre.ToString() + ".png";
-                    if (System.IO.File.Exists("~/Image/Tre/" + tRE.Anh))
-                        System.IO.File.Delete("~/Image/Tre/" + tRE.Anh);
+                    if (System.IO.File.Exists(uploadPath))
+                        System.IO.File.Delete(uploadPath);
                     tRE.Anh = tRE.MaTre + ".png";
                     f.SaveAs(uploadPath);
                 }
@@ -181,6 +181,7 @@ namespace QuanLyTruongMauGiao.Controllers
                 db.Entry(tRE).State = EntityState.Modified;
 
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             ViewBag.MaLop = new SelectList(db.LOPs, "MaLop", "TenLop", tRE.MaLop);
