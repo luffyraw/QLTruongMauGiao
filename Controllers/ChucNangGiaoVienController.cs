@@ -64,8 +64,11 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             return View(db.TREs.ToList());
         }
-        public ActionResult DanhGiaTre(string id)
+        public ActionResult DanhGiaTre(string maGV, string ngayLap, string namHoc, string theChat, string sucKhoe, string hoaDong)
         {
+            TAIKHOAN account = (TAIKHOAN)Session["user"];
+            var user = (from item in db.KETQUADANHGIAs where item.PHIEUDANHGIA.TRE.PHUHUYNH.TenTK == account.TenTK select item).FirstOrDefault();
+            KETQUADANHGIA kq = new KETQUADANHGIA();
             return View(db.KETQUADANHGIAs.ToList());
         }
     }
