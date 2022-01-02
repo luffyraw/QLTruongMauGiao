@@ -46,29 +46,37 @@ namespace QuanLyTruongMauGiao.Controllers
             var MaTre = (from t in db.TREs
                        where t.MaPH == phuhuynh.MaPH
                        select t).FirstOrDefault().MaTre;
-            if (data != null)
+            try
             {
-                foreach(var item in data)
+                if (data != null)
                 {
-                    var query = (from x in db.DIEMDANHs
-                                where x.MaTre == MaTre && x.Ngay == item.date
-                                select x).FirstOrDefault();
-                    if(query == null)
+                    foreach (var item in data)
                     {
-                        DIEMDANH diemDanh = new DIEMDANH();
-                        diemDanh.MaTre = MaTre;
-                        diemDanh.Ngay = item.date;
-                        diemDanh.DiemDanh1 = false;
-                        diemDanh.DangKiBuaAn = item.select;
-                        db.DIEMDANHs.Add(diemDanh);
+                        var query = (from x in db.DIEMDANHs
+                                     where x.MaTre == MaTre && x.Ngay == item.date
+                                     select x).FirstOrDefault();
+                        if (query == null)
+                        {
+                            DIEMDANH diemDanh = new DIEMDANH();
+                            diemDanh.MaTre = MaTre;
+                            diemDanh.Ngay = item.date;
+                            diemDanh.DiemDanh1 = false;
+                            diemDanh.DangKiBuaAn = item.select;
+                            db.DIEMDANHs.Add(diemDanh);
+                        }
+                        else
+                        {
+                            query.DangKiBuaAn = item.select;
+                        }
+                        db.SaveChanges();
                     }
-                    else
-                    {
-                        query.DangKiBuaAn = item.select;
-                    }
-                    db.SaveChanges();
+                    return Json("Đăng kí thành công", JsonRequestBehavior.AllowGet);
                 }
-                return Json("Đăng kí thành công", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
 
             return View(db.THUCDONNGAYs.ToList());
