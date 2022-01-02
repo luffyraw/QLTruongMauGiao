@@ -123,20 +123,20 @@ namespace QuanLyTruongMauGiao.Controllers
         }
         public ActionResult DanhSachDanhGia()
         {
+
             return View(db.TREs.ToList());
         }
         public ActionResult DanhGiaTre(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            KETQUADANHGIA tRE = (from item in db.KETQUADANHGIAs where item.MaPhieu == id select item).FirstOrDefault();
-            if (tRE == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tRE);
+            ViewBag.ID = id;
+            return View(db.KETQUADANHGIAs.ToList());
+
+        }
+        [HttpPost]
+        public ActionResult DanhGia(string id)
+        {
+
+            return View("DanhSachDanhGia");
         }
     }
 }

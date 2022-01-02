@@ -1,4 +1,4 @@
-﻿@model IEnumerable <QuanLyTruongMauGiao.Models.KETQUADANHGIA>
+﻿@model IEnumerable<QuanLyTruongMauGiao.Models.KETQUADANHGIA>
 @using PagedList.Mvc;
 @using QuanLyTruongMauGiao.Models
 
@@ -15,8 +15,9 @@
 <h2>Đánh giá trẻ</h2>
 <br />
 
-@using (Html.BeginForm("danhgiatre", "chucnanggiaovien", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("DanhGia", "chucnanggiaovien", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    
     <div class="row">
         <div class="col-md-6">
             <div class="ibox">
