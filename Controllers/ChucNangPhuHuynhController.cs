@@ -103,7 +103,7 @@ namespace QuanLyTruongMauGiao.Controllers
         //}
         public ActionResult XemDanhGia()
         {
-            return View();
+            return View(db.KETQUADANHGIAs.ToList());
         }
         public ActionResult DongHocPhi()
         {

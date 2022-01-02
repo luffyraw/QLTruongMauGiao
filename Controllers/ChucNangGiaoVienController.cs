@@ -33,6 +33,7 @@ namespace QuanLyTruongMauGiao.Controllers
         }
         public ActionResult DiemDanh()
         {
+           
             return View(db.TREs.ToList());
         }
         public ActionResult XemDanhSachLop(string maLop)
