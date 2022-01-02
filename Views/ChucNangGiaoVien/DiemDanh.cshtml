@@ -13,54 +13,60 @@
 
 <h2>Điểm danh</h2>
 
+@using (Html.BeginForm("dangkibuaan", "chucnangphuhuynh", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-control col-10" style="width:100%" id="registerMealContainer">
+        <dl class="dl-horizontal">
+            <table class="table">
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Ngày
+                    </th>
+                    <th>
+                        Tên trẻ
+                    </th>
+                    <th>
+                        Tên phụ huynh
+                    </th>
+                    <th>
+                        Điểm danh
+                    </th>
+                    <th></th>
+                </tr>
+                @{
+                    int stt = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    if (item.LOP.MaLop == MaLop)
+                    {
+                        stt++;
+                        <tr>
+                            <td>
+                                @stt
+                            </td>
+                            <td>
+                                @DateTime.Now.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenTre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PHUHUYNH.TenPH)
+                            </td>
+                            <td>
+                                <input type="checkbox" />
+                            </td>
+                        </tr>
+                    }
 
-<table class="table">
-    <tr>
-        <th>
-            STT
-        </th>
-        <th>
-            Ngày
-        </th>
-        <th>
-            Tên trẻ
-        </th>
-        <th>
-            Tên phụ huynh
-        </th>
-        <th>
-            Điểm danh
-        </th>
-        <th></th>
-    </tr>
-    @{
-        int stt = 0;
-    }
-    @foreach (var item in Model)
-    {
-        if (item.LOP.MaLop == MaLop)
-        {
-            stt++;
-            <tr>
-                <td>
-                    @stt
-                </td>
-                <td>
-                    @DateTime.Now.ToString("dd/MM/yyyy")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TenTre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PHUHUYNH.TenPH)
-                </td>
-                <td>
-                    <input type="checkbox" />
-                </td>
-            </tr>
-        }
+                }
 
-    }
-
-</table>
-<p><center><input type="submit" value="Lưu" /><input type="reset" value="Hủy" style="margin-left:50px" /></center></p>
+            </table>
+            <p><center><input type="submit" value="Lưu" /><input type="reset" value="Hủy" style="margin-left:50px" /></center></p>
+        </dl>
+    </div>
+}
