@@ -9,66 +9,110 @@
     var account = Session["user"] as TAIKHOAN;
     var user = (from item in db.GIAOVIENs where item.TenTK == account.TenTK select item).FirstOrDefault();
     var MaLop = (from item in db.PHANCONGGIAOVIENs where item.MaGV == user.MaGV select item.MaLop).FirstOrDefault();
-    var maTre = (from item in db.TREs where item.MaLop == MaLop select item.MaTre).FirstOrDefault();
 }
 
 <h2>Điểm danh</h2>
 <br />
-@using (Html.BeginForm("diemdanh", "chucnanggiaovien", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("dangkibuaan", "chucnangphuhuynh", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
-    <div class="form-control col-10" style="width:100%" id="registerMealContainer">
-        <dl class="dl-horizontal">
+    <div class="form-control col-10" style="width:100%" id="registerContainer">
+        <div class="dl-horizontal" id="tblRegister">
             <table class="table">
-                <tr>
-                    <th>
-                        STT
-                    </th>
-                    <th>
-                        Ngày
-                    </th>
-                    <th>
-                        Tên trẻ
-                    </th>
-                    <th>
-                        Tên phụ huynh
-                    </th>
-                    <th>
-                        Điểm danh
-                    </th>
-                    <th></th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            Mã trẻ
+                        </th>
+                        <th>
+                            Ngày
+                        </th>
+                        <th>
+                            Tên trẻ
+                        </th>
+                        <th>
+                            Tên phụ huynh
+                        </th>
+                        <th>
+                            Điểm danh
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
                 @{
                     int stt = 0;
                 }
-                @foreach (var item in Model)
-                {
-                    if (item.LOP.MaLop == MaLop)
+                <tbody>
+                    @foreach (var item in Model)
                     {
+
                         stt++;
                         <tr>
                             <td>
                                 @stt
                             </td>
                             <td>
+                                @item.MaTre
+                            </td>
+                            <td>
                                 @DateTime.Now.ToString("dd/MM/yyyy")
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TenTre)
+                                @item.TenTre
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PHUHUYNH.TenPH)
+                                @item.PHUHUYNH.TenPH
                             </td>
                             <td>
-                                <input id="@item.MaTre" type="checkbox" name="@item.MaTre" />
+                                <input type="checkbox" value="" />
                             </td>
                         </tr>
+
+
                     }
-
-                }
-
+                </tbody>
             </table>
-            <p><center><input type="submit" value="Lưu" /><input type="reset" value="Hủy" style="margin-left:50px" /></center></p>
-        </dl>
+        </div>
     </div>
+    <br />
+    <div class="form-group row">
+        <div class="col-sm-10 ml-sm-auto">
+            <button class="btn btn-info" type="button" @*onclick="pressSubmitBtn(this)"*@ id="DangKi" style="margin:0 30px 0 150px">Lưu</button><button class="btn btn-info" style="background-color:grey" type="reset">Hủy</button>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+           
+            $("#DangKi").click(function (e) {
+                e.preventDefault();
+                var index = 0;
+                var data = new Array();
+                $.each($("#tblRegister tbody tr"), function () {
+                    var MaTre = $(this).find("td").eq(1).html();
+                    var select = $(this).find("td").eq(5).is(":checked");
+
+                    var dataOne = {};
+                    dataOne.MaTre = MaTre;
+                    dataOne.select = select;
+                    data.push(dataOne);
+                });
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: "/ChucNangGiaoVien/DiemDanh",
+                    data: JSON.stringify(data),
+                    success: function (result) {
+                        alert(result);
+                    },
+                    error: function (data, errorThrown) {
+                        alert('request failed :' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
 }

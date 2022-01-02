@@ -34,17 +34,68 @@ namespace QuanLyTruongMauGiao.Controllers
 
         public ActionResult DiemDanh(string id)
         {
+            if (Session["user"] != null)
+            {
+                var account = Session["user"] as TAIKHOAN;
+                var user = (from item in db.GIAOVIENs where item.TenTK == account.TenTK select item).FirstOrDefault();
+                var MaLop = (from item in db.PHANCONGGIAOVIENs where item.MaGV == user.MaGV select item.MaLop).FirstOrDefault();
+                var tre = from item in db.TREs where item.MaLop == MaLop select item;
+                return View(tre.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        public class ParamDiemDanh
+        {
+            public string MaTre { get; set; }
+            public bool select { get; set; }
+        }
+
+        [HttpPost]
+        public ActionResult DiemDanh(ParamDiemDanh[] data)
+        {
             TAIKHOAN account = (TAIKHOAN)Session["user"];
-            var user = (from item in db.DIEMDANHs where item.MaTre == id select item).FirstOrDefault();   
-            DIEMDANH diemDanh = new DIEMDANH();
-            diemDanh.MaTre = id;
-            diemDanh.Ngay = DateTime.Now;
-            diemDanh.DiemDanh1 = true;
-            db.DIEMDANHs.Add(diemDanh);
-            db.SaveChanges();
+
+            try
+            {
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        var query = (from x in db.DIEMDANHs
+                                     where x.MaTre == item.MaTre && x.Ngay == DateTime.Now
+                                     select x).FirstOrDefault();
+                        if (query == null)
+                        {
+                            DIEMDANH diemDanh = new DIEMDANH();
+                            diemDanh.MaTre = item.MaTre;
+                            diemDanh.Ngay = DateTime.Now;
+                            diemDanh.DiemDanh1 = item.select;
+                            diemDanh.DangKiBuaAn = false;
+                            db.DIEMDANHs.Add(diemDanh);
+                        }
+                        else
+                        {
+                            query.DiemDanh1 = item.select;
+                        }
+                        db.SaveChanges();
+
+                    }
+                    return Json("Điểm danh thành công", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
             return View(db.TREs.ToList());
         }
-        public ActionResult XemDanhSachLop()
+
+        public ActionResult XemDanhSachLop(string maLop)
         {
             if (CheckLogin() == -1)
                 return RedirectToAction("index", "Home");
@@ -73,28 +124,18 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             return View(db.TREs.ToList());
         }
-        public ActionResult DanhGiaTre(string id, string maGV, DateTime ngayLap, string namHoc, string theChat, string sucKhoe, string hoaDong)
+        public ActionResult DanhGiaTre(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TRE tRE = db.TREs.Find(id);
+            KETQUADANHGIA tRE = db.KETQUADANHGIAs.Find(id);
             if (tRE == null)
             {
                 return HttpNotFound();
             }
             return View(tRE);
-            TAIKHOAN account = (TAIKHOAN)Session["user"];
-            var user = (from item in db.KETQUADANHGIAs where item.PHIEUDANHGIA.TRE.PHUHUYNH.TenTK == account.TenTK select item).FirstOrDefault();
-            KETQUADANHGIA kq = new KETQUADANHGIA();
-            kq.PHIEUDANHGIA.MaTre = id;
-            kq.PHIEUDANHGIA.MaGV = maGV;
-            kq.PHIEUDANHGIA.NgayTao = ngayLap;
-            kq.PHIEUDANHGIA.NamHoc = DateTime.Now.Year;
-            db.KETQUADANHGIAs.Add(kq);
-            db.SaveChanges();
-            return View(db.KETQUADANHGIAs.ToList());
         }
     }
 }
