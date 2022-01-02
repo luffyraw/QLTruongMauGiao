@@ -87,15 +87,15 @@ CREATE TABLE GIAOVIEN
 	NgaySinh Date not null,
 	GioiTinh bit not null,
 	QueQuan nvarchar(30) not null,
-	DienThoai varchar(15) not null,
-	Email varchar(100) not null,
+	DienThoai varchar(15),
+	Email varchar(100),
 	LoaiHopDong nvarchar(30) not null,
 	Luong money not null,
 	KinhNghiem nvarchar(30) not null,
 	TrinhDo nvarchar(30) not null,
 	ChuyenNganh nvarchar(30) not null,
 	LoaiTotNghiep nvarchar(30) not null,
-	TenTK varchar(20) not null, 
+	TenTK varchar(20), 
 	CONSTRAINT fk_fv_tk FOREIGN KEY(TenTK) REFERENCES TAIKHOAN(TenTK),
 )
 GO
@@ -145,9 +145,9 @@ CREATE TABLE PHUHUYNH
 	TenPH nvarchar(50) not null,
 	NamSinh date not null,
 	GioiTinh bit not null,
-	DiaChi nvarchar(100) not null,
-	DienThoai varchar(15) not null,
-	TenTK varchar(20) not null,
+	DiaChi nvarchar(100),
+	DienThoai varchar(15),
+	TenTK varchar(20),
 	CONSTRAINT fkphv_tk FOREIGN KEY(TenTK) REFERENCES TAIKHOAN(TenTK)
 )
 GO
@@ -245,10 +245,10 @@ CREATE TABLE TRE
 	TenTre nvarchar(100) not null,
 	NgaySinh Date not null,
 	GioiTinh bit not null,
-	QueQuan nvarchar(50) not null,
-	DanToc nvarchar(30) not null,
-	NgayNhapHoc datetime not null,
-	Anh varchar(100) not null
+	QueQuan nvarchar(50),
+	DanToc nvarchar(30),
+	NgayNhapHoc datetime,
+	Anh varchar(100),
 	CONSTRAINT fk_TRE_LOP FOREIGN KEY (MaLop) REFERENCES LOP(MaLop),
 	CONSTRAINT fk_TRE_PH FOREIGN KEY (MaPH) REFERENCES PHUHUYNH(MaPH) 
 )
