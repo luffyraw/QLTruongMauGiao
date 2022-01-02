@@ -5,6 +5,10 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/LayoutGV.cshtml";
+    QLMauGiao db = new QLMauGiao();
+    var account = Session["user"] as TAIKHOAN;
+    var user = (from item in db.GIAOVIENs where item.TenTK == account.TenTK select item).FirstOrDefault();
+    var MaLop = (from item in db.PHANCONGGIAOVIENs where item.MaGV == user.MaGV select item.MaLop).FirstOrDefault();
 }
 <h2>Danh sách lớp</h2>
 
@@ -21,7 +25,7 @@
     }
     @foreach (var item in Model)
     {
-        if (item.LOP.TenLop=="Lá 1")
+        if (item.LOP.MaLop==MaLop)
         {
             stt++;
             <tr>

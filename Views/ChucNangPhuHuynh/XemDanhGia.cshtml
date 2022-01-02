@@ -1,23 +1,26 @@
 ﻿@model IEnumerable<QuanLyTruongMauGiao.Models.KETQUADANHGIA>
-@using QuanLyTruongMauGiao.Models;
 @using PagedList.Mvc;
+@using QuanLyTruongMauGiao.Models
 
 @{
     ViewBag.Title = "XemDanhGia";
     Layout = "~/Views/Shared/LayoutPH.cshtml";
+    QLMauGiao db = new QLMauGiao();
+    var account = Session["user"] as TAIKHOAN;
+    var user = (from item in db.PHUHUYNHs where item.TenTK == account.TenTK select item).FirstOrDefault();
+    var TenTre = (from item in db.TREs where item.MaPH == user.MaPH select item.TenTre).FirstOrDefault();
 }
 
-<div>
-    <head>
-        <h2><center>Kết quả đánh giá</center></h2>
+
+<h2>Kết quả đánh giá</h2>
+<hr />
+
+<div class="form-control col-10" style="width:50%">
+    <dl class="dl-horizontal">
+        <br /><dt>Tên trẻ: @TenTre</dt>
         <br />
-    </head>
-    <body>
         <table class="table">
             <tr>
-                <th>
-                    Tên trẻ
-                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.NOIDUNGDANHGIA.NoiDungDanhGia1)
                 </th>
@@ -29,22 +32,22 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PHIEUDANHGIA.TRE.TenTre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NOIDUNGDANHGIA.NoiDungDanhGia1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.kq)
-                    </td>
-                </tr>
+                if (item.PHIEUDANHGIA.TRE.PHUHUYNH.TenTK == account.TenTK)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NOIDUNGDANHGIA.NoiDungDanhGia1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.kq)
+                        </td>
+                    </tr>
+
+                }
             }
         </table>
-        <p>
+        @*<p>
             <center><input type="button" value="Quay lại" onclick="location.href = '@Url.Action("HomePagePH","Home")'" /></center>
-        </p>
-    </body>
+        </p>*@
+    </dl>
 </div>
-
