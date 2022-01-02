@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.ComponentModel;
 
     [Table("TAIKHOAN")]
     public partial class TAIKHOAN
@@ -32,13 +32,12 @@
         [StringLength(30)]
         [DisplayName("Phân quyền")]
         public string PhanQuyen { get; set; }
-        [DisplayName("Trạng thái hoạt động")]
 
+        [DisplayName("Trạng thái hoạt động")]
         public bool TrangThaiHD { get; set; }
 
         [Required(ErrorMessage = "Không được để trống ảnh đại diện")]
         [StringLength(30)]
-
         [DisplayName("Ảnh đại diện")]
         public string AnhDaiDien { get; set; }
 

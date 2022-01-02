@@ -22,7 +22,7 @@
         public string MaPhieu { get; set; }
 
         [Required]
-        [StringLength(5)]
+        [StringLength(6)]
         [DisplayName("Mã trẻ")]
         public string MaTre { get; set; }
 

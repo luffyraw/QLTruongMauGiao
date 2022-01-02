@@ -1,11 +1,11 @@
-namespace QuanLyTruongMauGiao.Models
+﻿namespace QuanLyTruongMauGiao.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.ComponentModel;
 
     [Table("TRE")]
     public partial class TRE
@@ -19,7 +19,7 @@ namespace QuanLyTruongMauGiao.Models
         }
 
         [Key]
-        [StringLength(5)]
+        [StringLength(6)]
         public string MaTre { get; set; }
 
         [Required(ErrorMessage = "Không được để trống l")]
@@ -37,7 +37,6 @@ namespace QuanLyTruongMauGiao.Models
         [Required(ErrorMessage = "Không được để trống ngày sinh")]
         [Column(TypeName = "date")]
         [DisplayName("Ngày sinh")]
-
         public DateTime NgaySinh { get; set; }
 
         public bool GioiTinh { get; set; }

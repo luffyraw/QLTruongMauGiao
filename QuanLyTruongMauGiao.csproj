@@ -165,6 +165,7 @@
     <Compile Include="Models\PHIEUTHUTIEN.cs" />
     <Compile Include="Models\PHUHUYNH.cs" />
     <Compile Include="Models\QLMauGiao.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TAIKHOAN.cs" />
     <Compile Include="Models\THUCDONNGAY.cs" />
     <Compile Include="Models\TRE.cs" />

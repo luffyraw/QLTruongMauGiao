@@ -20,27 +20,23 @@
         [Required(ErrorMessage = "Không được để trống")]
         public string MaPH { get; set; }
 
-        
         [StringLength(50)]
         [Required(ErrorMessage = "Không được để trống")]
         public string TenPH { get; set; }
 
-        [Column(TypeName = "date")]
         [Required(ErrorMessage = "Không được để trống")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
         public DateTime NamSinh { get; set; }
 
-        
         public bool GioiTinh { get; set; }
 
-        
-        [StringLength(100)]
         [Required(ErrorMessage = "Không được để trống")]
+        [StringLength(100)]
         public string DiaChi { get; set; }
 
-        
-        [StringLength(15)]
         [Required(ErrorMessage = "Không được để trống")]
+        [StringLength(15)]
         public string DienThoai { get; set; }
 
         [Required(ErrorMessage = "Không được để trống")]

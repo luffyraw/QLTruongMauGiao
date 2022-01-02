@@ -22,14 +22,15 @@
         public string MaPhieu { get; set; }
 
         [Required]
-        [StringLength(5)]
+        [StringLength(6)]
         [DisplayName("Mã trẻ")]
         public string MaTre { get; set; }
 
         [DisplayName("Ngày lập phiếu")]
         public DateTime NgayLapPhieu { get; set; }
-        
+
         public bool TrangThai { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DONGCHIPHI> DONGCHIPHIs { get; set; }
 

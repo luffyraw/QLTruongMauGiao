@@ -25,8 +25,6 @@
         [DisplayName("Số lượng")]
         public int SoLuong { get; set; }
 
-
-
         public virtual CHIPHI CHIPHI { get; set; }
 
         public virtual PHIEUTHUTIEN PHIEUTHUTIEN { get; set; }
