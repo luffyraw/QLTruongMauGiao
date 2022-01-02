@@ -22,14 +22,6 @@ namespace QuanLyTruongMauGiao.Controllers
             if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 var pHIEUTHUTIENs = db.PHIEUTHUTIENs.Include(p => p.TRE);
-                if (TrangThai == "HoanThanh")
-                {
-                    pHIEUTHUTIENs = pHIEUTHUTIENs.Where(x => x.TrangThai == true);
-                }
-                if (TrangThai == "ChuaHoanThanh")
-                {
-                    pHIEUTHUTIENs = pHIEUTHUTIENs.Where(x => x.TrangThai == false);
-                }
                 pHIEUTHUTIENs = pHIEUTHUTIENs.OrderBy(p => p.MaPhieu);
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
@@ -39,6 +31,22 @@ namespace QuanLyTruongMauGiao.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+        public PartialViewResult GetThucDonByTrangThai(string TrangThai, int? page)
+        {
+            var pHIEUTHUTIENs = db.PHIEUTHUTIENs.Include(p => p.TRE);
+            if (TrangThai == "HoanThanh")
+            {
+                pHIEUTHUTIENs = pHIEUTHUTIENs.Where(x => x.TrangThai == true);
+            }
+            if (TrangThai == "ChuaHoanThanh")
+            {
+                pHIEUTHUTIENs = pHIEUTHUTIENs.Where(x => x.TrangThai == false);
+            }
+            pHIEUTHUTIENs = pHIEUTHUTIENs.OrderBy(p => p.MaPhieu);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return PartialView("Index", pHIEUTHUTIENs.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: ThuTien/Details/5
@@ -134,24 +142,32 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             if (maPhieu != null && maTre != null && chiPhi != null)
             {
-                PHIEUTHUTIEN phieu = new PHIEUTHUTIEN();
-                phieu.MaPhieu = maPhieu;
-                phieu.MaTre = maTre;
-                phieu.NgayLapPhieu = DateTime.Now;
-                phieu.TrangThai = false;
-
-                db.PHIEUTHUTIENs.Add(phieu);
-
-                foreach (var item in chiPhi.ToList())
+                try
                 {
-                    DONGCHIPHI dongCP = new DONGCHIPHI();
-                    dongCP.MaPhieu = item.MaPhieu;
-                    dongCP.MaChiPhi = item.MaChiPhi;
-                    dongCP.SoLuong = item.SoLuong;
-                    db.DONGCHIPHIs.Add(dongCP);
+                    PHIEUTHUTIEN phieu = new PHIEUTHUTIEN();
+                    phieu.MaPhieu = maPhieu;
+                    phieu.MaTre = maTre;
+                    phieu.NgayLapPhieu = DateTime.Now;
+                    phieu.TrangThai = false;
+
+                    db.PHIEUTHUTIENs.Add(phieu);
+
+                    foreach (var item in chiPhi.ToList())
+                    {
+                        DONGCHIPHI dongCP = new DONGCHIPHI();
+                        dongCP.MaPhieu = item.MaPhieu;
+                        dongCP.MaChiPhi = item.MaChiPhi;
+                        dongCP.SoLuong = item.SoLuong;
+                        db.DONGCHIPHIs.Add(dongCP);
+                    }
+                    db.SaveChanges();
+                    return Json("Tạo phiếu thu thành công", JsonRequestBehavior.AllowGet);
                 }
-                db.SaveChanges();
-                return Json("Tạo phiếu thu thành công", JsonRequestBehavior.AllowGet);
+                catch (Exception ex)
+                {
+
+                    ViewBag.error = ex.Message;
+                }
             }
             ViewBag.MaPhieu = SinhMaPhieu();
             ViewBag.NgayLap = DateTime.Now.ToString("dd-MM-yyyy");

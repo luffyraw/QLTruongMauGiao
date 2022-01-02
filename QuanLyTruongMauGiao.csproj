@@ -3727,6 +3727,9 @@
     <Content Include="Views\Lop\AddTrePV.cshtml" />
     <Content Include="Views\TaiKhoan\ResetPass.cshtml" />
     <Content Include="Views\ChucNangPhuHuynh\DongHocPhi.cshtml" />
+    <Content Include="Views\PhuHuynh\PhuHuynhPartialView.cshtml" />
+    <Content Include="Views\ThucDon\ThucDonPartialView.cshtml" />
+    <Content Include="Views\ThuTien\PhieuThuPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -18,6 +18,7 @@
         [Column(TypeName = "date")]
         [DisplayName("Ngày")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage ="Không được để trống")]
         public DateTime Ngay { get; set; }
 
         [StringLength(500)]

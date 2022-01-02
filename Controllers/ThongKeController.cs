@@ -54,10 +54,10 @@ namespace QuanLyTruongMauGiao.Controllers
                                       SoTre = gr.Sum(x=>x.SoTre)
                                   };
 
-                Dictionary<int, float> listDT = new Dictionary<int, float>();
+                Dictionary<string, string> listDT = new Dictionary<string, string>();
                 foreach (var item in queryDoTuoi.ToList())
                 {
-                    listDT.Add(item.DoTuoi, (float)item.SoTre * 100 / db.TREs.Count());
+                    listDT.Add(item.DoTuoi.ToString(), Math.Round((float)item.SoTre * 100 / db.TREs.Count(),2).ToString());
                 }
                 ViewBag.DT = listDT;
 
@@ -66,7 +66,7 @@ namespace QuanLyTruongMauGiao.Controllers
                 foreach (var item in queryDoTuoi.ToList())
                 {
                     listDoTuoi.Add(item.DoTuoi.ToString());
-                    listPhanTram.Add(((float)item.SoTre * 100 / db.TREs.Count()).ToString());
+                    listPhanTram.Add(Math.Round((float)item.SoTre * 100 / db.TREs.Count(), 2).ToString());
                 }
                 ViewBag.DoTuoi = String.Join(",",listDoTuoi);
                 ViewBag.PhanTram = String.Join(",", listPhanTram);

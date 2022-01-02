@@ -16,16 +16,12 @@ namespace QuanLyTruongMauGiao.Controllers
         private QLMauGiao db = new QLMauGiao();
 
         // GET: PhuHuynh
-        public ActionResult Index(string searchstr, int? page)
+        public ActionResult Index(int? page)
         {
             TAIKHOAN user = (TAIKHOAN)Session["user"];
             if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 var phuHuynh = db.PHUHUYNHs.Include(p => p.TAIKHOAN);
-                if (!String.IsNullOrEmpty(searchstr))
-                {
-                    phuHuynh = phuHuynh.Where(ph => ph.TenPH == searchstr);
-                }
                 phuHuynh = phuHuynh.OrderBy(ph => ph.TenPH);
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
@@ -36,6 +32,16 @@ namespace QuanLyTruongMauGiao.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        public PartialViewResult GetNamePH(string searchstr, int? page)
+        {
+            var phuHuynhs = db.PHUHUYNHs.Where(x => x.TenPH.Contains(searchstr));
+            phuHuynhs = phuHuynhs.OrderBy(ph => ph.TenPH);
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return PartialView("Index", phuHuynhs.ToPagedList(pageNumber, pageSize));
+        }
+
         // GET: PhuHuynh/Details/5
         public ActionResult Details(string id)
         {
@@ -105,21 +111,31 @@ namespace QuanLyTruongMauGiao.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(/*FormCollection frm*/[Bind(Include = "MaPH,TenPH,NamSinh,GioiTinh,DiaChi,DienThoai,TenTK")] PHUHUYNH pHUHUYNH)
+        public ActionResult Create([Bind(Include = "MaPH,TenPH,NamSinh,GioiTinh,DiaChi,DienThoai,TenTK")] PHUHUYNH pHUHUYNH)
         {
             
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //PHUHUYNH ph = new PHUHUYNH();
-                    //ph.MaPH = frm["MaPH"];
-                    //ph.TenPH = frm["TenPH"];
-                    //ph.NamSinh = DateTime.Parse(frm["NamSinh"]);
-                    //ph.GioiTinh = Boolean.Parse(frm["GioiTinh"]);
-                    //ph.DiaChi = frm["DiaChi"];
-                    //ph.DienThoai = frm["DienThoai"];
-                    //ph.TenTK = frm["TenTK"];
+                    var taiKhoan = db.TAIKHOANs.Find(pHUHUYNH.TenTK);
+                    TAIKHOAN taiKhoanNew = new TAIKHOAN();
+                    if (taiKhoan != null)
+                    {
+                        taiKhoan.MatKhau = "123456";
+                        taiKhoan.PhanQuyen = "Phụ huynh";
+                        taiKhoan.TrangThaiHD = false;
+                    }
+                    else
+                    {
+                        
+                        taiKhoanNew.TenTK = pHUHUYNH.TenTK;
+                        taiKhoanNew.MatKhau = "123456";
+                        taiKhoanNew.PhanQuyen = "Phụ huynh";
+                        taiKhoanNew.TrangThaiHD = false;
+                        taiKhoanNew.AnhDaiDien = "default.png";
+                        db.TAIKHOANs.Add(taiKhoanNew);
+                    }
                     db.PHUHUYNHs.Add(pHUHUYNH);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -133,6 +149,7 @@ namespace QuanLyTruongMauGiao.Controllers
             var taiKhoanPH = (from ph in db.PHUHUYNHs
                               select ph.TenTK).Distinct();
             ViewBag.TenTK = new SelectList(taiKhoanPH);
+            ViewBag.MaPH = SinhMaPH();
             return View(pHUHUYNH);
         }
 
