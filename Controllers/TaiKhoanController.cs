@@ -95,9 +95,11 @@ namespace QuanLyTruongMauGiao.Controllers
         }
         [HttpPost, ActionName("ResetPass")]
         [ValidateAntiForgeryToken]
-        public ActionResult ConfirmReset(string id)
+        public ActionResult ConfirmReset(string TenTK)
         {
-
+            var tk = db.TAIKHOANs.Find(TenTK);
+            tk.MatKhau = "123456";
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
         // GET: TaiKhoan/Create

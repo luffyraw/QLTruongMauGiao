@@ -22,9 +22,7 @@
 
     <div class="form-horizontal">
         <hr />
-        @*
-            Mã trẻ
-        *@
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <label class="control-label col-md-10"><h4>Mã trẻ: @Model.MaTre </h4></label>
         <input id="MaTre" name="MaTre" value="@Model.MaTre" hidden="hidden" />
@@ -32,7 +30,9 @@
             Lớp
         *@
         <div class="form-group">
-            Lớp            <div class="col-md-10">
+            <label class="control-label col-md-10">   Lớp   </label>
+
+            <div class="col-md-10">
                 @Html.DropDownList("MaLop", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MaLop, "", new { @class = "text-danger" })
             </div>
@@ -122,7 +122,9 @@
         @*Tên trẻ
         *@
         <div class="form-group">
-            Tên trẻ            <div class="col-md-10">
+            <label class="control-label col-md-2">Tên trẻ </label>
+
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.TenTre, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TenTre, "", new { @class = "text-danger" })
             </div>
@@ -130,7 +132,9 @@
         @* ngày sinh
         *@
         <div class="form-group">
-            Ngày sinh            <div class="col-md-10">
+            <label class="control-label col-md-2"> Ngày sinh  </label>
+
+            <div class="col-md-10">
                 <input class="form-control" id="NgaySinh" name="NgaySinh" type="date" value="@ngaysinh" />
                 @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
             </div>
@@ -139,7 +143,9 @@
             Giới tính
         *@
         <div class="form-group">
-            Giới tính            <div class="col-md-10">
+            <label class="control-label col-md-2">Giới tính </label>
+
+            <div class="col-md-10">
                 @{
                     if (Model.GioiTinh == true)
                     {
@@ -161,7 +167,9 @@
             Quê quán
         *@
         <div class="form-group">
-            Quê quán            <div class="col-md-10">
+            <label class="control-label col-md-2"> Quê quán  </label>
+
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.QueQuan, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.QueQuan, "", new { @class = "text-danger" })
             </div>
@@ -170,7 +178,9 @@
             Dân tộc
         *@
         <div class="form-group">
-            Dân tộc            <div class="col-md-10">
+            <label class="control-label col-md-2">Dân tộc</label>
+
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.DanToc, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DanToc, "", new { @class = "text-danger" })
             </div>
@@ -179,7 +189,9 @@
             Ngày nhập học
         *@
         <div class="form-group">
-            Ngày nhập học            <div class="col-md-10">
+            <label class="control-label col-md-2">Ngày nhập học</label>
+
+            <div class="col-md-10">
                 <input type="date" id="NgayNhapHoc" name="NgayNhapHoc" class="form-control" value="@ngaynhaphoc" />
 
                 @Html.ValidationMessageFor(model => model.NgayNhapHoc, "", new { @class = "text-danger" })
@@ -189,7 +201,9 @@
             Ảnh
         *@
         <div class="form-group">
-            Ảnh            <div class="col-md-10">
+            <label class="control-label col-md-2">Ảnh</label>
+
+            <div class="col-md-10">
                 <input class="form-control" id="anh" name="anh" type="text" value="@Model.Anh" hidden="hidden" />
                 <input type="file" id="inputimg" name="inputimg" onchange="loadFile(event)" />
                 <br />
@@ -203,7 +217,7 @@
         *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Lưu" class="btn btn-default" />
             </div>
         </div>
     </div>

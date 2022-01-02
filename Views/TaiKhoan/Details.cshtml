@@ -3,12 +3,21 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string path;
+    if (Model.PhanQuyen == "Phụ huynh")
+    {
+        path = "PhuHuynh";
+    }
+    else
+    {
+        path = "GiaoVien";
+
+    }
 }
 
-<h2>Details</h2>
+<h2>Thông tin tài khoản @Model.TenTK</h2>
 
 <div>
-    <h4>TAIKHOAN</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,7 +25,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MatKhau)
+            Không hiển thị
         </dd>
 
         <dt>
@@ -26,26 +35,19 @@
         <dd>
             @Html.DisplayFor(model => model.PhanQuyen)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.TrangThaiHD)
+            Ảnh 
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.TrangThaiHD)
+            <img src="~/Image/@path/@Model.AnhDaiDien" height="200" width="200" />
+
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AnhDaiDien)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AnhDaiDien)
-        </dd>
+      
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TenTK }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.TenTK }) |
+    @Html.ActionLink("Trở về", "Index")
 </p>
