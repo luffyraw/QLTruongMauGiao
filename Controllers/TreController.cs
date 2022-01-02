@@ -108,12 +108,12 @@ namespace QuanLyTruongMauGiao.Controllers
                 var lop = (from item in db.LOPs where item.MaLop == tRE.MaLop select item).FirstOrDefault();
                 lop.SiSo++;
                 var f = Request.Files["inputimg"];
-                string filename;
                 if (f!=null)
                 {
-                    filename = System.IO.Path.GetFileName(f.FileName);
                     string uploadPath = Server.MapPath("~/Image/Tre/") + tRE.MaTre.ToString() + ".png";
                     tRE.Anh = tRE.MaTre + ".png";
+                    if (System.IO.File.Exists(uploadPath))
+                        System.IO.File.Delete(uploadPath);
                     f.SaveAs(uploadPath);
                 }
 
