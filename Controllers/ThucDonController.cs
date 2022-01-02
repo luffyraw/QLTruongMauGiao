@@ -22,11 +22,6 @@ namespace QuanLyTruongMauGiao.Controllers
             if (Session["user"] != null && user.PhanQuyen == "Quản lý")
             {
                 IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
-
-                //if (startdate != null && enddate != null)
-                //{
-                //    thucdons = thucdons.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
-                //}
                 thucdons = thucdons.OrderBy(td => td.Ngay);
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
