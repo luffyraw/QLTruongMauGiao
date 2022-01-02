@@ -9,12 +9,14 @@
     var account = Session["user"] as TAIKHOAN;
     var user = (from item in db.GIAOVIENs where item.TenTK == account.TenTK select item).FirstOrDefault();
     var MaLop = (from item in db.PHANCONGGIAOVIENs where item.MaGV == user.MaGV select item.MaLop).FirstOrDefault();
+    var maTre = (from item in db.TREs where item.MaLop == MaLop select item.MaTre).FirstOrDefault();
 }
 
 <h2>Điểm danh</h2>
-
-@using (Html.BeginForm("dangkibuaan", "chucnangphuhuynh", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<br />
+@using (Html.BeginForm("diemdanh", "chucnanggiaovien", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
     <div class="form-control col-10" style="width:100%" id="registerMealContainer">
         <dl class="dl-horizontal">
             <table class="table">
@@ -58,7 +60,7 @@
                                 @Html.DisplayFor(modelItem => item.PHUHUYNH.TenPH)
                             </td>
                             <td>
-                                <input type="checkbox" />
+                                <input id="@item.MaTre" type="checkbox" name="@item.MaTre" />
                             </td>
                         </tr>
                     }

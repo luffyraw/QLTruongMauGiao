@@ -48,6 +48,10 @@ namespace QuanLyTruongMauGiao.Controllers
 
             TAIKHOAN account = (TAIKHOAN)Session["user"];
             var users = (from item in db.DIEMDANHs where item.TRE.PHUHUYNH.TenTK == account.TenTK select item).FirstOrDefault();
+
+
+
+
             if (param != null)
             {
                 foreach (ParamDangKyBuaAn i in param)
@@ -75,32 +79,8 @@ namespace QuanLyTruongMauGiao.Controllers
                     }
                 }
             }
-            return View();
+            return View(thucdons);
         }
-        //[HttpPost]
-        //public ActionResult DangKiBuaAn(DateTime? startdate, DateTime? enddate, int? page, Boolean? choice)
-        //{
-        //    IQueryable<THUCDONNGAY> thucdons = db.THUCDONNGAYs;
-
-        //    if (startdate != null && enddate != null)
-        //    {
-        //        thucdons = thucdons.Where(td => td.Ngay >= startdate && td.Ngay <= enddate);
-        //    }
-        //    thucdons = thucdons.OrderBy(td => td.Ngay);
-
-        //    TAIKHOAN account = (TAIKHOAN)Session["user"];
-
-        //    var users = (from item in db.DIEMDANHs where item.TRE.PHUHUYNH.TenTK == account.TenTK select item).FirstOrDefault();
-        //    var thucdon = (from item in db.THUCDONNGAYs where item.Ngay == users.Ngay select item.Ngay).FirstOrDefault();
-        //    if (choice == true)
-        //    {
-        //        users.DangKiBuaAn = true;
-        //    }
-        //    else users.DangKiBuaAn = false;
-        //    db.SaveChanges();
-        //    ViewBag.msg = "Đăng kí thành công!!!";
-        //    return View(thucdons);
-        //}
         public ActionResult XemDanhGia()
         {
             return View();

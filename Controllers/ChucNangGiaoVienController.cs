@@ -31,11 +31,20 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             return View();
         }
-        public ActionResult DiemDanh()
+
+        public ActionResult DiemDanh(string id)
         {
+            TAIKHOAN account = (TAIKHOAN)Session["user"];
+            var user = (from item in db.DIEMDANHs where item.MaTre == id select item).FirstOrDefault();   
+            DIEMDANH diemDanh = new DIEMDANH();
+            diemDanh.MaTre = id;
+            diemDanh.Ngay = DateTime.Now;
+            diemDanh.DiemDanh1 = true;
+            db.DIEMDANHs.Add(diemDanh);
+            db.SaveChanges();
             return View(db.TREs.ToList());
         }
-        public ActionResult XemDanhSachLop(string maLop)
+        public ActionResult XemDanhSachLop()
         {
             if (CheckLogin() == -1)
                 return RedirectToAction("index", "Home");
@@ -64,11 +73,27 @@ namespace QuanLyTruongMauGiao.Controllers
         {
             return View(db.TREs.ToList());
         }
-        public ActionResult DanhGiaTre(string maGV, string ngayLap, string namHoc, string theChat, string sucKhoe, string hoaDong)
+        public ActionResult DanhGiaTre(string id, string maGV, DateTime ngayLap, string namHoc, string theChat, string sucKhoe, string hoaDong)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TRE tRE = db.TREs.Find(id);
+            if (tRE == null)
+            {
+                return HttpNotFound();
+            }
+            return View(tRE);
             TAIKHOAN account = (TAIKHOAN)Session["user"];
             var user = (from item in db.KETQUADANHGIAs where item.PHIEUDANHGIA.TRE.PHUHUYNH.TenTK == account.TenTK select item).FirstOrDefault();
             KETQUADANHGIA kq = new KETQUADANHGIA();
+            kq.PHIEUDANHGIA.MaTre = id;
+            kq.PHIEUDANHGIA.MaGV = maGV;
+            kq.PHIEUDANHGIA.NgayTao = ngayLap;
+            kq.PHIEUDANHGIA.NamHoc = DateTime.Now.Year;
+            db.KETQUADANHGIAs.Add(kq);
+            db.SaveChanges();
             return View(db.KETQUADANHGIAs.ToList());
         }
     }
