@@ -107,8 +107,8 @@ $(function () {
         var val = $(this).val();
         if(val != 'default') {
             if(! $('#theme-style').length ) {
-                $('head').append( "<link href='Content/assets/css/themes/"+val+".css' rel='stylesheet' id='theme-style' >" );
-            } else $('#theme-style').attr('href', 'Content/assets/css/themes/'+val+'.css');
+                $('head').append( "<link href='~/Content/assets/css/themes/"+val+".css' rel='stylesheet' id='theme-style' >" );
+            } else $('#theme-style').attr('href', '~/Content/assets/css/themes/'+val+'.css');
         } else $('#theme-style').remove();
     });
 

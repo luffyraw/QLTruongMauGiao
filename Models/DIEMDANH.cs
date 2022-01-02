@@ -11,7 +11,7 @@ namespace QuanLyTruongMauGiao.Models
     {
         [Key]
         [Column(Order = 0)]
-        [StringLength(5)]
+        [StringLength(6)]
         public string MaTre { get; set; }
 
         [Key]

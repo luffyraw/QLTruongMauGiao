@@ -165,6 +165,7 @@
     <Compile Include="Models\PHIEUTHUTIEN.cs" />
     <Compile Include="Models\PHUHUYNH.cs" />
     <Compile Include="Models\QLMauGiao.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TAIKHOAN.cs" />
     <Compile Include="Models\THUCDONNGAY.cs" />
     <Compile Include="Models\TRE.cs" />
@@ -3143,6 +3144,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Image\Default.png" />
+    <Content Include="Image\mnminhkhai.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\assets\demo\data\countries.json" />
@@ -3711,9 +3713,7 @@
     <Content Include="Views\ThongKe\Index.cshtml" />
     <Content Include="Views\Home\HomePageAdmin.cshtml" />
     <Content Include="Views\ThuTien\Create.cshtml" />
-    <Content Include="Views\ThuTien\Delete.cshtml" />
     <Content Include="Views\ThuTien\Details.cshtml" />
-    <Content Include="Views\ThuTien\Edit.cshtml" />
     <Content Include="Views\ThuTien\Index.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
@@ -3745,9 +3745,7 @@
     <Content Include="Views\PHIEUDANHGIAs\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Views\ThuTien\Create.cshtml" />
-    <Content Include="Views\ThuTien\Delete.cshtml" />
     <Content Include="Views\ThuTien\Details.cshtml" />
-    <Content Include="Views\ThuTien\Edit.cshtml" />
     <Content Include="Views\ThuTien\Index.cshtml" />
     <Content Include="Views\ChucNangPhuHuynh\DangKiBuaAn.cshtml" />
     <Content Include="Views\ChucNangPhuHuynh\XemDanhGia.cshtml" />

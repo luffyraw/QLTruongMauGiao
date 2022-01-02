@@ -25,8 +25,8 @@
                     <div class="ibox-body">
                         <form class="form-horizontal">
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Lớp</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-2 col-form-label" style="flex: 0 0 20%; max-width: 20%;">Lớp</label>
+                                <div class="col-sm-10" style="flex: 0 0 80%; max-width: 80%;">
                                     @Html.DropDownList("MaLop", null, htmlAttributes: new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-10 ml-sm-auto">
@@ -34,8 +34,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Năm Học</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-2 col-form-label" style="flex: 0 0 20%; max-width: 20%;">Năm Học</label>
+                                <div class="col-sm-10" style="flex: 0 0 80%; max-width: 80%;">
                                     @Html.EditorFor(model => model.NamHoc, new { htmlAttributes = new { @class = "form-control" } })
                                 </div>
                                 <div class="col-sm-10 ml-sm-auto">
@@ -43,8 +43,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Giáo Viên 1</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-2 col-form-label" style="flex: 0 0 20%; max-width: 20%;">Giáo Viên 1</label>
+                                <div class="col-sm-10" style="flex: 0 0 80%; max-width: 80%;">
                                     @Html.DropDownList("MaGV1", new SelectList(ViewBag.MaGV, "MaGV", "TenGV"), htmlAttributes: new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-10 ml-sm-auto">
@@ -52,8 +52,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Giáo Viên 2</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-2 col-form-label" style="flex: 0 0 20%; max-width: 20%;">Giáo Viên 2</label>
+                                <div class="col-sm-10" style="flex: 0 0 80%; max-width: 80%;">
                                     @Html.DropDownList("MaGV2", new SelectList(ViewBag.MaGV, "MaGV", "TenGV"), htmlAttributes: new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-10 ml-sm-auto">

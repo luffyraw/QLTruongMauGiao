@@ -24,6 +24,7 @@ namespace QuanLyTruongMauGiao.Models
         public virtual DbSet<PHIEUDANHGIA> PHIEUDANHGIAs { get; set; }
         public virtual DbSet<PHIEUTHUTIEN> PHIEUTHUTIENs { get; set; }
         public virtual DbSet<PHUHUYNH> PHUHUYNHs { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TAIKHOAN> TAIKHOANs { get; set; }
         public virtual DbSet<THUCDONNGAY> THUCDONNGAYs { get; set; }
         public virtual DbSet<TRE> TREs { get; set; }
